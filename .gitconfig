@@ -1,0 +1,14 @@
+[user]
+	name = Koyashiro Kohaku
+	email = 6698252+KoyashiroKohaku@users.noreply.github.com
+[core]
+	editor = code --wait
+	autoCRLF = false
+	quotepath = false
+	pager = LESSCHARSET=utf-8 less
+[merge]
+	tool = code --wait $MERGED
+[push]
+	default = current
+[color]
+	ui = auto
