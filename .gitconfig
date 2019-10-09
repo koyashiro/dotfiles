@@ -12,3 +12,5 @@
 	default = current
 [color]
 	ui = auto
+[credential]
+	helper = manager
