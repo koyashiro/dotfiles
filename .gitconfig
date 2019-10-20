@@ -7,7 +7,6 @@
 	quotepath = false
 	pager = LESSCHARSET=utf-8 less
 [merge]
-	tool = code --wait $MERGED
 	ff = false
 [push]
 	default = current
