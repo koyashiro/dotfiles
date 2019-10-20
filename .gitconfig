@@ -6,6 +6,7 @@
 	autoCRLF = false
 	quotepath = false
 	pager = LESSCHARSET=utf-8 less
+	editor = vim
 [merge]
 	tool = code --wait $MERGED
 [push]
