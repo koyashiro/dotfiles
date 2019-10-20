@@ -1,5 +1,5 @@
-$link = "$env:HOMEDRIVE$env:HOMEPATH\.gitconfig"
-$target = "$env:HOMEDRIVE$env:HOMEPATH\dotfiles\.gitconfig"
+$link = "${env:USERPROFILE}\.gitconfig"
+$target = "${env:USERPROFILE}\dotfiles\.gitconfig"
 
 if (Test-Path $link) {
   Write-Host "remove > $link"
