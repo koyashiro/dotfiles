@@ -9,7 +9,10 @@
 	editor = vim
 [merge]
 	tool = code --wait $MERGED
+	ff = false
 [push]
 	default = current
+[pull]
+	ff = only
 [color]
 	ui = auto
