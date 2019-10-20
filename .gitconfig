@@ -2,11 +2,10 @@
 	name = Koyashiro Kohaku
 	email = 6698252+KoyashiroKohaku@users.noreply.github.com
 [core]
-	editor = code --wait
+	editor = vim
 	autoCRLF = false
 	quotepath = false
 	pager = LESSCHARSET=utf-8 less
-	editor = vim
 [merge]
 	tool = code --wait $MERGED
 	ff = false
