@@ -14,3 +14,9 @@
 	ff = only
 [color]
 	ui = auto
+[alias]
+	st = status
+	sts = status --short
+	co = checkout
+	br = branch
+	ci = commit
