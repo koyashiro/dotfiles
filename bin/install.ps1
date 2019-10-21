@@ -6,5 +6,5 @@ if (Test-Path $link) {
   Remove-Item $link
 }
 
-Write-Host "mklink $link > $target"
+Write-Host "mklink $target > $link"
 powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
