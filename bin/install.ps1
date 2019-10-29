@@ -41,3 +41,14 @@ if (Test-Path $link) {
 
 Write-Host "mklink $target > $link"
 powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
+
+$link = "${env:APPDATA}\Hyper\.hyper.js"
+$target = "${env:USERPROFILE}\dotfiles\Hyper\.hyper.js"
+
+if (Test-Path $link) {
+  Write-Host "remove > $link"
+  Remove-Item $link
+}
+
+Write-Host "mklink $target > $link"
+powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
