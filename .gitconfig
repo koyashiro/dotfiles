@@ -1,6 +1,5 @@
-[user]
-	name = Koyashiro Kohaku
-	email = 6698252+KoyashiroKohaku@users.noreply.github.com
+[include]
+	path = .gitconfig.user
 [core]
 	editor = vim -c 'set fenc=utf-8'
 	autoCRLF = false
@@ -21,3 +20,8 @@
 	br = branch
 	ci = commit
 	cm = commit
+[difftool "sourcetree"]
+	cmd = '' \"$LOCAL\" \"$REMOTE\"
+[mergetool "sourcetree"]
+	cmd = "'' "
+	trustExitCode = true
