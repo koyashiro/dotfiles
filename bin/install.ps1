@@ -30,3 +30,14 @@ if (Test-Path $link) {
 
 Write-Host "mklink $target > $link"
 powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
+
+$link = $PROFILE
+$target = "${env:USERPROFILE}\dotfiles\PowerShell\Microsoft.PowerShell_profile.ps1"
+
+if (Test-Path $link) {
+  Write-Host "remove > $link"
+  Remove-Item $link
+}
+
+Write-Host "mklink $target > $link"
+powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
