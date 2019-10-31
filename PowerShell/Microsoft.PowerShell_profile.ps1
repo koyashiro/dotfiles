@@ -1,3 +1,6 @@
+$rawui = (Get-Host).UI.RawUI
+$rawui.WindowTitle = "PowerShell Core"
+
 Remove-Item alias:ls
 Remove-Item alias:pwd
 Remove-Item alias:clear
