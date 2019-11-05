@@ -32,7 +32,7 @@ module.exports = {
     // terminal text color under BLOCK cursor
     cursorAccentColor: '#000',
 
-    // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for â–ˆ
+    // `'BEAM'` for |, `'UNDERLINE'` for _, `'BLOCK'` for Ã¢â€“Ë†
     cursorShape: 'BLOCK',
 
     // set to `true` (without backticks and without quotes) for blinking cursor
@@ -146,7 +146,7 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: [`hyper-statusline`, `hyper-tab-icons`, `hyperpower`, `hyperterm-material`, `hyperborder`, `gitrocket`],
+  plugins: ['hyper-statusline', 'hyper-tab-icons', 'hyperpower', 'hyperterm-material', 'hyperborder', 'gitrocket'],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
