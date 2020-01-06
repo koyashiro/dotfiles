@@ -20,8 +20,7 @@
 	br = branch
 	ci = commit
 	cm = commit
-[difftool "sourcetree"]
-	cmd = '' \"$LOCAL\" \"$REMOTE\"
-[mergetool "sourcetree"]
-	cmd = "'' "
-	trustExitCode = true
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
