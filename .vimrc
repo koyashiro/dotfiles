@@ -17,4 +17,5 @@ set smartcase
 set incsearch
 set wrapscan
 set hlsearch
+set tw=0
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
