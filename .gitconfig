@@ -18,8 +18,10 @@
 	sts = status --short
 	co = checkout
 	br = branch
-	ci = commit
 	cm = commit
+	rb = rebase
+	mg = merge
+	cp = cherry-pick
 [diff]
 	tool = vimdiff
 [difftool]
