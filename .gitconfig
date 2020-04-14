@@ -17,8 +17,11 @@
 	st = status
 	sts = status --short
 	co = checkout
+	cob = checkout -b
 	br = branch
+	brd = branch -d
 	cm = commit
+	cma = commit --amend
 	rb = rebase
 	mg = merge
 	cp = cherry-pick
