@@ -37,9 +37,9 @@ if (Test-Path $link) {
 Write-Host "mklink $target > $link"
 powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
 
-# profile.ps1
+# PowerShell
 
-$link = $PROFILE
+$link = "${PROFILE}\Microsoft.PowerShell_profile.ps1"
 $target = "${env:USERPROFILE}\dotfiles\PowerShell\Microsoft.PowerShell_profile.ps1"
 
 if (Test-Path $link) {
