@@ -30,3 +30,5 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
+[fetch]
+	prune = true
