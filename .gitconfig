@@ -6,6 +6,7 @@
 	quotepath = false
 	pager = LESSCHARSET=utf-8 less
 	whitespace=cr-at-eol
+	eol = lf
 [merge]
 	ff = false
 [push]
