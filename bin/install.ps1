@@ -62,3 +62,16 @@ if (Test-Path $link) {
 
 Write-Host "mklink $target > $link"
 powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
+
+# .prettierrc
+
+$link = "${env:USERPROFILE}\.prettierrc"
+$target = "${env:USERPROFILE}\dotfiles\.prettierrc"
+
+if (Test-Path $link) {
+  Write-Host "remove > $link"
+  Remove-Item $link
+}
+
+Write-Host "mklink $target > $link"
+powershell.exe -Command Start-Process -FilePath "cmd" -ArgumentList "/c", "mklink", $link, $target -Verb Runas
