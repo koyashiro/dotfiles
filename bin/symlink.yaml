@@ -1,0 +1,15 @@
+# Git
+- srcPath: .gitconfig
+  destPath: $env:USERPROFILE\.gitconfig
+# PowerShell
+- srcPath: PowerShell\profile.ps1
+  destPath: $profile.CurrentUserAllHosts
+# WindowsTerminal
+- srcPath: WindowsTerminal\settings.json
+  destPath: ${env:LOCALAPPDATA}\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json
+# Vim
+- srcPath: .vimrc
+  destPath: ${env:USERPROFILE}\_vimrc
+# Prettier
+- srcPath: .prettierrc
+  destPath: ${env:USERPROFILE}\.prettierrc

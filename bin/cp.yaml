@@ -1,0 +1,3 @@
+# Git
+- srcPath: .gitconfig.user
+  destPath: $env:USERPROFILE\.gitconfig.user
