@@ -30,9 +30,14 @@ foreach ($setting in $settings) {
   if (Test-Path $destPath) {
     Remove-Item $destPath
   }
+  $destPathParent = $destPath | Split-Path -Parent
+  if (!$(Test-Path $destPathParent)) {
+    New-Item -ItemType Directory $destPathParent
+  }
+  $destPathLeaf = $destPath | Split-Path -Leaf
 
   Write-Output "[symlink] $srcPath => $destPath"
-  New-Item -Value $srcPath -Path $destPath -ItemType SymbolicLink
+  New-Item -ItemType SymbolicLink -Value $(Resolve-Path $srcPath) -Path $(Resolve-Path $destPathParent) -Name $destPathLeaf
 }
 
 Set-Location $startPath
