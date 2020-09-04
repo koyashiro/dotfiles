@@ -27,6 +27,9 @@
 	rb = rebase
 	mg = merge
 	cp = cherry-pick
+  pl = pull
+  fc = fetch
+  l = log
 [diff]
 	tool = vimdiff
 [difftool]
