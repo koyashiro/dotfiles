@@ -8,5 +8,3 @@ autoload -Uz compinit && compinit -u
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 autoload -Uz is-at-least
-
-setopt auto_cd
