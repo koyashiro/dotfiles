@@ -27,18 +27,16 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # bin
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
+PATH="$PATH:$HOME/.bin"
+PATH="$PATH:$HOME/.local/bin"
 
 # yarn
-if [[ ":$PATH:" != *:$(yarn global bin)a:* ]] ; then
-    export PATH="$PATH:$(yarn global bin)"
-fi
+PATH="$PATH:$HOME/.yarn/bin"
 
 # Rust
-if [[ ":$PATH:" != *:"$HOME/.cargo/bin"a:* ]]; then
-    export PATH="$HOME/.cargo/bin:$PATH"
-fi
+PATH="$PATH:$HOME/.cargo/bin"
+
+export PATH
 
 # History file and its size
 export HISTFILE=$HOME/.zsh_history
