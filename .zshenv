@@ -62,22 +62,4 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
 
     # VSCode
     alias code="'$WINHOME/AppData/Local/Programs/Microsoft VS Code/bin/code'"
-
-    # checks to see if we are in a windows or linux dir
-    function isWinDir {
-        case $PWD/ in
-            /mnt/c/* ) return $(true);;
-            $HOME/winhome/* ) return $(true);;
-            * ) return $(false);;
-        esac
-    }
-
-    # wrap the git command to either run windows git or linux
-    function git {
-        if isWinDir; then
-            git.exe "$@"
-        else
-            /usr/bin/git "$@"
-        fi
-    }
 fi
