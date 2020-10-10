@@ -16,13 +16,8 @@ Set-Alias g git
 Set-Alias d docker
 Set-Alias dc docker-compose
 
-
 function ll {
-  ls -lh
-}
-
-function la {
-  ls -lhA
+  ls -alhAF
 }
 
 Import-Module posh-git

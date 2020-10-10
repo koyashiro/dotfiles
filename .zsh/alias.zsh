@@ -9,9 +9,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll='ls -alhAF'
 
 # prompt
 alias cp='cp -i'
