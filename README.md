@@ -4,7 +4,7 @@
 
 ```sh
 cd ~
-git clone https://github.com/KoyashiroKohaku/dotfiles
+git clone git@github.com:KoyashiroKohaku/dotfiles.git
 cd dotfiles
 ./install.sh
 ```
@@ -14,7 +14,7 @@ cd dotfiles
 ```ps1
 Set-ExecutionPolicy RemoteSigned
 cd ~
-git clone https://github.com/KoyashiroKohaku/dotfiles
+git clone git@github.com:KoyashiroKohaku/dotfiles.git
 cd dotfiles
 ./install.ps1
 ```
