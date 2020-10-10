@@ -1,6 +1,5 @@
 set encoding=utf-8
 set number
-set title
 set nowritebackup
 set nobackup
 set ambiwidth=double
