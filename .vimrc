@@ -18,3 +18,5 @@ set wrapscan
 set hlsearch
 set tw=0
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+set list
+set listchars=tab:>-,trail:.
