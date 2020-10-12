@@ -27,9 +27,10 @@
 	rb = rebase
 	mg = merge
 	cp = cherry-pick
-  pl = pull
-  fc = fetch
-  l = log
+	pl = pull
+	fc = fetch
+	l = log
+	lf = log --pretty=fuller
 [diff]
 	tool = vimdiff
 [difftool]
