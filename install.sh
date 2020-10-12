@@ -8,5 +8,5 @@ for f in .??*; do
     [[ "$f" == '.gitattributes' ]] && continue
     [[ "$f" == '.gitconfig.user' ]] && continue
 
-    ln -fs "$(cd $(dirname $f) && pwd)/$(basename $f)" "$HOME/$f"
+    ln -fns "$(cd $(dirname $f) && pwd)/$(basename $f)" "$HOME/$f"
 done
