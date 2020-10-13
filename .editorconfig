@@ -6,7 +6,98 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.sh]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+
 [*.ps1]
+charset = utf-8
 end_of_line = crlf
 indent_style = space
 indent_size = 2
+
+[*.md]
+charset = utf-8
+end_of_line = crlf
+indent_style = space
+indent_size = 2
+
+[*.json]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.{yml,yaml}]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.cs]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+
+[*.csproj]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.sln]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = 4
+
+[*.{js,ts}]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.html]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.xml]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.{css,scss}]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.vue]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[*.rs]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+
+[*.py]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+
+[*.sql]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
