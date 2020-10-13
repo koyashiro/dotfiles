@@ -16,6 +16,9 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
 
+# tmux
+alias tmux='tmux -u'
+
 # clear
 alias clr=clear
 
