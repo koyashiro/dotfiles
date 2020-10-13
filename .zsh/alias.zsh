@@ -22,6 +22,9 @@ alias tmux='tmux -u'
 # clear
 alias clr=clear
 
+# Neovim
+type nvim >/dev/null 2>&1 && alias vim=nvim
+
 # Git
 alias g=git
 
