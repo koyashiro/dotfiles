@@ -28,7 +28,7 @@
 	mg = merge
 	cp = cherry-pick
 	pl = pull
-	fc = fetch
+	ft = fetch
 	l = log
 	lf = log --pretty=fuller
 [diff]
