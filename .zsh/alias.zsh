@@ -25,6 +25,9 @@ alias clr=clear
 # Neovim
 type nvim >/dev/null 2>&1 && alias vim=nvim
 
+# emacs
+alias emacs=vim
+
 # Git
 alias g=git
 
