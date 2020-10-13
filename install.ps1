@@ -11,7 +11,6 @@ if (!(Get-Module oh-my-posh)) {
 # exclude dotfiles
 $excludes=@(
     '.git',
-    '.editorconfig',
     '.gitattributes',
     '.gitconfig.user',
     '.zsh',
