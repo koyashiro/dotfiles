@@ -27,7 +27,7 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # bin
-PATH="$HOME/.bin:$PATH"
+PATH="$HOME/bin:$PATH"
 PATH="$PATH:$HOME/.local/bin"
 
 # yarn
