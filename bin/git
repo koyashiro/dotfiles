@@ -1,10 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-git_linux='/bin/git'
-git_win='/mnt/c/Program Files/Git/cmd/git.exe'
-
-if [ $(echo "$(/bin/pwd)/" | grep '/mnt/c/') ]; then
-    "$git_win" $@
+if [[ "$(readlink -f .)/" == '/mnt/c/'* ]]; then
+    /mnt/c/Program\ Files/Git/cmd/git.exe $@
 else
-    "$git_linux" $@
+    /bin/git $@
 fi
