@@ -27,14 +27,11 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
 # bin
-PATH="$HOME/bin:$PATH"
+PATH="$PATH:$HOME/bin"
 PATH="$PATH:$HOME/.local/bin"
 
 # yarn
 PATH="$PATH:$HOME/.yarn/bin"
-
-# Rust
-PATH="$PATH:$HOME/.cargo/bin"
 
 export PATH
 
@@ -44,22 +41,6 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 
 # wsl
-if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-    # explorer.exe
-    alias explorer.exe=/mnt/c/Windows/explorer.exe
-
-    # cmd.exe
-    alias cmd.exe=/mnt/c/Windows/system32/cmd.exe
-
-    # powershell.exe
-    alias powershell.exe=/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
-
-    # git.exe
-    alias git.exe="'/mnt/c/Program Files/Git/cmd/git.exe'"
-
-    # Windows $HOME
-    export WINHOME="$(wslpath $(powershell.exe -Command 'Write-Host "$env:USERPROFILE" -NoNewLine'))"
-
-    # VSCode
-    alias code="'$WINHOME/AppData/Local/Programs/Microsoft VS Code/bin/code'"
+if [[ -f $HOME/.wsl/.zshenv ]]; then
+    source $HOME/.wsl/.zshenv
 fi
