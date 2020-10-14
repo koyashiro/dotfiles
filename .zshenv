@@ -40,6 +40,9 @@ export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
+# XDG_CONFIG_HOME
+export XDG_CONFIG_HOME=$HOME/.config
+
 # wsl
 if [[ -f $HOME/.wsl/.zshenv ]]; then
     source $HOME/.wsl/.zshenv
