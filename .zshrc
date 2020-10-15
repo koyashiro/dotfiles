@@ -8,3 +8,5 @@ if [[ -f $HOME/.wsl/.zshrc ]]; then
 fi
 
 typeset -U path PATH
+
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
