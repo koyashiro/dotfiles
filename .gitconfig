@@ -4,7 +4,7 @@
 	editor = vim -c 'set fenc=utf-8'
 	autoCRLF = false
 	quotepath = false
-	pager = LESSCHARSET=utf-8 less
+	pager = LESSCHARSET=utf-8 less -x4
 	whitespace = cr-at-eol
 	eol = lf
 [merge]
