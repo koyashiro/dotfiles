@@ -26,6 +26,9 @@ set showtabline=2
 " status line
 set laststatus=2
 
+" bindings
+inoremap <silent> jj <ESC>
+
 set nowritebackup
 set nobackup
 set ambiwidth=double
@@ -40,6 +43,10 @@ set wrapscan
 set tw=0
 set list
 set listchars=tab:>-,trail:.
+
+if !&compatible
+  set nocompatible
+endif
 
 augroup MyAutoCmd
   autocmd!
