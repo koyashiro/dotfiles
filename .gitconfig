@@ -22,15 +22,17 @@
 	cob = checkout -b
 	br = branch
 	brd = branch -d
+	df = diff
+	ad = add
 	cm = commit
 	cma = commit --amend
+	ft = fetch
 	rb = rebase
 	mg = merge
-	cp = cherry-pick
 	pl = pull
-	ft = fetch
 	l = log
 	lf = log --pretty=fuller
+	cp = cherry-pick
 [diff]
 	tool = vimdiff
 [difftool]
