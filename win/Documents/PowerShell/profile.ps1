@@ -17,7 +17,7 @@ Set-Alias d docker
 Set-Alias dc docker-compose
 
 function ll {
-  ls -alhAF
+  ls -alhAF $args
 }
 
 Import-Module posh-git
