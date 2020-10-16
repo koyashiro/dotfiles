@@ -12,10 +12,7 @@ if (!(Get-Module oh-my-posh)) {
 $excludes=@(
     '.git',
     '.gitattributes',
-    '.gitconfig.user',
-    '.zsh',
-    '.zshenv',
-    '.zshrc'
+    '.gitconfig.user'
 )
 
 # dotfiles
@@ -24,7 +21,7 @@ foreach ($f in Get-ChildItem -Name .*) {
       continue
     }
 
-    New-Item -ItemType SymbolicLink -Value $HOME\dotfiles\$f -Path $HOME\$f -Force
+    New-Item -ItemType SymbolicLink -Value $(Convert-Path $f) -Path $(Join-Path $HOME $f) -Force
 }
 
 # rename .vimrc -> _vimrc
@@ -33,7 +30,11 @@ if (Test-Path $HOME\.vimrc) {
 }
 
 # Windows Terminal
-New-Item -ItemType SymbolicLink -Value $HOME\dotfiles\win\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Path $env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json -Force
+$localAppDataDir = 'win\AppData\Local'
+$f = 'Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
+New-Item -ItemType SymbolicLink -Value $(Convert-Path $(Join-Path $localAppDataDir $f)) -Path $(Join-Path $env:LOCALAPPDATA $f) -Force
 
-# Windows Terminal
-New-Item -ItemType SymbolicLink -Value $HOME\dotfiles\win\Documents\PowerShell\profile.ps1 -Path $profile.CurrentUserAllHosts -Force
+# PowerShell
+$documentsDir = 'win\Documents'
+$f = 'PowerShell\profile.ps1'
+New-Item -ItemType SymbolicLink -Value $(Convert-Path $(Join-Path $documentsDir $f)) -Path $profile.CurrentUserAllHosts -Force
