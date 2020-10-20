@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ "$(readlink -f .)/" == '/mnt/c/'* ]]; then
+if [[ "$(readlink -f .)/" =~ ^/mnt/[cd]/.* ]]; then
     /mnt/c/Program\ Files/Git/cmd/git.exe $@
 else
     /bin/git $@
