@@ -32,6 +32,7 @@
 	pl = pull
 	l = log
 	lf = log --pretty=fuller
+	sh = show
 	cp = cherry-pick
 [diff]
 	tool = vimdiff
