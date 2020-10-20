@@ -1,6 +1,9 @@
+# dein.vim
+
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# colorscheme
 [[plugins]]
 repo = 'tomasr/molokai'
 hook_add = '''
@@ -10,6 +13,7 @@ hook_add = '''
   au MyAutoCmd VimEnter * nested colorscheme molokai
 '''
 
+# statusline
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
@@ -19,27 +23,35 @@ hook_add = '''
     \ }
 '''
 
+# git
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 
+# syntax
 [[plugins]]
 repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
-repo = 'suan/vim-instant-markdown'
-
-[[plugins]]
 repo = 'cespare/vim-toml'
 
+# formatter
 [[plugins]]
 repo = 'prettier/vim-prettier'
+build = 'yarn install'
 
+# coc.nvim
 [[plugins]]
 repo = 'neoclide/coc.nvim'
+rev = 'release'
+on_i = 1
+merged = '0'
+hook_source = 'call coil398#init#coc#hook_source()'
+repo = 'neoclide/coc.nvim'
 
+# incremental search
 [[plugins]]
 repo = 'junegunn/fzf'
 build_on = '''
@@ -48,3 +60,7 @@ build_on = '''
 
 [[plugins]]
 repo = 'junegunn/fzf.vim'
+
+# markdown preview
+[[plugins]]
+repo = 'suan/vim-instant-markdown'
