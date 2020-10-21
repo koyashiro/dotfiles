@@ -1,6 +1,7 @@
 coc/
 configstore/
+git/
 nvim/.netrwhist
+scoop/
 wslu/
 yarn/
-git/
