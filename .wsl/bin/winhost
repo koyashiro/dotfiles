@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# https://qiita.com/samunohito/items/019c1432161a950892be
+ip route | grep 'default via' | grep -Eo '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
