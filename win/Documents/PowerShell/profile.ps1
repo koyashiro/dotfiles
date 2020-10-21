@@ -3,13 +3,21 @@ $rawui.WindowTitle = "PowerShell 7"
 
 $ENV:Path = "${HOME}\bin;" + $ENV:Path
 
-Remove-Alias ls
-Remove-Alias cat
-Remove-Alias echo
-Remove-Alias cp
-Remove-Alias mv
-Remove-Alias rm
-Remove-Alias pwd
+$removeAliases = @(
+  'ls',
+  'cat',
+  'echo',
+  'cp',
+  'mv',
+  'rm',
+  'pwd'
+)
+
+foreach ($removeAlias in $removeAliases) {
+  if (Get-Alias "$removeAlias" *>$null) {
+    Remove-Item "alias:$removeAlias"
+  }
+}
 
 Set-Alias clr Clear-Host
 Set-Alias g git
