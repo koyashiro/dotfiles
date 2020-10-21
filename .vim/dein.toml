@@ -42,15 +42,6 @@ repo = 'cespare/vim-toml'
 repo = 'prettier/vim-prettier'
 build = 'yarn install'
 
-# coc.nvim
-[[plugins]]
-repo = 'neoclide/coc.nvim'
-rev = 'release'
-on_i = 1
-merged = '0'
-hook_source = 'call coil398#init#coc#hook_source()'
-repo = 'neoclide/coc.nvim'
-
 # incremental search
 [[plugins]]
 repo = 'junegunn/fzf'
