@@ -45,5 +45,5 @@ export XDG_CONFIG_HOME=$HOME/.config
 
 # wsl
 if [[ -f $HOME/.wsl/.zshenv ]]; then
-    source $HOME/.wsl/.zshenv
+  source $HOME/.wsl/.zshenv
 fi

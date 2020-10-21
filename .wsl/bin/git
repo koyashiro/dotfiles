@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$(readlink -f .)/" =~ ^/mnt/[cd]/.* ]]; then
-    /mnt/c/Program\ Files/Git/cmd/git.exe $@
+  /mnt/c/Program\ Files/Git/cmd/git.exe $@
 else
-    /bin/git $@
+  /bin/git $@
 fi

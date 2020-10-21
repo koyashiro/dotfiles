@@ -1,11 +1,9 @@
 for f in $HOME/.zsh/*.zsh; do
-    source $f
+  source $f
 done
 
 # wsl
-if [[ -f $HOME/.wsl/.zshrc ]]; then
-    source $HOME/.wsl/.zshrc
-fi
+[[ -f $HOME/.wsl/.zshrc ]] && source $HOME/.wsl/.zshrc
 
 typeset -U path PATH
 
