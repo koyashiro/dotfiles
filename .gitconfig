@@ -18,8 +18,8 @@
 [alias]
 	st = status
 	sts = status --short
-	co = checkout
-	cob = checkout -b
+	# co = checkout
+	# cob = checkout -b
 	sw = switch
 	swc = switch -c
 	rs = restore
