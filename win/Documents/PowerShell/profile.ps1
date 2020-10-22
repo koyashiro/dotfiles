@@ -1,7 +1,4 @@
-$rawui = (Get-Host).UI.RawUI
-$rawui.WindowTitle = "PowerShell 7"
-
-$ENV:Path = "${HOME}\bin;" + $ENV:Path
+$ENV:Path = "$HOME\bin;${ENV:Path}"
 
 $removeAliases = @(
   'ls',
