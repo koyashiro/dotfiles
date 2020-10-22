@@ -37,6 +37,9 @@ export HISTFILE=$HOME/.zsh_history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
+# DOTDIR
+export DOTDIR=$(dirname $(readlink $HOME/.zshenv))
+
 # XDG_CONFIG_HOME
 export XDG_CONFIG_HOME=$HOME/.config
 
