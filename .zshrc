@@ -3,8 +3,8 @@ for f in $HOME/.zsh/*.zsh; do
 done
 
 # wsl
-[[ -f $HOME/.wsl/.zshrc ]] && source $HOME/.wsl/.zshrc
+if [[ -f $HOME/.wsl/.zshrc ]]; then
+  source $HOME/.wsl/.zshrc
+fi
 
 typeset -U path PATH
-
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
