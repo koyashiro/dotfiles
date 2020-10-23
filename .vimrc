@@ -34,8 +34,8 @@ nnoremap <C-l> <C-w>l
 inoremap <silent> jj <ESC>
 
 " Python
-let g:python_host_prog = system('type python2')
-let g:python3_host_prog = system('type python3')
+let g:python_host_prog = '/usr/bin/python2'
+let g:python3_host_prog = '/usr/bin/python3'
 
 set nowritebackup
 set nobackup
