@@ -21,6 +21,12 @@ Set-Alias g git
 Set-Alias d docker
 Set-Alias dc docker-compose
 
+if (Get-Command -ErrorAction Ignore nvim) {
+  function vim {
+    nvim $args
+  }
+}
+
 function ll {
   ls -alhAF $args
 }
