@@ -11,7 +11,7 @@ $removeAliases = @(
 )
 
 foreach ($removeAlias in $removeAliases) {
-  if (Get-Alias "$removeAlias" *>$null) {
+  if (Get-Alias -ErrorAction Ignore "$removeAlias") {
     Remove-Item "alias:$removeAlias"
   }
 }
