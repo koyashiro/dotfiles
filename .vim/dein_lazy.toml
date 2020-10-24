@@ -18,15 +18,6 @@ hook_source = '''
    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
    xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-   " SuperTab like snippets behavior.
-   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-   "imap <expr><TAB>
-   " \ pumvisible() ? "\<C-n>" :
-   " \ neosnippet#expandable_or_jumpable() ?
-   " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
    " For conceal markers.
    if has('conceal')
        set conceallevel=2 concealcursor=niv
@@ -40,6 +31,8 @@ hook_source = '''
   set completeopt=menuone,noinsert
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#lauto_complete_delay = 0
+  inoremap <expr><Tab> pumvisible() ? "\<DOWN>" : "\<Tab>"
+  inoremap <expr><S-Tab> pumvisible() ? "\<UP>" : "\<S-Tab>"
 '''
 on_i = 1
 
