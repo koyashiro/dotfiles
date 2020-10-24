@@ -6,6 +6,7 @@ set wildmenu
 " color
 set background=dark
 set t_Co=256
+set termguicolors
 
 " encoding
 set encoding=utf-8
