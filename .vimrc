@@ -34,8 +34,17 @@ nnoremap <C-l> <C-w>l
 inoremap <silent> jj <ESC>
 
 " Python
-let g:python_host_prog = '/usr/bin/python2'
-let g:python3_host_prog = '/usr/bin/python3'
+if has('unix') || has('mac')
+  let g:python_host_prog = '/usr/bin/python2'
+  let g:python3_host_prog = '/usr/bin/python3'
+endif
+
+if has('win32') || has('win64')
+  let g:python3_host_prog = '$LOCALAPPDATA\Programs\Python\Python38\python.exe'
+endif
+
+" Ruby
+let g:ruby_host_prog = '/usr/bin/ruby'
 
 set nowritebackup
 set nobackup
@@ -62,17 +71,16 @@ augroup END
 
 " dein.vim settings {{{
 " install dir {{{
-let s:dein_dir = expand('~/.cache/dein')
+let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 " }}}
 
 " dein installation check {{{
-if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-  endif
-  execute 'set runtimepath^=' . s:dein_repo_dir
+if !isdirectory(s:dein_repo_dir)
+  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
+execute 'set runtimepath^=' . s:dein_repo_dir
 " }}}
 
 " begin settings {{{
@@ -98,7 +106,7 @@ endif
 " }}}
 
 " plugin installation check {{{
-if dein#check_install()
+if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
 " }}}
