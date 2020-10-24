@@ -27,6 +27,7 @@ hook_source = '''
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertEnter'
 hook_source = '''
   set completeopt=menuone,noinsert
   let g:deoplete#enable_at_startup = 1
@@ -34,7 +35,6 @@ hook_source = '''
   inoremap <expr><Tab> pumvisible() ? "\<DOWN>" : "\<Tab>"
   inoremap <expr><S-Tab> pumvisible() ? "\<UP>" : "\<S-Tab>"
 '''
-on_i = 1
 
 [[plugins]]
 repo = 'Shougo/neco-vim'
