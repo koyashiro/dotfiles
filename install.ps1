@@ -30,6 +30,15 @@ if (Test-Path $HOME\.vimrc) {
   Move-Item -Force $HOME\.vimrc $HOME\_vimrc
 }
 
+# neovim
+$localAppDataDir = 'win\AppData\Local'
+$f = 'nvim\init.vim'
+New-Item `
+  -ItemType SymbolicLink `
+  -Force `
+  -Value $(Convert-Path $(Join-Path $localAppDataDir $f)) `
+  -Path $(Join-Path $env:LOCALAPPDATA $f)
+
 # Windows Terminal
 $localAppDataDir = 'win\AppData\Local'
 $f = 'Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
