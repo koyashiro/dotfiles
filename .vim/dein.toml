@@ -7,9 +7,6 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'tomasr/molokai'
 hook_add = '''
-  syntax enable
-  set background=dark
-  set t_Co=256
   au MyAutoCmd VimEnter * nested colorscheme molokai
 '''
 

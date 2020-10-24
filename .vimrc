@@ -3,6 +3,10 @@ syntax enable
 set smartindent
 set wildmenu
 
+" color
+set background=dark
+set t_Co=256
+
 " encoding
 set encoding=utf-8
 set fileencoding=utf-8
