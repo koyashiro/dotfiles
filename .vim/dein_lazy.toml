@@ -1,3 +1,5 @@
+# dein_lazy.toml
+
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
