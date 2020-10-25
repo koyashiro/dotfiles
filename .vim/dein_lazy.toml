@@ -42,3 +42,11 @@ on_ft = 'vim'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = 'json'

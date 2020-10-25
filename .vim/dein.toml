@@ -32,7 +32,7 @@ repo = 'airblade/vim-gitgutter'
 repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
-repo = 'cespare/vim-toml'
+repo = 'jiangmiao/auto-pairs'
 
 # formatter
 [[plugins]]
