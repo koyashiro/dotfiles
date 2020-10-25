@@ -34,6 +34,13 @@ repo = 'sheerun/vim-polyglot'
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
 
+# language server
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merge = 0
+rev = 'release'
+if = 'executable("node") && executable("yarn")'
+
 # formatter
 [[plugins]]
 repo = 'prettier/vim-prettier'
