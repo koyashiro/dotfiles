@@ -1,40 +1,40 @@
 # dein_lazy.toml
 
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
+# [[plugins]]
+# repo = 'Shougo/context_filetype.vim'
 
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
+# [[plugins]]
+# repo = 'Shougo/neosnippet-snippets'
 
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
-hook_source = '''
-   " Plugin key-m"appings.
-   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-   imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-   smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-   xmap <C-k>     <Plug>(neosnippet_expand_target)
+# [[plugins]]
+# repo = 'Shougo/neosnippet.vim'
+# depends = ['neosnippet-snippets', 'context_filetype.vim']
+# on_event = 'InsertCharPre'
+# on_ft = 'snippet'
+# hook_source = '''
+#    " Plugin key-m"appings.
+#    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+#    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+#    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+#    xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-   " For conceal markers.
-   if has('conceal')
-       set conceallevel=2 concealcursor=niv
-   endif
-'''
+#    " For conceal markers.
+#    if has('conceal')
+#        set conceallevel=2 concealcursor=niv
+#    endif
+# '''
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertEnter'
-hook_source = '''
-  set completeopt=menuone,noinsert
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#lauto_complete_delay = 0
-  inoremap <expr><Tab> pumvisible() ? "\<DOWN>" : "\<Tab>"
-  inoremap <expr><S-Tab> pumvisible() ? "\<UP>" : "\<S-Tab>"
-'''
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# depends = ['neosnippet-snippets', 'context_filetype.vim']
+# on_event = 'InsertEnter'
+# hook_source = '''
+#   set completeopt=menuone,noinsert
+#   let g:deoplete#enable_at_startup = 1
+#   let g:deoplete#lauto_complete_delay = 0
+#   inoremap <expr><Tab> pumvisible() ? "\<DOWN>" : "\<Tab>"
+#   inoremap <expr><S-Tab> pumvisible() ? "\<UP>" : "\<S-Tab>"
+# '''
 
 [[plugins]]
 repo = 'Shougo/neco-vim'
