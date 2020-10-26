@@ -15,6 +15,15 @@ hook_add = '''
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
+    \ 'colorscheme': 'molokai',
+    \ 'active': {
+      \ 'right': [
+        \ ['coc']
+      \ ]
+    \ },
+    \ 'component_function': {
+      \ 'coc': 'coc#status'
+    \ },
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
     \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
     \ }
@@ -40,6 +49,18 @@ repo = 'neoclide/coc.nvim'
 merge = 0
 rev = 'release'
 if = 'executable("node") && executable("yarn")'
+hook_add = '''
+  let g:coc_global_extensions = [
+    \ 'coc-json',
+    \ 'coc-tsserver',
+    \ 'coc-prettier',
+    \ 'coc-eslint',
+    \ 'coc-python',
+    \ 'coc-sh',
+    \ 'coc-rls',
+    \ 'coc-omnisharp',
+  \ ]
+'''
 
 # formatter
 [[plugins]]
