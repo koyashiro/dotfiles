@@ -29,9 +29,7 @@
         {
             // Put settings here that you want to apply to all profiles.
             "fontFace": "Delugia Nerd Font",
-            "fontSize": 15,
-            "useAcrylic" : true,
-            "acrylicOpacity" : 0.7
+            "fontSize": 15
         },
         "list":
         [
