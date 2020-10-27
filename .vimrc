@@ -3,6 +3,10 @@ syntax enable
 set smartindent
 set wildmenu
 
+" filetype
+filetype on
+filetype plugin indent on
+
 " color
 set background=dark
 set t_Co=256

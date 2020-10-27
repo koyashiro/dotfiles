@@ -15,15 +15,6 @@ hook_add = '''
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
-    \ 'colorscheme': 'molokai',
-    \ 'active': {
-      \ 'right': [
-        \ ['coc']
-      \ ]
-    \ },
-    \ 'component_function': {
-      \ 'coc': 'coc#status'
-    \ },
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
     \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
     \ }
@@ -44,23 +35,52 @@ repo = 'sheerun/vim-polyglot'
 repo = 'jiangmiao/auto-pairs'
 
 # language server
+# [[plugins]]
+# repo = 'neoclide/coc.nvim'
+# merge = 0
+# rev = 'release'
+# if = 'executable("node") && executable("yarn")'
+# hook_add = '''
+#   let g:coc_global_extensions = [
+#     \ 'coc-json',
+#     \ 'coc-tsserver',
+#     \ 'coc-prettier',
+#     \ 'coc-eslint',
+#     \ 'coc-python',
+#     \ 'coc-sh',
+#     \ 'coc-rls',
+#     \ 'coc-omnisharp',
+#   \ ]
+# '''
+
+# [[plugins]]
+# repo = 'autozimu/LanguageClient-neovim'
+# rev = 'next'
+# build = 'bash install.sh'
+# hook_add = '''
+# set hidden
+# let g:LanguageCllient_serverCommands = {
+#   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+# \ }
+
+# augroup LanguageClient_config
+# autocmd!
+# autocmd User LanguageClientStarted setlocal signcolumn=yes
+# autocmd User LanguageClientStopped setlocal signcolumn=auto
+# augroup END
+
+# let g:LanguageClient_autoStart = 1
+# nnoremap <silent> <Space>lh :call LanguageClient_textDocument_hover()<CR>
+# nnoremap <silent> <Space>ld :call LanguageClient_textDocument_definition()<CR>
+# nnoremap <silent> <Space>lr :call LanguageClient_textDocument_rename()<CR>
+# nnoremap <silent> <Space>lf :call LanguageClient_textDocument_formatting()<CR>
+# '''
+
 [[plugins]]
-repo = 'neoclide/coc.nvim'
-merge = 0
-rev = 'release'
-if = 'executable("node") && executable("yarn")'
-hook_add = '''
-  let g:coc_global_extensions = [
-    \ 'coc-json',
-    \ 'coc-tsserver',
-    \ 'coc-prettier',
-    \ 'coc-eslint',
-    \ 'coc-python',
-    \ 'coc-sh',
-    \ 'coc-rls',
-    \ 'coc-omnisharp',
-  \ ]
-'''
+repo = 'prabirshrestha/vim-lsp'
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
 
 # formatter
 [[plugins]]
