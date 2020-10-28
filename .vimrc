@@ -36,6 +36,7 @@ set showtabline=2
 set laststatus=2
 
 " bindings
+let mapleader = "\<Space>"
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
