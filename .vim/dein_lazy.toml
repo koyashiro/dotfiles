@@ -156,6 +156,10 @@ repo = 'kristijanhusak/defx-icons'
 repo = 'kristijanhusak/defx-git'
 
 [[plugins]]
+repo = 'markonm/traces.vim'
+on_event = 'CmdwinEnter'
+
+[[plugins]]
 repo = 'Shougo/neco-vim'
 on_ft = 'vim'
 
