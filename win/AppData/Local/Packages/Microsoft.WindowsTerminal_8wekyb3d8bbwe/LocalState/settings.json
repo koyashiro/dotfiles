@@ -37,12 +37,14 @@
                 "guid": "{96be24fd-152c-5812-90bb-b4bd046f9785}",
                 "hidden": false,
                 "name": "Arch2",
+                "icon": "ms-appdata:///Local/icons/archlinux.png",
                 "commandline": "wsl.exe ~ -d Arch2"
             },
             {
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
                 "hidden": false,
                 "name": "Ubuntu",
+                "icon": "ms-appdata:///Local/icons/ubuntu.png",
                 "commandline" : "wsl.exe ~ -d Ubuntu"
             },
             {
