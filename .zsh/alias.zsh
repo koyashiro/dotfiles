@@ -36,7 +36,3 @@ alias d=docker
 
 # Docker Compose
 alias dc=docker-compose
-
-# Python
-alias python=python3
-alias pip=pip3
