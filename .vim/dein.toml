@@ -5,9 +5,9 @@ repo = 'Shougo/dein.vim'
 
 # colorscheme
 [[plugins]]
-repo = 'tomasr/molokai'
+repo = 'cocopon/iceberg.vim'
 hook_add = '''
-  au MyAutoCmd VimEnter * nested colorscheme molokai
+  au MyAutoCmd VimEnter * nested colorscheme iceberg
 '''
 
 # statusline
@@ -15,6 +15,7 @@ hook_add = '''
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
+    \ 'colorscheme': 'iceberg',
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
     \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
     \ }
