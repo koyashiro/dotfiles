@@ -34,6 +34,7 @@ set showtabline=2
 
 " status line
 set laststatus=2
+set noshowmode
 
 " bindings
 let mapleader = "\<Space>"
