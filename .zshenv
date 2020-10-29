@@ -14,7 +14,7 @@ export GIT_EDITOR="$EDITOR"
 export PAGER=less
 
 # Less status line
-export LESS='-R -f -x4 -X -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'
+export LESS='-fiMRfx4X'
 export LESSCHARSET='utf-8'
 
 # LESS man page colors (makes Man pages more readable).
