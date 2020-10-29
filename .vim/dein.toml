@@ -16,9 +16,23 @@ repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
     \ 'colorscheme': 'iceberg',
+    \ 'active': {
+    \   'left': [
+    \     [ 'mode', 'paste' ],
+    \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+    \  ]
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'MyFugitive',
+    \ },
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
     \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
     \ }
+
+  function! MyFugitive()
+    let fugitive_head = FugitiveHead()
+    return strlen(fugitive_head) ? "\ue0a0 " . fugitive_head : ''
+  endfunction
 '''
 
 # git
