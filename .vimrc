@@ -36,14 +36,6 @@ set showtabline=2
 set laststatus=2
 set noshowmode
 
-" bindings
-let mapleader = "\<Space>"
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-inoremap <silent> jj <ESC>
-
 " Python
 if has('unix') || has('mac')
   let g:python3_host_prog = substitute(system('builtin command -v python3'), '\n', '', '')
@@ -67,6 +59,9 @@ set wrapscan
 set tw=0
 set list
 set listchars=tab:>-,trail:.,eol:↲,
+
+" map
+source ~/.vim/rc/map.rc.vim
 
 " dein
 source ~/.vim/rc/dein.rc.vim
