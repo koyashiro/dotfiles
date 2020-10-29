@@ -45,16 +45,12 @@ inoremap <silent> jj <ESC>
 
 " Python
 if has('unix') || has('mac')
-  let g:python_host_prog = '/usr/bin/python2'
-  let g:python3_host_prog = '/usr/bin/python3'
+  let g:python3_host_prog = substitute(system('builtin command -v python3'), '\n', '', '')
 endif
 
 if has('win32') || has('win64')
-  let g:python3_host_prog = '$LOCALAPPDATA\Programs\Python\Python38\python.exe'
+  let g:python3_host_prog = substitute(system('where python'), '\n', '', '')
 endif
-
-" Ruby
-let g:ruby_host_prog = '/usr/bin/ruby'
 
 set nowritebackup
 set nobackup
