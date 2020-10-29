@@ -65,7 +65,7 @@ set smartcase
 set wrapscan
 set tw=0
 set list
-set listchars=tab:>-,trail:.
+set listchars=tab:>-,trail:.,eol:↲,
 
 if !&compatible
   set nocompatible
