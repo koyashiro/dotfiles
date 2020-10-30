@@ -57,6 +57,15 @@ New-Item `
   -Value $(Convert-Path $(Join-Path $localAppDataDir $f)) `
   -Path $(Join-Path $env:LOCALAPPDATA $f)
 
+# Alacritty
+$configDir = '.config'
+$f = 'alacritty'
+New-Item `
+  -ItemType SymbolicLink `
+  -Force `
+  -Value $(Convert-Path $(Join-Path $configDir $f)) `
+  -Path $(Join-Path $env:APPDATA $f)
+
 # Windows PowerShell
 $documentsDir = 'win\Documents'
 $f = 'WindowsPowerShell\profile.ps1'
