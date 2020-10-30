@@ -1,5 +1,7 @@
 {
   "experimentalFeatures": {
-    "experimentalMSStore": true
+    "experimentalMSStore": true,
+    "list": true,
+    "upgrade": true
   }
 }
