@@ -30,6 +30,9 @@ type nvim >/dev/null 2>&1 && alias vim=nvim
 # emacs
 alias emacs=vim
 
+# tree
+alias tree='tree -a -I "\.git"'
+
 # Git
 alias g=git
 
