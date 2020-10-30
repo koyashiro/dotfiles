@@ -1,4 +1,4 @@
-for f in $HOME/.bash/*.bash; do
+for f in $DOTDIR/.config/bash/*.bash; do
   source $f
 done
 
