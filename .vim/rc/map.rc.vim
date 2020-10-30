@@ -5,6 +5,7 @@ let mapleader = "\<Space>"
 
 " Esc
 inoremap <silent> jj <ESC>
+inoremap <silent> っｊ <ESC>
 
 " move coursor in insert mode
 inoremap <C-h> <left>
