@@ -5,7 +5,7 @@ for f in .??*; do
   [[ "$f" == '.config' ]] && continue
   [[ "$f" == '.git' ]] && continue
   [[ "$f" == '.gitattributes' ]] && continue
-  [[ "$f" == '.gitconfig.user' ]] && continue
+  [[ "$f" == '.gitignore' ]] && continue
   [[ "$f" == '.wsl' ]] && continue
 
   ln -fns "$(cd $(dirname $f) && pwd)/$(basename $f)" "$HOME/$f"
