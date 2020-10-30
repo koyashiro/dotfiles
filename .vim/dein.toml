@@ -53,23 +53,14 @@ repo = 'sheerun/vim-polyglot'
 repo = 'jiangmiao/auto-pairs'
 
 # language server
-# [[plugins]]
-# repo = 'neoclide/coc.nvim'
-# merge = 0
-# rev = 'release'
-# if = 'executable("node") && executable("yarn")'
-# hook_add = '''
-#   let g:coc_global_extensions = [
-#     \ 'coc-json',
-#     \ 'coc-tsserver',
-#     \ 'coc-prettier',
-#     \ 'coc-eslint',
-#     \ 'coc-python',
-#     \ 'coc-sh',
-#     \ 'coc-rls',
-#     \ 'coc-omnisharp',
-#   \ ]
-# '''
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merge = 0
+rev = 'release'
+if = 'executable("node") && executable("yarn")'
+hook_source_source_post = '''
+  source ~/.vim/rc/plugins/coc.rc.vim
+'''
 
 # [[plugins]]
 # repo = 'autozimu/LanguageClient-neovim'
