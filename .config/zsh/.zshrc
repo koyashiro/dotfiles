@@ -1,4 +1,4 @@
-for f in $HOME/.zsh/*.zsh; do
+for f in $ZDOTDIR/rc/*.zsh; do
   source $f
 done
 
