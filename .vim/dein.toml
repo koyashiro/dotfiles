@@ -121,3 +121,10 @@ repo = 'junegunn/fzf.vim'
 # markdown preview
 [[plugins]]
 repo = 'suan/vim-instant-markdown'
+
+# EditorConfig
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+hook_add = '''
+  let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
+'''
