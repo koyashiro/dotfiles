@@ -94,14 +94,14 @@ repo = 'jiangmiao/auto-pairs'
 # nnoremap <silent> <Space>lf :call LanguageClient_textDocument_formatting()<CR>
 # '''
 
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-hook_add = '''
-  source ~/.vim/rc/plugins/vim-lsp.rc.vim
-'''
+# [[plugins]]
+# repo = 'prabirshrestha/vim-lsp'
+# hook_add = '''
+#   source ~/.vim/rc/plugins/vim-lsp.rc.vim
+# '''
 
-[[plugins]]
-repo = 'mattn/vim-lsp-settings'
+# [[plugins]]
+# repo = 'mattn/vim-lsp-settings'
 
 # formatter
 [[plugins]]
