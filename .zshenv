@@ -13,9 +13,11 @@ export GIT_EDITOR="$EDITOR"
 # Pager
 export PAGER=less
 
-# Less status line
+# Less
 export LESS='-fiMRfx4X'
 export LESSCHARSET='utf-8'
+export LESSKEY=$XDG_CONFIG_HOME/less/lesskey
+export LESSHISTFILE=$XDG_CACHE_HOME/less/history
 
 # LESS man page colors (makes Man pages more readable).
 export LESS_TERMCAP_mb=$'\E[01;31m'
@@ -41,6 +43,10 @@ export SAVEHIST=1000000
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
+
+export RUSTUP_HOME=$XDG_DATA_HOME/rustup
+export CARGO_HOME=$XDG_DATA_HOME/cargo
+export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 
 # DOTDIR
 export DOTDIR=$(dirname $(readlink $HOME/.zshenv))
