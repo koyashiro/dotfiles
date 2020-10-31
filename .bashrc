@@ -1,4 +1,4 @@
-for f in $DOTDIR/.config/bash/*.bash; do
+for f in ${XDG_CONFIG_HOME:-$HOME/.config}/bash/*.bash; do
   source $f
 done
 
