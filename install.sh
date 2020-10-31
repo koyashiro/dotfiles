@@ -12,8 +12,14 @@ for f in .??*; do
 done
 
 # $XDG_CONFIG_HOME or .config
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=$HOME/.config}
+
+if [[ ! -d $XDG_CONFIG_HOME ]]; then
+  mkdir $XDG_CONFIG_HOME
+fi
+
 for f in .config/??*; do
-  ln -fns "$(cd $(dirname $f) && pwd)/$(basename $f)" "${XDG_CONFIG_HOME:-$HOME/.cache}/$(basename $f)"
+  ln -fns "$(cd $(dirname $f) && pwd)/$(basename $f)" "$XDG_CONFIG_HOME/$(basename $f)"
 done
 
 # wsl
