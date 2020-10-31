@@ -47,6 +47,7 @@ export SAVEHIST=1000000
 export RUSTUP_HOME=$XDG_DATA_HOME/rustup
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
+export DOCKER_CONFIG=$XDG_CONFIG_HOME/docker
 
 # DOTDIR
 export DOTDIR=$(dirname $(readlink $HOME/.zshenv))
