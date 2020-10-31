@@ -1,5 +1,5 @@
 # .profile
-[[ -f $HOME/.profile]] && source $HOME/.profile
+[[ -f $HOME/.profile ]] && source $HOME/.profile
 
 # .zshenv
 [[ -f $HOME/.zshen ]] && source $HOME/.zshenv
