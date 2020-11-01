@@ -86,7 +86,7 @@ on_ft = 'json'
 [[plugins]]
 repo = 'rust-lang/rust.vim'
 hook_add = '''
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
 '''
 on_ft = 'rust'
 
