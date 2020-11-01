@@ -35,6 +35,27 @@ alias tree='tree -a -I "\.git"'
 
 # Git
 alias g=git
+alias gst='git status'
+alias gad='git add'
+alias gad.='git add .'
+alias gcm='git commit'
+alias gcma='git commit --amend'
+alias grs='git restore'
+alias grs.='git restore .'
+alias grss='git restore --staged'
+alias grss.='git restore --staged .'
+alias grb='git rebase'
+alias grbi='git rebase -i'
+alias gbr='git branch'
+alias gbrd='git branch -d'
+alias gsw='git switch'
+alias gswc='git switch -c'
+alias gdf='git diff'
+alias gl='git log'
+alias glf='git log --pretty=fuller'
+alias gft='git fetch'
+alias gpl='git pull'
+alias gps='git push'
 
 # Docker
 alias d=docker
