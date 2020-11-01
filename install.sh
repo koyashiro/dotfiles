@@ -22,6 +22,12 @@ for f in .config/??*; do
   ln -fns "$(cd $(dirname $f) && pwd)/$(basename $f)" "$XDG_CONFIG_HOME/$(basename $f)"
 done
 
+# $HOME/bin
+[[ ! -d $HOME/bin ]] && mkdir $HOME/bin
+for f in bin/??*; do
+  ln -fns "$(cd $(dirname $f) && pwd)/$(basename $f)" "$HOME/bin/$(basename $f)"
+done
+
 # wsl
 if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
   ln -fns "$(cd $(dirname .wsl) && pwd)/$(basename .wsl)" $HOME/.wsl

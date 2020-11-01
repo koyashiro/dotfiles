@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [[ -e .gitattributes ]]; then
+  echo 'make-gitattributes: `.gitattributes` alreadly exists'
+  exit 1
+fi
+
+echo '* text=auto' > .gitattributes
