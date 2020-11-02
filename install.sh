@@ -5,10 +5,10 @@ echo $DOTDIR > $HOME/.dotfir
 
 # dot files
 for f in $DOTDIR/.??*; do
-  [[ "$f" == '.config' ]] && continue
-  [[ "$f" == '.git' ]] && continue
-  [[ "$f" == '.gitattributes' ]] && continue
-  [[ "$f" == '.gitignore' ]] && continue
+  [[ $(basename $f) == '.config' ]] && continue
+  [[ $(basename $f) == '.git' ]] && continue
+  [[ $(basename $f) == '.gitattributes' ]] && continue
+  [[ $(basename $f) == '.gitignore' ]] && continue
 
   ln -fns $f $HOME/$(basename $f)
 done
@@ -17,7 +17,7 @@ done
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=$HOME/.config}
 [[ ! -d $XDG_CONFIG_HOME ]] && mkdir $XDG_CONFIG_HOME
 for f in $DOTDIR/.config/??*; do
-  [[ "$f" == 'wsl' ]] && continue
+  [[ $(basename $f) == 'wsl' ]] && continue
 
   ln -fns $f $XDG_CONFIG_HOME/$(basename $f)
 done
