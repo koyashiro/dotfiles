@@ -3,8 +3,8 @@ for f in $XDG_CONFIG_HOME/sh/*.sh; do
   source $f
 done
 
-# bash
-for f in $XDG_CONFIG_HOME/bash/*.bash; do
+# zsh
+for f in $XDG_CONFIG_HOME/zsh/*.zsh; do
   source $f
 done
 

@@ -3,8 +3,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 
-# ZDOTDIR
-export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+# DOTDIR
+export DOTDIR=$([[ -f ~/.dotdir ]] && cat $HOME/.dotdir || echo $HOME/.dotfiles)
 
 # LANGUAGE
 export LANGUAGE=ja_JP.UTF-8
@@ -13,7 +13,7 @@ export LC_ALL="$LANGUAGE"
 export LC_CTYPE="$LANGUAGE"
 
 # Editor
-export EDITOR="$(type nvim >/dev/null && echo 'nvim' || echo 'vim')"
+export EDITOR="$(builtin command -v nvim >/dev/null && echo 'nvim' || echo 'vim')"
 export CVSEDITOR="$EDITOR"
 export SVN_EDITOR="$EDITOR"
 export GIT_EDITOR="$EDITOR"
@@ -43,7 +43,7 @@ PATH="$HOME/bin:$PATH"
 export PATH
 
 # History file and its size
-export HISTFILE=${XDG_DATA_HOME:-$HOME/.local/share}/zsh/history
+export HISTFILE=$XDG_DATA_HOME/sh/history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
@@ -51,11 +51,3 @@ export RUSTUP_HOME=$XDG_DATA_HOME/rustup
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export DOCKER_CONFIG=$XDG_CONFIG_HOME/docker
-
-# DOTDIR
-export DOTDIR=$(dirname $(readlink $HOME/.zshenv))
-
-# wsl
-if [[ -f $HOME/.wsl/.zshenv ]]; then
-  source $HOME/.wsl/.zshenv
-fi

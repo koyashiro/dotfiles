@@ -1,8 +1,12 @@
 # .profile
-[[ -f $HOME/.profile ]] && source $HOME/.profile
+if [[ -f $HOME/.profile ]]; then
+  source $HOME/.profile
+fi
 
-# .zshenv
-[[ -f $HOME/.zshen ]] && source $HOME/.zshenv
+# History file
+export HISTFILE=$XDG_DATA_HOME/bash/history
 
-# .bashrc
-[[ -f $HOME/.bashrc ]] && source $HOME/.bashrc
+# wsl
+if [[ -f $HOME/.wsl/.zshenv ]]; then
+  source $HOME/.wsl/.zshenv
+fi
