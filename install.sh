@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DOTDIR=$(dirname $(readlink -f build.sh))
-echo $DOTDIR > $HOME/.dotfir
+echo $DOTDIR > $HOME/.dotdir
 
 # dot files
 for f in $DOTDIR/.??*; do
