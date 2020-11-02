@@ -22,6 +22,6 @@ export WINHOME="$(wslpath $(powershell.exe -Command 'Write-Host "$env:USERPROFIL
 alias code="$WINHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 
 # wsl bin
-PATH=$HOME/.wsl/bin:$PATH
+PATH=$XDG_CONFIG_HOME/wsl/bin:$PATH
 
 export PATH

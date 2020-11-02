@@ -7,6 +7,6 @@ fi
 export HISTFILE=$XDG_DATA_HOME/bash/history
 
 # wsl
-if [[ -f $HOME/.wsl/.zshenv ]]; then
-  source $HOME/.wsl/.zshenv
+if [[ -f $XDG_CONFIG_HOME/wsl/profile.sh ]]; then
+  source $XDG_CONFIG_HOME/wsl/profile.sh
 fi
