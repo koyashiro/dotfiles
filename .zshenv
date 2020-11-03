@@ -1,7 +1,5 @@
 # .profile
-if [[ -f $HOME/.profile ]]; then
-  source $HOME/.profile
-fi
+[[ -f $HOME/.profile ]] && source $HOME/.profile;:
 
 # History file
 export HISTFILE=$XDG_DATA_HOME/zsh/history
