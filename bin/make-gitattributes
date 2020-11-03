@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ -e .gitattributes ]]; then
-  printf '\033[31merror:\033[m `.gitattributes` alreadly exists\n'
+  printf '\033[31merror:\033[m `.gitattributes` alreadly exists\n' 1>&2
   exit 1
 fi
 
