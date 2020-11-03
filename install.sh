@@ -3,7 +3,7 @@
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
 
-export DOTDIR=$(dirname $(readlink -f build.sh))
+export DOTDIR=$(dirname $(readlink -f $0))
 echo $DOTDIR > $HOME/.dotdir
 
 # dot files
