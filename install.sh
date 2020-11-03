@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+
 export DOTDIR=$(dirname $(readlink -f build.sh))
 echo $DOTDIR > $HOME/.dotdir
 
@@ -13,13 +16,16 @@ for f in $DOTDIR/.??*; do
   ln -fns $f $HOME/$(basename $f)
 done
 
-# $XDG_CONFIG_HOME or .config
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:=$HOME/.config}
+# $XDG_CONFIG_HOME
 [[ ! -d $XDG_CONFIG_HOME ]] && mkdir $XDG_CONFIG_HOME
 for f in $DOTDIR/.config/??*; do
-  [[ $(basename $f) == 'wsl' ]] && continue
-
   ln -fns $f $XDG_CONFIG_HOME/$(basename $f)
+done
+
+# $XDG_DATA_HOME
+[[ ! -d $XDG_DATA_HOME ]] && mkdir $XDG_DATA_HOME
+for f in $DOTDIR/.local/share/??*; do
+  ln -fns $f $XDG_DATA_HOME/$(basename $f)
 done
 
 # $HOME/bin
@@ -27,8 +33,3 @@ done
 for f in $DOTDIR/bin/??*; do
   ln -fns $f $HOME/bin/$(basename $f)
 done
-
-# wsl
-if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
-  ln -fns $DOTDIR/.config/wsl $XDG_CONFIG_HOME/wsl
-fi
