@@ -29,7 +29,7 @@
         {
             // Put settings here that you want to apply to all profiles.
             "fontFace": "Delugia Nerd Font",
-            "fontSize": 15
+            "fontSize": 13
         },
         "list":
         [
