@@ -53,4 +53,4 @@ export DOCKER_CONFIG=$XDG_CONFIG_HOME/docker
 export NUGET_PACKAGES=$XDG_CACHE_HOME/NuGetPackages
 
 # wsl
-[[ is_wsl ]] && source $XDG_CONFIG_HOME/wsl/profile
+is_wsl && source $XDG_CONFIG_HOME/wsl/profile;:
