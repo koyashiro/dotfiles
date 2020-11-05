@@ -1,5 +1,10 @@
 # .profile
-[[ -f $HOME/.profile ]] && source $HOME/.profile;:
+if [[ -f $HOME/.profile ]]; then
+  source $HOME/.profile
+fi
 
 # History file
+if [[ ! -d $XDG_DATA_HOME/bash ]];
+  mkdir $XDG_DATA_HOME/bash
+fi
 export HISTFILE=$XDG_DATA_HOME/bash/history

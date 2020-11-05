@@ -22,6 +22,12 @@ export GIT_EDITOR="$EDITOR"
 export PAGER=less
 
 # Less
+if [[ ! -d $XDG_CONFIG_HOME/less ]]; then
+  mkdir $XDG_CONFIG_HOME/less
+fi
+if [[ ! -d $XDG_CACHE_HOME/less ]]; then
+  mkdir $XDG_CACHE_HOME/less
+fi
 export LESS='-fiMRfx4X'
 export LESSCHARSET='utf-8'
 export LESSKEY=$XDG_CONFIG_HOME/less/lesskey
@@ -53,4 +59,6 @@ export DOCKER_CONFIG=$XDG_CONFIG_HOME/docker
 export NUGET_PACKAGES=$XDG_CACHE_HOME/NuGetPackages
 
 # wsl
-is_wsl && source $XDG_CONFIG_HOME/wsl/profile;:
+if is_wsl; then
+  source $XDG_CONFIG_HOME/wsl/profile
+fi
