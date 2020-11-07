@@ -52,7 +52,7 @@ hook_add = '''
   nnoremap <silent> <Leader>f :<C-u> Defx <CR>
 '''
 hook_post_source = '''
-  source ~/.vim/rc/plugins/defx.rc.vim
+  source $XDG_CONFIG_HOME/vim/rc/plugins/defx.rc.vim
 '''
 
 [[plugins]]

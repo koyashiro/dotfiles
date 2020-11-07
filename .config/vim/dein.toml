@@ -56,7 +56,7 @@ merge = 0
 rev = 'release'
 if = 'executable("node") && executable("yarn")'
 hook_source_post = '''
-  source ~/.vim/rc/plugins/coc.rc.vim
+  source $XDG_CONFIG_HOME/vim/rc/plugins/coc.rc.vim
 '''
 
 # [[plugins]]
