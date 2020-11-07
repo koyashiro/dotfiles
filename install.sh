@@ -12,6 +12,7 @@ for f in $DOTDIR/.??*; do
   [[ $(basename $f) == '.git' ]] && continue
   [[ $(basename $f) == '.gitattributes' ]] && continue
   [[ $(basename $f) == '.gitignore' ]] && continue
+  [[ $(basename $f) == '.local' ]] && continue
 
   ln -fns $f $HOME/$(basename $f)
 done
