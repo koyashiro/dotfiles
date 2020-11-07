@@ -58,7 +58,7 @@ repo = 'neoclide/coc.nvim'
 merge = 0
 rev = 'release'
 if = 'executable("node") && executable("yarn")'
-hook_source_source_post = '''
+hook_source_post = '''
   source ~/.vim/rc/plugins/coc.rc.vim
 '''
 
