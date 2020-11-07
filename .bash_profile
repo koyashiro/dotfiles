@@ -4,7 +4,7 @@ if [[ -f $HOME/.profile ]]; then
 fi
 
 # History file
-if [[ ! -d $XDG_DATA_HOME/bash ]];
+if [[ ! -d $XDG_DATA_HOME/bash ]]; then
   mkdir $XDG_DATA_HOME/bash
 fi
 export HISTFILE=$XDG_DATA_HOME/bash/history
