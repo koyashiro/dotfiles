@@ -20,7 +20,7 @@ indent_size = 2
 
 [*.md]
 charset = utf-8
-end_of_line = crlf
+end_of_line = lf
 indent_style = space
 indent_size = 2
 
