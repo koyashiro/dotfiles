@@ -6,16 +6,13 @@ repo = 'Shougo/dein.vim'
 # colorscheme
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
-hook_add = '''
-  au MyAutoCmd VimEnter * nested colorscheme iceberg
-'''
 
 # statusline
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
-    \ 'colorscheme': 'iceberg',
+    \ 'colorscheme': 'default',
     \ 'active': {
     \   'left': [
     \     [ 'mode', 'paste' ],

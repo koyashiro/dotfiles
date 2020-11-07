@@ -1,5 +1,5 @@
 if has('unix') || has('mac')
-  source $HOME/.vimrc
+  source $XDG_CONFIG_HOME/vim/vimrc
 endif
 
 if has('win32') || has('win64')
