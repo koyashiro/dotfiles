@@ -83,6 +83,16 @@ hook_post_source = '''
 '''
 
 [[plugins]]
+repo = 'w0rp/ale'
+on_ft = 'rust'
+hook_add = '''
+  let g:ale_fixers = {
+    \ 'rust': ['rustfmt']
+    \ }
+  let g:ale_fix_on_save = 1
+'''
+
+[[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
