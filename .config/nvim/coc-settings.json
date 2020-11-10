@@ -1,5 +1,0 @@
-{
-  "suggest.noselect": true,
-  "suggest.preferCompleteThanJumpPlaceholder": true,
-  "coc.preferences.formatOnSaveFiletypes": ["rust"]
-}

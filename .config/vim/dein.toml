@@ -22,12 +22,10 @@ hook_add = '''
     \     [ 'lineinfo' ],
     \     [ 'percent' ],
     \     [ 'fileformat', 'fileencoding', 'filetype' ],
-    \     [ 'coc' ],
     \   ],
     \ },
     \ 'component_function': {
     \   'gitbranch': 'MyFugitive',
-    \   'coc': 'coc#status',
     \ },
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
     \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -57,15 +55,6 @@ repo = 'sheerun/vim-polyglot'
 repo = 'jiangmiao/auto-pairs'
 
 # language server
-[[plugins]]
-repo = 'neoclide/coc.nvim'
-merge = 0
-rev = 'release'
-if = 'executable("node") && executable("yarn")'
-hook_source_post = '''
-  source $XDG_CONFIG_HOME/vim/rc/plugins/coc.rc.vim
-'''
-
 # [[plugins]]
 # repo = 'autozimu/LanguageClient-neovim'
 # rev = 'next'
