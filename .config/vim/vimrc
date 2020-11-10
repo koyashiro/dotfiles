@@ -47,7 +47,6 @@ endif
 
 set nowritebackup
 set nobackup
-set ambiwidth=double
 set autoread
 set visualbell
 set expandtab
