@@ -29,7 +29,6 @@ repo = 'Shougo/deoplete.nvim'
 depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertEnter'
 hook_source = '''
-  set completeopt=menuone,noinsert
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#lauto_complete_delay = 0
   inoremap <expr><Tab> pumvisible() ? "\<DOWN>" : "\<Tab>"
