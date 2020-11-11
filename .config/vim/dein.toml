@@ -85,6 +85,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'mattn/vim-lsp-icons'
+
+[[plugins]]
 repo = 'mattn/vim-lsp-settings'
 
 # formatter
