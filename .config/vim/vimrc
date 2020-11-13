@@ -42,7 +42,7 @@ if has('unix') || has('mac')
 endif
 
 if has('win32') || has('win64')
-  let g:python3_host_prog = substitute(system('where python'), '\n', '', '')
+  let g:python3_host_prog = substitute(system('pwsh.exe -Command "$(Get-Command python).Source"'), '\n', '', '')
 endif
 
 set nowritebackup
