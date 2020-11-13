@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [[ "$(readlink -f .)/" =~ ^/mnt/[cd]/.* ]]; then
   /mnt/c/Program\ Files/Git/cmd/git.exe "$@"
