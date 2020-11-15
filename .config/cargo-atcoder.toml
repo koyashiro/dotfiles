@@ -68,10 +68,11 @@ use proconio::{fastout, input};
 
 #[fastout]
 fn main() {
-  input! {
+    input! {
 
-  }
+    }
 
-  println!("{}", result);
+    let result = 0;
+    println!("{}", result);
 }
 """
