@@ -124,3 +124,8 @@ on_ft = 'json'
 [[plugins]]
 repo = 'tpope/vim-markdown'
 on_ft = 'markdown'
+
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = 'markdown'
+build = 'cd app & yarn install'
