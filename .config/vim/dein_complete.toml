@@ -1,0 +1,43 @@
+# dein_complete.toml
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+build = ':UpdateRemotePlugins'
+depends = ['neosnippet.vim']
+on_event = 'InsertEnter'
+hook_add = '''
+  let g:deoplete#enable_at_startup = 1
+'''
+hook_source = '''
+  set completeopt-=preview
+
+  inoremap <expr><Tab> pumvisible() ? "\<DOWN>" : "\<Tab>"
+  inoremap <expr><S-Tab> pumvisible() ? "\<UP>" : "\<S-Tab>"
+
+  call deoplete#custom#option({
+    \ 'auto_complete': v:true,
+    \ 'min_pattern_length': 2,
+    \ 'auto_complete_delay': 0,
+    \ 'auto_refresh_delay': 20,
+    \ 'refresh_always': v:true,
+    \ 'smart_case': v:true,
+    \ 'camel_case': v:true,
+    \ })
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets']
+on_ft = 'snippet'
+hook_source = '''
+  " Plugin key-m"appings.
+  " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+  imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+  " For conceal markers.
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+'''

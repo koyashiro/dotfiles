@@ -12,7 +12,6 @@ repo = 'cocopon/iceberg.vim'
 repo = 'itchyny/lightline.vim'
 hook_add = '''
   let g:lightline = {
-    \ 'colorscheme': 'default',
     \ 'active': {
     \   'left': [
     \     [ 'mode', 'paste' ],
@@ -47,67 +46,8 @@ hook_add = '''
   set signcolumn=yes
 '''
 
-# syntax
-[[plugins]]
-repo = 'sheerun/vim-polyglot'
-
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
-
-# language server
-# [[plugins]]
-# repo = 'autozimu/LanguageClient-neovim'
-# rev = 'next'
-# build = 'bash install.sh'
-# hook_add = '''
-# set hidden
-# let g:LanguageCllient_serverCommands = {
-#   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-# \ }
-
-# augroup LanguageClient_config
-# autocmd!
-# autocmd User LanguageClientStarted setlocal signcolumn=yes
-# autocmd User LanguageClientStopped setlocal signcolumn=auto
-# augroup END
-
-# let g:LanguageClient_autoStart = 1
-# nnoremap <silent> <Space>lh :call LanguageClient_textDocument_hover()<CR>
-# nnoremap <silent> <Space>ld :call LanguageClient_textDocument_definition()<CR>
-# nnoremap <silent> <Space>lr :call LanguageClient_textDocument_rename()<CR>
-# nnoremap <silent> <Space>lf :call LanguageClient_textDocument_formatting()<CR>
-# '''
-
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-hook_add = '''
-  source $XDG_CONFIG_HOME/vim/rc/plugins/vim-lsp.rc.vim
-'''
-
-[[plugins]]
-repo = 'mattn/vim-lsp-icons'
-
-[[plugins]]
-repo = 'mattn/vim-lsp-settings'
-
-# formatter
-[[plugins]]
-repo = 'prettier/vim-prettier'
-build = 'yarn install'
-
-# incremental search
-[[plugins]]
-repo = 'junegunn/fzf'
-build_on = '''
-./install -all
-'''
-
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-
-# markdown preview
-[[plugins]]
-repo = 'suan/vim-instant-markdown'
 
 # EditorConfig
 [[plugins]]
@@ -116,6 +56,7 @@ hook_add = '''
   let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
 '''
 
+# Vim
 [[plugins]]
 repo = 'roxma/nvim-yarp'
 if = '!has("nvim")'
@@ -123,3 +64,11 @@ if = '!has("nvim")'
 [[plugins]]
 repo = 'roxma/vim-hug-neovim-rpc'
 if = '!has("nvim")'
+
+# defx
+[[plugins]]
+repo = 'kristijanhusak/defx-git'
+
+# snippets
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
