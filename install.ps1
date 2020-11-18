@@ -1,3 +1,7 @@
+$DOTDIR = "$HOME\.dotfiles"
+
+$ENV:XDG_CONFIG_HOME = "$HOME\.config"
+
 # install posh-git
 if (!(Get-Module posh-git)) {
   Install-Module posh-git
@@ -10,14 +14,15 @@ if (!(Get-Module oh-my-posh)) {
 
 # exclude dotfiles
 $excludes = @(
+  '.config',
   '.git',
   '.gitattributes',
-  '.gitconfig.user',
-  '.wsl'
+  '.gitconfig',
+  '.local'
 )
 
 # dotfiles
-foreach ($f in Get-ChildItem -Name .*) {
+foreach ($f in Get-ChildItem -Name $DOTDIR\.*) {
   if ($f -in $excludes) {
     continue
   }
@@ -25,19 +30,13 @@ foreach ($f in Get-ChildItem -Name .*) {
   New-Item -ItemType SymbolicLink -Value $(Convert-Path $f) -Path $(Join-Path $HOME $f) -Force
 }
 
-# rename .vimrc -> _vimrc
-if (Test-Path $HOME\.vimrc) {
-  Move-Item -Force $HOME\.vimrc $HOME\_vimrc
+# XDG_CONFIG_HOME
+if (!(Test-Path $ENV:XDG_CONFIG_HOME)) {
+  New-Item -ItemType Directory $ENV:XDG_CONFIG_HOME
 }
-
-# neovim
-$localAppDataDir = 'win\AppData\Local'
-$f = 'nvim\init.vim'
-New-Item `
-  -ItemType SymbolicLink `
-  -Force `
-  -Value $(Convert-Path $(Join-Path $localAppDataDir $f)) `
-  -Path $(Join-Path $env:LOCALAPPDATA $f)
+foreach ($f in Get-ChildItem $DOTDIR\.config\*) {
+  New-Item -ItemType SymbolicLink -Value $f -Path $(Join-Path $ENV:XDG_CONFIG_HOME $([System.IO.Path]::GetFileName($f))) -Force
+}
 
 # Windows Terminal
 $localAppDataDir = 'win\AppData\Local'
