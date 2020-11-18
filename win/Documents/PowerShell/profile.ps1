@@ -1,4 +1,5 @@
 $ENV:Path = "$HOME\bin;${ENV:Path}"
+$ENV:TERM = 'xterm-256color'
 
 $removeAliases = @(
   'ls',
@@ -20,12 +21,6 @@ Set-Alias clr Clear-Host
 Set-Alias g git
 Set-Alias d docker
 Set-Alias dc docker-compose
-
-if (Get-Command -ErrorAction Ignore nvim) {
-  function vim {
-    nvim $args
-  }
-}
 
 function ll {
   ls -alhAF $args
