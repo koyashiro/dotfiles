@@ -44,6 +44,7 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 # bin
 PATH="$HOME/.local/bin:$PATH"
+PATH="$XDG_DATA_HOME/docker/bin:$PATH"
 PATH="$HOME/bin:$PATH"
 PATH="$PATH:$XDG_DATA_HOME/cargo/bin"
 export PATH
@@ -60,6 +61,8 @@ export GOPATH=$XDG_DATA_HOME/go
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export DOCKER_CONFIG=$XDG_CONFIG_HOME/docker
 export NUGET_PACKAGES=$XDG_CACHE_HOME/NuGetPackages
+export AWS_SHARED_CREDENTIALS_FILE=$XDG_CONFIG_HOME/aws/credentials
+export AWS_CONFIG_FILE=$XDG_CONFIG_HOME/aws/config
 
 # wsl
 if is_wsl; then
