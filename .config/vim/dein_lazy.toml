@@ -2,6 +2,7 @@
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
+if = 'executable("python3")'
 on_cmd = 'Denite'
 hook_add = '''
   nmap <silent> <Leader>df :<C-u> Denite file/rec <CR>
@@ -41,6 +42,7 @@ hook_post_source = '''
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
+if = 'executable("python3")'
 depends = [
   'vim-devicons',
   'defx-icons',
@@ -72,5 +74,6 @@ repo = 'Shougo/neco-syntax'
 
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
+if = 'executable("yarn")'
 on_ft = 'markdown'
 build = 'cd app & yarn install'
