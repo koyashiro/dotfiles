@@ -3,5 +3,6 @@
 docker run --rm \
   -it \
   -v $XDG_CONFIG_HOME/aws:/root/.aws \
-  -v $(pwd):/aws amazon/aws-cli \
+  -v $(pwd):/aws \
+  amazon/aws-cli \
   "$@"
