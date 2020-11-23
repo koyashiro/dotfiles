@@ -56,6 +56,12 @@ hook_post_source = '''
 '''
 
 [[plugins]]
+repo = 'Shougo/deol.nvim'
+hook_add = '''
+  nnoremap <Leader>o :<C-u>Deol -split=floating<CR>
+'''
+
+[[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
 [[plugins]]
