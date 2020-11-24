@@ -10,6 +10,10 @@ repo = 'cocopon/iceberg.vim'
 # statusline
 [[plugins]]
 repo = 'itchyny/lightline.vim'
+depends = [
+  'vim-fugitive',
+  'vim-devicons',
+]
 hook_add = '''
   let g:lightline = {
     \ 'active': {
@@ -20,11 +24,12 @@ hook_add = '''
     \   'right': [
     \     [ 'lineinfo' ],
     \     [ 'percent' ],
-    \     [ 'fileformat', 'fileencoding', 'filetype' ],
+    \     [ 'fileformat', 'fileencoding', 'myfiletype' ],
     \   ],
     \ },
     \ 'component_function': {
     \   'gitbranch': 'MyFugitive',
+    \   'myfiletype': 'MyFileType',
     \ },
     \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
     \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -33,6 +38,10 @@ hook_add = '''
   function! MyFugitive()
     let fugitive_head = FugitiveHead()
     return strlen(fugitive_head) ? "\ue0a0 " . fugitive_head : ''
+  endfunction
+
+  function! MyFileType()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
   endfunction
 '''
 
