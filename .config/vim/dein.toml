@@ -46,9 +46,6 @@ hook_add = '''
   set signcolumn=yes
 '''
 
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-
 # EditorConfig
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
