@@ -39,13 +39,7 @@ set laststatus=2
 set noshowmode
 
 " Python
-if has('unix') || has('mac')
-  let g:python3_host_prog = '/usr/bin/python3'
-endif
-
-if has('win32') || has('win64')
-  let g:python3_host_prog = substitute(system('pwsh.exe -Command "$(Get-Command python).Source"'), '\n', '', '')
-endif
+let g:python3_host_prog = 'python'
 
 set nowritebackup
 set nobackup
