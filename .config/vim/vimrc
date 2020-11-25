@@ -40,7 +40,7 @@ set noshowmode
 
 " Python
 if has('unix') || has('mac')
-  let g:python3_host_prog = substitute(system('builtin command -v python3'), '\n', '', '')
+  let g:python3_host_prog = '/usr/bin/python3'
 endif
 
 if has('win32') || has('win64')
