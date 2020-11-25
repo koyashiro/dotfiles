@@ -16,7 +16,12 @@ alias explorer.exe=/mnt/c/Windows/explorer.exe
 alias git.exe="/mnt/c/Program\ Files/Git/cmd/git.exe"
 
 # Windows $HOME
-export WINHOME="$(wslpath $(powershell.exe -Command 'Write-Host "$env:USERPROFILE" -NoNewLine'))"
+if [[ -f $XDG_CONFIG_HOME/wsl/winhome.sh ]]; then
+  source $XDG_CONFIG_HOME/wsl/winhome.sh
+else
+  export WINHOME="$(wslpath $(powershell.exe -Command 'Write-Host "$env:USERPROFILE" -NoNewLine'))"
+  echo "export WINHOME='$WINHOME'" > $XDG_CONFIG_HOME/wsl/winhome.sh
+fi
 
 # VS Code
 alias code="$WINHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"

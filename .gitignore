@@ -1,3 +1,4 @@
 *.zwc
 .config/git/config.user
 .config/aws/credentials
+.config/wsl/winhome.sh
