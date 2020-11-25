@@ -9,7 +9,11 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-alias ll='ls -alhAF'
+if builtin command -v exa >& /dev/null; then
+  alias ll='exa -alhF --git --icons'
+else
+  alias ll='ls -alhAF'
+fi
 
 # prompt
 alias cp='cp -i'
@@ -31,7 +35,11 @@ type nvim >/dev/null 2>&1 && alias vim=nvim
 alias emacs=vim
 
 # tree
-alias tree='tree -a -I "\.git"'
+if builtin command -v exa >& /dev/null; then
+  alias tree='exa --tree -a --git-ignore --icons --ignore-glob=".git"'
+else
+  alias tree='tree -a -I "\.git"'
+fi
 
 # Git
 alias g=git
