@@ -1,1 +1,1 @@
-compinit -d ${XDG_DATA_HOME:-$HOME/.local/home}/zsh/compdump
+compinit -d ${XDG_DATA_HOME:-$HOME/.local/home}/zsh/compdump -C
