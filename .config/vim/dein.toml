@@ -3,10 +3,6 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-# colorscheme
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
-
 # statusline
 [[plugins]]
 repo = 'itchyny/lightline.vim'

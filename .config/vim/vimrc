@@ -62,5 +62,5 @@ source $XDG_CONFIG_HOME/vim/rc/map.rc.vim
 source $XDG_CONFIG_HOME/vim/dein.rc.vim
 
 " colorscheme
-colorscheme iceberg
-let g:lightline.colorscheme = 'iceberg'
+colorscheme hybrid
+let g:lightline.colorscheme = 'hybrid'

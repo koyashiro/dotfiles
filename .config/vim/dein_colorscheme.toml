@@ -1,0 +1,7 @@
+# "dein_colorscheme.toml
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'

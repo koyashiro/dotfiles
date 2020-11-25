@@ -18,6 +18,7 @@ execute 'set runtimepath^=' . s:dein_repo_dir
 if dein#load_state($XDG_CACHE_HOME . '/dein')
   call dein#begin($XDG_CACHE_HOME . '/dein')
   call dein#load_toml($XDG_CONFIG_HOME . '/vim/dein.toml', {'lazy': 0})
+  call dein#load_toml($XDG_CONFIG_HOME . '/vim/dein_colorscheme.toml', {'lazy': 0})
   call dein#load_toml($XDG_CONFIG_HOME . '/vim/dein_syntax.toml', {'lazy': 0})
   call dein#load_toml($XDG_CONFIG_HOME . '/vim/dein_lazy.toml', {'lazy': 1})
   call dein#load_toml($XDG_CONFIG_HOME . '/vim/dein_complete.toml', {'lazy': 1})
