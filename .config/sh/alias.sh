@@ -63,6 +63,7 @@ alias gsh='git show'
 alias gl='git log'
 alias glf='git log --pretty=fuller'
 alias gft='git fetch'
+alias gftrb='git fetch && git rebase'
 alias gpl='git pull'
 alias gps='git push'
 
