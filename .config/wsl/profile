@@ -26,6 +26,9 @@ fi
 # VS Code
 alias code="$WINHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 
+# clip.exe
+alias clip.exe='/mnt/c/Windows/System32/clip.exe'
+
 # wsl bin
 PATH=$XDG_DATA_HOME/wsl/bin:$PATH
 
