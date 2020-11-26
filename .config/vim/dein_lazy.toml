@@ -66,9 +66,12 @@ on_event = 'InsertEnter'
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 hook_add = '''
-  nnoremap <Leader>ff :<C-u>Files<CR>
-  nnoremap <Leader>fg :<C-u>Rg<CR>
-  nnoremap <Leader>fb :<C-u>Buffers<CR>
+  nnoremap [Fzf] <Nop>
+  nmap <Leader>f [Fzf]
+
+  nnoremap [Fzf]f :<C-u>Files<CR>
+  nnoremap [Fzf]g :<C-u>Rg<CR>
+  nnoremap [Fzf]b :<C-u>Buffers<CR>
 
   command! -bang -nargs=* Rg
     \ call fzf#vim#grep(
