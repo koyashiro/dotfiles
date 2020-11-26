@@ -9,7 +9,7 @@ depends = [
   'defx-git',
 ]
 hook_add = '''
-  nnoremap <silent> <Leader>f :<C-u> Defx <CR>
+  nnoremap <silent> <Leader>t :<C-u> Defx <CR>
 '''
 hook_post_source = '''
   source $XDG_CONFIG_HOME/vim/rc/plugins/defx.rc.vim
