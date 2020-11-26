@@ -10,7 +10,7 @@ fi
 
 # ls
 if builtin command -v exa >& /dev/null; then
-  alias ll='exa -alhF --git --icons'
+  alias ll='exa -alhF --icons'
 else
   alias ll='ls -alhAF'
 fi
