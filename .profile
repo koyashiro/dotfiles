@@ -28,7 +28,7 @@ fi
 if [[ ! -d $XDG_CACHE_HOME/less ]]; then
   mkdir $XDG_CACHE_HOME/less
 fi
-export LESS='-fiMRfx4X'
+export LESS='-fiMRfFx4X'
 export LESSCHARSET='utf-8'
 export LESSKEY=$XDG_CONFIG_HOME/less/lesskey
 export LESSHISTFILE=$XDG_CACHE_HOME/less/history
