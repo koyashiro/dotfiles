@@ -101,3 +101,19 @@ build = 'cd app & yarn install'
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
 on_event = 'InsertEnter'
+
+# fzf
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+hook_add = '''
+  nnoremap <Leader>ff :<C-u>Files<CR>
+  nnoremap <Leader>fg :<C-u>Rg<CR>
+  nnoremap <Leader>fb :<C-u>Buffers<CR>
+
+  command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   "rg --column --line-number --no-heading --color=always --smart-case --hidden -- ".shellescape(<q-args>),
+    \   1,
+    \   fzf#vim#with_preview(),
+    \   <bang>0)
+'''
