@@ -41,6 +41,9 @@ set noshowmode
 " Python
 let g:python3_host_prog = 'python'
 
+" clipboard
+set clipboard+=unnamedplus
+
 set nowritebackup
 set nobackup
 set autoread

@@ -29,4 +29,7 @@ alias code="$WINHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
 # wsl bin
 PATH=$XDG_DATA_HOME/wsl/bin:$PATH
 
+# DISPLAY
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+
 export PATH
