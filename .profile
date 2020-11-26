@@ -68,3 +68,7 @@ export AWS_CONFIG_FILE=$XDG_CONFIG_HOME/aws/config
 if is_wsl; then
   source $XDG_CONFIG_HOME/wsl/profile
 fi
+
+# fzf
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border --preview "bat --color=always --style=header,grid --line-range :100 {}"'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'

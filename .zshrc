@@ -8,7 +8,7 @@ function launch_tmux() {
   local new_session='Create New Session'
   local all_sessions="$sessions\n$new_session:"
 
-  local target_session="$(echo $all_sessions | peco | cut -d: -f1)"
+  local target_session="$(echo $all_sessions | fzf | cut -d: -f1)"
 
   if [[ "$target_session" = "$new_session" ]]; then
     tmux -u new-session
