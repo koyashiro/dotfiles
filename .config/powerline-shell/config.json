@@ -1,5 +1,9 @@
 {
   "segments": [
+    {
+      "type": "stdout",
+      "command": ["vimode"]
+    },
     "ssh",
     "cwd",
     "git",

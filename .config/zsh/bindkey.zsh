@@ -1,4 +1,5 @@
-bindkey -e
+bindkey -v
+bindkey 'jj' vi-cmd-mode
 
 typeset -g -A key
 

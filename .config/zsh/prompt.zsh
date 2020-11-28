@@ -18,3 +18,14 @@ function install_powerline_precmd() {
 if [ "$TERM" != "linux" ]; then
   install_powerline_precmd
 fi
+
+export VIMODE='INSERT'
+function zle-keymap-select zle-line-init {
+  local exit_code=$?
+  export VIMODE="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
+  PS1="$(powerline-shell --shell zsh $exit_code)"
+  zle reset-prompt
+}
+
+zle -N zle-keymap-select
+zle -N zle-line-init
