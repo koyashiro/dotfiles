@@ -1,13 +1,10 @@
 {
   "segments": [
-    {
-      "type": "stdout",
-      "command": ["vimode"]
-    },
     "ssh",
     "cwd",
     "git",
     "jobs",
+    "~/.config/powerline-shell/segments/vimode.py",
     "root"
   ],
   "cwd": {
