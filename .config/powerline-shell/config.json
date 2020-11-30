@@ -9,5 +9,6 @@
   ],
   "cwd": {
     "mode": "dironly"
-  }
+  },
+  "theme": "gruvbox"
 }
