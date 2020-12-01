@@ -11,7 +11,10 @@ BG_VISUAL = '11'
 
 class Segment(BasicSegment):
     def add_to_powerline(self):
-        vimode = os.environ['VIMODE']
+        vimode = os.getenv('VIMODE')
+
+        if vimode is None:
+            return
 
         if vimode == 'NORMAL':
             fg = FG_NORMAL
