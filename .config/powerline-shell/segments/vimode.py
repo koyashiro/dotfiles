@@ -5,6 +5,8 @@ FG_NORMAL = '0'
 BG_NORMAL = '15'
 FG_INSERT = '0'
 BG_INSERT = '12'
+FG_VISUAL = '0'
+BG_VISUAL = '11'
 
 
 class Segment(BasicSegment):
@@ -17,6 +19,9 @@ class Segment(BasicSegment):
         elif vimode == 'INSERT':
             fg = FG_INSERT
             bg = BG_INSERT
+        elif vimode == 'VISUAL':
+            fg = FG_VISUAL
+            bg = BG_VISUAL
         else:
             fg = FG_NORMAL
             bg = BG_NORMAL

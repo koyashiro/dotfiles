@@ -22,8 +22,18 @@ fi
 export VIMODE='INSERT'
 function zle-keymap-select zle-line-init {
   local exit_code=$?
-  export VIMODE="${${KEYMAP/vicmd/NORMAL}/(main|viins)/INSERT}"
   PS1="$(powerline-shell --shell zsh $exit_code)"
+  case "$KEYMAP" in
+    vicmd)
+      export VIMODE='NORMAL'
+      ;;
+    main|viins)
+      export VIMODE='INSERT'
+      ;;
+    vivis|vivli)
+      export VIMODE='VISUAL'
+      ;;
+  esac
   zle reset-prompt
 }
 
