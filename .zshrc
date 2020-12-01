@@ -1,3 +1,7 @@
+if [[ -z "$PS1" ]]; then
+  return
+fi
+
 # tmux
 function launch_tmux() {
   local sessions=$(tmux list-sessions)

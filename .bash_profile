@@ -8,3 +8,7 @@ if [[ ! -d $XDG_DATA_HOME/bash ]]; then
   mkdir $XDG_DATA_HOME/bash
 fi
 export HISTFILE=$XDG_DATA_HOME/bash/history
+
+if [[ -f $HOME/.bashrc ]]; then
+  source $HOME/.bashrc
+fi
