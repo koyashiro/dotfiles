@@ -1,6 +1,3 @@
-bindkey -v
-bindkey 'jj' vi-cmd-mode
-
 typeset -g -A key
 
 key[Home]="${terminfo[khome]}"
@@ -36,3 +33,8 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
   add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
   add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
+
+bindkey -v
+bindkey 'jj' vi-cmd-mode
+bindkey '^h' backward-char
+bindkey '^l' forward-char
