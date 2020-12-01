@@ -2,7 +2,7 @@ from powerline_shell.utils import BasicSegment
 import os
 
 FG_NORMAL = '0'
-BG_NORMAL = '247'
+BG_NORMAL = '15'
 FG_INSERT = '0'
 BG_INSERT = '12'
 
