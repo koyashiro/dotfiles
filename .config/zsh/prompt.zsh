@@ -3,7 +3,8 @@ if ! builtin command -v powerline-shell >& /dev/null; then
 fi
 
 function powerline_precmd() {
-  PS1="$(powerline-shell --shell zsh $?)"
+  POWERLINE_SHELL_EXITCODE=$?
+  PS1="$(powerline-shell --shell zsh $POWERLINE_SHELL_EXITCODE)"
 }
 
 function install_powerline_precmd() {
@@ -21,8 +22,6 @@ fi
 
 export VIMODE='INSERT'
 function zle-keymap-select zle-line-init {
-  local exit_code=$?
-  PS1="$(powerline-shell --shell zsh $exit_code)"
   case "$KEYMAP" in
     vicmd)
       export VIMODE='NORMAL'
@@ -34,6 +33,8 @@ function zle-keymap-select zle-line-init {
       export VIMODE='VISUAL'
       ;;
   esac
+
+  PS1="$(powerline-shell --shell zsh $POWERLINE_SHELL_EXITCODE)"
   zle reset-prompt
 }
 
