@@ -70,5 +70,5 @@ if is_wsl; then
 fi
 
 # fzf
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border --preview "bat --color=always --style=header,grid --line-range :100 {}"'
+export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
