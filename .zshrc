@@ -26,12 +26,6 @@ if [[ -z "$TMUX" ]]; then
   launch_tmux
 fi
 
-# install zinit
-if [[ ! -d "$XDG_CACHE_HOME/zinit" ]]; then
-  mkdir "$XDG_CACHE_HOME/zinit"
-  git clone https://github.com/zdharma/zinit.git "$XDG_CACHE_HOME/zinit/bin"
-fi
-
 # sh
 for f in $XDG_CONFIG_HOME/sh/*.sh; do
   if [[ ! -f $f.zwc ]] || [[ $f -nt $f.zwc ]]; then
@@ -54,6 +48,7 @@ for f in $XDG_CONFIG_HOME/zsh/*.zsh; do
   source $f
 done
 
+# zinit
 if [[ -f $XDG_CONFIG_HOME/zsh/zinit.zsh ]]; then
   if [[ ! -f "$XDG_CONFIG_HOME/zsh/zinit.zsh.zwc" ]] || [[ "$XDG_CONFIG_HOME/zsh/zinit.zsh" -nt "$XDG_CONFIG_HOME/zsh/zinit.zsh" ]]; then
     zcompile "$XDG_CONFIG_HOME/zsh/zinit.zsh"
