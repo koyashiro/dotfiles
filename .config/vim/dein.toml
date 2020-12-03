@@ -80,12 +80,9 @@ if = 'g:lsp_type == "vim-lsp"'
 [[plugins]]
 repo = 'junegunn/fzf.vim'
 hook_add = '''
-  nnoremap [Fzf] <Nop>
-  nmap <Leader>f [Fzf]
-
-  nnoremap [Fzf]f :<C-u>Files<CR>
-  nnoremap [Fzf]g :<C-u>Rg<CR>
-  nnoremap [Fzf]b :<C-u>Buffers<CR>
+  nnoremap <Leader>f :<C-u>Files<CR>
+  nnoremap <Leader>g :<C-u>Rg<CR>
+  nnoremap <Leader>b :<C-u>Buffers<CR>
 
   command! -bang -nargs=* Rg
     \ call fzf#vim#grep(
