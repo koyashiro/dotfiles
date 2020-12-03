@@ -52,7 +52,3 @@ build = 'cd app & yarn install'
 if    = 'executable("yarn")'
 on_ft = 'markdown'
 repo  = 'iamcco/markdown-preview.nvim'
-
-[[plugins]]
-on_event = 'InsertEnter'
-repo     = 'jiangmiao/auto-pairs'

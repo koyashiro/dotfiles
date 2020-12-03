@@ -90,3 +90,6 @@ hook_add = '''
     \   <bang>0)
 '''
 repo     = 'junegunn/fzf.vim'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
