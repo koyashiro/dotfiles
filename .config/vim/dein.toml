@@ -74,3 +74,4 @@ repo = 'kristijanhusak/defx-git'
 # snippets
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
+if = 'g:lsp_type == "vim-lsp"'

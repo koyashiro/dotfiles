@@ -2,6 +2,7 @@
 
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
+if = 'g:lsp_type == "vim-lsp"'
 depends = ['deoplete-vim-lsp', 'vim-lsp-icons']
 hook_add = '''
   source $XDG_CONFIG_HOME/vim/rc/plugins/vim-lsp.rc.vim
@@ -9,15 +10,18 @@ hook_add = '''
 
 [[plugins]]
 repo = 'lighttiger2505/deoplete-vim-lsp'
+if = 'g:lsp_type == "vim-lsp"'
 depends = ['deoplete.nvim']
 
 [[plugins]]
 repo = 'mattn/vim-lsp-icons'
+if = 'g:lsp_type == "vim-lsp"'
 depends = ['vim-lsp']
 on_source = ['vim-lsp']
 
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'
+if = 'g:lsp_type == "vim-lsp"'
 on_ft = [
   'sh',
   'cs',

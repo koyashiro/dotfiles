@@ -2,6 +2,7 @@
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+if = 'g:lsp_type == "vim-lsp"'
 build = ':UpdateRemotePlugins'
 depends = ['neosnippet.vim']
 on_event = 'InsertEnter'
@@ -27,6 +28,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
+if = 'g:lsp_type == "vim-lsp"'
 depends = ['neosnippet-snippets']
 on_ft = 'snippet'
 hook_source = '''
