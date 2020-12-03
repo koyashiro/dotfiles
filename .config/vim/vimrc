@@ -65,7 +65,7 @@ set listchars=tab:>-,trail:.,eol:↲,
 source $XDG_CONFIG_HOME/vim/rc/map.rc.vim
 
 " dein
-let g:lsp_type = 'vim-lsp'
+let g:lsp_type = 'coc'
 source $XDG_CONFIG_HOME/vim/dein.rc.vim
 
 " colorscheme

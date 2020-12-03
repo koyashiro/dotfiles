@@ -35,3 +35,11 @@ on_ft = [
   'yaml',
 ]
 depends = ['vim-lsp']
+
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+if = 'g:lsp_type == "coc"'
+hook_source_post = '''
+  source $XDG_CONFIG_HOME/vim/rc/plugins/coc.rc.vim
+'''
