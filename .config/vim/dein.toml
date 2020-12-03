@@ -93,3 +93,14 @@ repo     = 'junegunn/fzf.vim'
 
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+hook_add = '''
+  let g:neoterm_default_mod='belowright'
+  let g:neoterm_size=10
+  let g:neoterm_autoinsert = 1
+  let g:neoterm_autoscroll=1
+  nnoremap <silent> <C-t> :Ttoggle<CR>
+  tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
+'''
+repo     = 'kassio/neoterm'
