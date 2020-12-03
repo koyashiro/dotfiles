@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+while true
+do
+  for c in "\u2826" "\u2807" "\u280b" "\u2819" "\u2838" "\u2834"; do
+    printf "$c"
+    sleep 0.1
+    printf "$(tput cub 1)"
+  done
+done
