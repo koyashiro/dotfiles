@@ -1,21 +1,16 @@
 # dein_lazy.toml
 
 [[plugins]]
-repo = 'Shougo/defx.nvim'
-depends = [
-  'vim-devicons',
-  'defx-icons',
-  'defx-git',
-]
-hook_add = '''
+depends          = ['vim-devicons', 'defx-icons', 'defx-git']
+hook_add         = '''
   nnoremap <silent> <Leader>t :<C-u> Defx <CR>
 '''
 hook_post_source = '''
   source $XDG_CONFIG_HOME/vim/rc/plugins/defx.rc.vim
 '''
+repo             = 'Shougo/defx.nvim'
 
 [[plugins]]
-repo = 'Shougo/deol.nvim'
 hook_add = '''
   let g:deol#custom_map = {
     \ 'edit': 'e',
@@ -31,8 +26,9 @@ hook_add = '''
     \ 'quit': 'q',
     \ }
 
-  nnoremap <Leader>o :<C-u>Deol -split=floating<CR>
+  nnoremap <Leader>o :<C-u>Deol -split=horizontal<CR>
 '''
+repo     = 'Shougo/deol.nvim'
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -41,22 +37,22 @@ repo = 'ryanoasis/vim-devicons'
 repo = 'kristijanhusak/defx-icons'
 
 [[plugins]]
-repo = 'markonm/traces.vim'
 on_event = 'CmdwinEnter'
+repo     = 'markonm/traces.vim'
 
 [[plugins]]
-repo = 'Shougo/neco-vim'
 on_ft = 'vim'
+repo  = 'Shougo/neco-vim'
 
 [[plugins]]
 repo = 'Shougo/neco-syntax'
 
 [[plugins]]
-repo = 'iamcco/markdown-preview.nvim'
-if = 'executable("yarn")'
-on_ft = 'markdown'
 build = 'cd app & yarn install'
+if    = 'executable("yarn")'
+on_ft = 'markdown'
+repo  = 'iamcco/markdown-preview.nvim'
 
 [[plugins]]
-repo = 'jiangmiao/auto-pairs'
 on_event = 'InsertEnter'
+repo     = 'jiangmiao/auto-pairs'

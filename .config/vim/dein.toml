@@ -5,11 +5,7 @@ repo = 'Shougo/dein.vim'
 
 # statusline
 [[plugins]]
-repo = 'itchyny/lightline.vim'
-depends = [
-  'vim-fugitive',
-  'vim-devicons',
-]
+depends  = ['vim-fugitive', 'vim-devicons']
 hook_add = '''
   let g:lightline = {
     \ 'active': {
@@ -42,32 +38,33 @@ hook_add = '''
     return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
   endfunction
 '''
+repo     = 'itchyny/lightline.vim'
 
 # git
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
-repo = 'airblade/vim-gitgutter'
 hook_add = '''
   set signcolumn=yes
 '''
+repo     = 'airblade/vim-gitgutter'
 
 # EditorConfig
 [[plugins]]
-repo = 'editorconfig/editorconfig-vim'
 hook_add = '''
   let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
 '''
+repo     = 'editorconfig/editorconfig-vim'
 
 # Vim
 [[plugins]]
+if   = '!has("nvim")'
 repo = 'roxma/nvim-yarp'
-if = '!has("nvim")'
 
 [[plugins]]
+if   = '!has("nvim")'
 repo = 'roxma/vim-hug-neovim-rpc'
-if = '!has("nvim")'
 
 # defx
 [[plugins]]
@@ -75,12 +72,11 @@ repo = 'kristijanhusak/defx-git'
 
 # snippets
 [[plugins]]
+if   = 'g:lsp_type == "vim-lsp"'
 repo = 'Shougo/neosnippet-snippets'
-if = 'g:lsp_type == "vim-lsp"'
 
 # fzf
 [[plugins]]
-repo = 'junegunn/fzf.vim'
 hook_add = '''
   nnoremap <Leader>f :<C-u>Files<CR>
   nnoremap <Leader>g :<C-u>Rg<CR>
@@ -93,3 +89,4 @@ hook_add = '''
     \   fzf#vim#with_preview(),
     \   <bang>0)
 '''
+repo     = 'junegunn/fzf.vim'

@@ -1,12 +1,9 @@
 # dein_complete.toml
 
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-if = 'g:lsp_type == "vim-lsp"'
-build = ':UpdateRemotePlugins'
-depends = ['neosnippet.vim']
-on_event = 'InsertEnter'
-hook_add = '''
+build       = ':UpdateRemotePlugins'
+depends     = ['neosnippet.vim']
+hook_add    = '''
   let g:deoplete#enable_at_startup = 1
 '''
 hook_source = '''
@@ -25,12 +22,12 @@ hook_source = '''
     \ 'camel_case': v:true,
     \ })
 '''
+if          = 'g:lsp_type == "vim-lsp"'
+on_event    = 'InsertEnter'
+repo        = 'Shougo/deoplete.nvim'
 
 [[plugins]]
-repo = 'Shougo/neosnippet.vim'
-if = 'g:lsp_type == "vim-lsp"'
-depends = ['neosnippet-snippets']
-on_ft = 'snippet'
+depends     = ['neosnippet-snippets']
 hook_source = '''
   " Plugin key-m"appings.
   " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
@@ -43,3 +40,6 @@ hook_source = '''
     set conceallevel=2 concealcursor=niv
   endif
 '''
+if          = 'g:lsp_type == "vim-lsp"'
+on_ft       = 'snippet'
+repo        = 'Shougo/neosnippet.vim'
