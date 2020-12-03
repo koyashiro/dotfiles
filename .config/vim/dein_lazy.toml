@@ -2,7 +2,6 @@
 
 [[plugins]]
 repo = 'Shougo/defx.nvim'
-if = 'executable("python3")'
 depends = [
   'vim-devicons',
   'defx-icons',

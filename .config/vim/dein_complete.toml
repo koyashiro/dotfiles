@@ -2,7 +2,6 @@
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-if = 'executable("python3")'
 build = ':UpdateRemotePlugins'
 depends = ['neosnippet.vim']
 on_event = 'InsertEnter'
