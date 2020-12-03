@@ -40,6 +40,42 @@ hook_add = '''
 '''
 repo     = 'itchyny/lightline.vim'
 
+[[plugins]]
+depends  = ['vim-devicons', 'lightline-bufferline']
+hook_add = '''
+  let g:lightline.tabline = {
+    \   'left': [
+    \     [ 'buffers' ],
+    \   ],
+    \   'right': [
+    \     [ 'close' ],
+    \   ],
+    \ }
+
+  let g:lightline.component_expand = {
+    \   'buffers': 'lightline#bufferline#buffers',
+    \ }
+
+  let g:lightline.component_type = {
+    \   'buffers': 'tabsel',
+    \ }
+
+  let g:lightline#bufferline#enable_devicons = 1
+  let g:lightline#bufferline#show_number = 1
+
+  nmap t1 <Plug>lightline#bufferline#go(1)
+  nmap t2 <Plug>lightline#bufferline#go(2)
+  nmap t3 <Plug>lightline#bufferline#go(3)
+  nmap t4 <Plug>lightline#bufferline#go(4)
+  nmap t5 <Plug>lightline#bufferline#go(5)
+  nmap t6 <Plug>lightline#bufferline#go(6)
+  nmap t7 <Plug>lightline#bufferline#go(7)
+  nmap t8 <Plug>lightline#bufferline#go(8)
+  nmap t9 <Plug>lightline#bufferline#go(9)
+  nmap t0 <Plug>lightline#bufferline#go(10)
+'''
+repo     = 'mengelbrecht/lightline-bufferline'
+
 # git
 [[plugins]]
 repo = 'tpope/vim-fugitive'
