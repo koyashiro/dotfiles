@@ -19,6 +19,10 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+for n in range(1, 9)
+  execute 'nnoremap <silent> t'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+
 map <silent> tc :tablast <bar> tabnew<CR>
 map <silent> tq :tabclose<CR>
 map <silent> tn :tabnext<CR>
