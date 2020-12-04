@@ -65,6 +65,15 @@ New-Item `
   -Value $(Convert-Path $(Join-Path $configDir $f)) `
   -Path $(Join-Path $env:APPDATA $f)
 
+# Inkdrop
+$configDir = '.config'
+$f = 'inkdrop'
+New-Item `
+  -ItemType SymbolicLink `
+  -Force `
+  -Value $(Convert-Path $(Join-Path $configDir $f | Join-Path -ChildPath 'keymap.cson')) `
+  -Path $(Join-Path $env:APPDATA $f | Join-Path -ChildPath 'keymap.cson')
+
 # Windows PowerShell
 $documentsDir = 'win\Documents'
 $f = 'WindowsPowerShell\profile.ps1'
