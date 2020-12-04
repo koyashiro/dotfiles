@@ -1,5 +1,32 @@
+function install_powerline_shell() {
+  if builtin command -v pip3 >& /dev/null; then
+    echo 'zsh: install `powerline-shell` by `pip3`.'
+    pip3 install powerline-shell
+
+    if [[ "$?" == '0' ]]; then
+      echo 'zsh: `powerline-shell` is installed.'
+    fi
+  elif builtin command -v pip >& /dev/null; then
+    if [[ "$(pip --version)" =~ '\(python 3\.[0-9]\)' ]]; then
+      echo 'zsh: install `powerline-shell` by `pip`.'
+      pip install powerline-shell
+
+      if [[ "$?" == '0' ]]; then
+        echo 'zsh: `powerline-shell` installed.'
+      fi
+    fi
+  fi
+}
+
 if ! builtin command -v powerline-shell >& /dev/null; then
-  exit
+  echo 'zsh: `powerline-shell is not installed.`'
+
+  # install `powerline-shell`
+  install_powerline_shell
+
+  if ! builtin command -v powerline-shell >& /dev/null; then
+    exit
+  fi
 fi
 
 function powerline_precmd() {
