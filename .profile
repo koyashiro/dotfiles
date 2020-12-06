@@ -51,7 +51,6 @@ export HISTFILE=$XDG_DATA_HOME/sh/history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
-export VIMINIT=":source $XDG_CONFIG_HOME/vim/vimrc"
 export RUSTUP_HOME=$XDG_DATA_HOME/rustup
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export GOPATH=$XDG_DATA_HOME/go

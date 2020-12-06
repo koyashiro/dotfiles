@@ -3,7 +3,7 @@
 [[plugins]]
 depends  = ['deoplete-vim-lsp', 'vim-lsp-icons']
 hook_add = '''
-  source $XDG_CONFIG_HOME/vim/rc/plugins/vim-lsp.rc.vim
+  source $XDG_CONFIG_HOME/nvim/rc/vim-lsp.rc.vim
 '''
 if       = 'g:lsp_type == "vim-lsp"'
 repo     = 'prabirshrestha/vim-lsp'
@@ -38,7 +38,7 @@ repo    = 'mattn/vim-lsp-settings'
 
 [[plugins]]
 hook_source_post = '''
-  source $XDG_CONFIG_HOME/vim/rc/plugins/coc.rc.vim
+  source $XDG_CONFIG_HOME/nvim/rc/coc.rc.vim
 '''
 if               = 'g:lsp_type == "coc"'
 repo             = 'neoclide/coc.nvim'

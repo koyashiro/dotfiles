@@ -63,11 +63,3 @@ set listchars=tab:>-,trail:.,eol:↲,
 
 " map
 source $XDG_CONFIG_HOME/vim/rc/map.rc.vim
-
-" dein
-let g:lsp_type = 'coc'
-source $XDG_CONFIG_HOME/vim/dein.rc.vim
-
-" colorscheme
-colorscheme iceberg
-let g:lightline.colorscheme = 'iceberg'
