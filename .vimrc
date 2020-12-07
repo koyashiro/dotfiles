@@ -47,6 +47,9 @@ set clipboard+=unnamedplus
 " viminfo
 set viminfo+=n"$XDG_DATA_HOME/vim/viminfo"
 
+" force increment and decrement to decimal
+set nrformats=
+
 set nowritebackup
 set nobackup
 set autoread
