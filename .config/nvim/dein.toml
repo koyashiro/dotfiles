@@ -104,3 +104,6 @@ hook_add = '''
   tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
 '''
 repo     = 'kassio/neoterm'
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
