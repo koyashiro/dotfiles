@@ -8,6 +8,3 @@ repo = 'cespare/vim-toml'
 
 [[plugins]]
 repo = 'elzr/vim-json'
-
-[[plugins]]
-repo = 'tpope/vim-markdown'
