@@ -30,6 +30,9 @@ set cursorline
 set hlsearch
 set incsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+set ignorecase
+set smartcase
+set wrapscan
 
 " tab line
 set showtabline=2
@@ -47,22 +50,28 @@ set clipboard+=unnamedplus
 " viminfo
 set viminfo+=n"$XDG_DATA_HOME/vim/viminfo"
 
-" force increment and decrement to decimal
-set nrformats=
+" hel and decimal
+set nrformats=hex
 
+" don't create backup
 set nowritebackup
 set nobackup
+
+" auto refresh changed content
 set autoread
-set visualbell
+
+" disable beeping
+set visualbell t_vb=
+set noerrorbells
+
+" tab
 set expandtab
 set tabstop=2
 set shiftwidth=2
-set ignorecase
-set smartcase
-set wrapscan
-set tw=0
+
+" eol, tab, space
 set list
-set listchars=tab:>-,trail:.,eol:↲,
+set listchars=eol:↲,tab:>-,space:.,trail:.
 
 " map
 source $XDG_CONFIG_HOME/vim/rc/map.rc.vim
