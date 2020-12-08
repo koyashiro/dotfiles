@@ -77,6 +77,11 @@ repo = 'Shougo/neosnippet-snippets'
 
 # fzf
 [[plugins]]
+merged = 0
+repo   = 'junegunn/fzf'
+
+[[plugins]]
+depends  = ['fzf']
 hook_add = '''
   nnoremap <Leader>f :<C-u>Files<CR>
   nnoremap <Leader>g :<C-u>Rg<CR>
