@@ -7,7 +7,9 @@
     "yaml",
     "toml",
     "rust",
-    "go"
+    "go",
+    "javascript",
+    "typescript"
   ],
   "eslint.options": {
     "configFile": "$XDG_CONFIG_HOME/eslint/global.eslintrc.yml"
