@@ -168,6 +168,7 @@ let g:coc_global_extensions = [
   \ 'coc-eslint',
   \ 'coc-python',
   \ 'coc-sh',
+  \ 'coc-vimlsp',
   \ 'coc-omnisharp',
   \ 'coc-go',
   \ 'coc-rust-analyzer',
