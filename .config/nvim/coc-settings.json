@@ -14,5 +14,5 @@
   "eslint.options": {
     "configFile": "$XDG_CONFIG_HOME/eslint/global.eslintrc.yml"
   },
-  "eslint.nodePath": "$XDG_DATA_HOME/npm/bin/eslint"
+  "eslint.nodePath": "$XDG_DATA_HOME/npm/lib/node_modules/"
 }
