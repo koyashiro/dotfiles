@@ -4,9 +4,10 @@ fi
 
 # tmux
 function launch_tmux() {
-  local sessions=$(tmux list-sessions)
+  local sessions=$(tmux list-sessions >& /dev/null)
   if [[ -z "$sessions" ]]; then
     tmux -u new-session
+    return
   fi
 
   local new_session='Create New Session'
@@ -22,6 +23,7 @@ function launch_tmux() {
     : # Start terminal normally
   fi
 }
+
 if [[ -z "$TMUX" ]]; then
   launch_tmux
 fi
