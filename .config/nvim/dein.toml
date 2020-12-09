@@ -3,7 +3,11 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-# statusline
+# colorscheme
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
+# statusline {{
 [[plugins]]
 depends  = ['vim-fugitive', 'vim-devicons']
 hook_add = '''
@@ -39,8 +43,31 @@ hook_add = '''
   endfunction
 '''
 repo     = 'itchyny/lightline.vim'
+# }}
 
-# git
+# japanese help
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+# indent guides
+[[plugins]]
+hook_add = '''
+  let g:indent_guides_enable_on_vim_startup = 1
+'''
+repo     = 'nathanaelkane/vim-indent-guides'
+
+# auto parirs
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+# EditorConfig
+[[plugins]]
+hook_add = '''
+  let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
+'''
+repo     = 'editorconfig/editorconfig-vim'
+
+# git {{
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
@@ -50,32 +77,11 @@ hook_add = '''
 '''
 repo     = 'airblade/vim-gitgutter'
 
-# EditorConfig
-[[plugins]]
-hook_add = '''
-  let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
-'''
-repo     = 'editorconfig/editorconfig-vim'
-
-# Vim
-[[plugins]]
-if   = '!has("nvim")'
-repo = 'roxma/nvim-yarp'
-
-[[plugins]]
-if   = '!has("nvim")'
-repo = 'roxma/vim-hug-neovim-rpc'
-
-# defx
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
+# }}
 
-# snippets
-[[plugins]]
-if   = 'g:lsp_type == "vim-lsp"'
-repo = 'Shougo/neosnippet-snippets'
-
-# fzf
+# fzf {{
 [[plugins]]
 merged = 0
 repo   = 'junegunn/fzf'
@@ -95,10 +101,9 @@ hook_add = '''
     \   <bang>0)
 '''
 repo     = 'junegunn/fzf.vim'
+# }}
 
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-
+# terminal integration {{
 [[plugins]]
 hook_add = '''
   let g:neoterm_default_mod='belowright'
@@ -109,12 +114,23 @@ hook_add = '''
   tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
 '''
 repo     = 'kassio/neoterm'
+# }}
+
+# syntax {{
+[[plugins]]
+repo = 'sheerun/vim-polyglot'
 
 [[plugins]]
-repo = 'vim-jp/vimdoc-ja'
+repo = 'cespare/vim-toml'
 
 [[plugins]]
-hook_add = '''
-  let g:indent_guides_enable_on_vim_startup = 1
+repo = 'elzr/vim-json'
+# }}
+
+# lsp
+[[plugins]]
+hook_source_post = '''
+  source $XDG_CONFIG_HOME/nvim/rc/coc.rc.vim
 '''
-repo     = 'nathanaelkane/vim-indent-guides'
+repo             = 'neoclide/coc.nvim'
+rev              = 'release'

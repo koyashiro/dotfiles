@@ -1,5 +1,6 @@
 # dein_lazy.toml
 
+# filer {{
 [[plugins]]
 depends          = ['vim-devicons', 'defx-icons', 'defx-git']
 hook_add         = '''
@@ -10,6 +11,14 @@ hook_post_source = '''
 '''
 repo             = 'Shougo/defx.nvim'
 
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'kristijanhusak/defx-icons'
+# }}
+
+# floating terminal
 [[plugins]]
 hook_add = '''
   let g:deol#custom_map = {
@@ -26,27 +35,12 @@ hook_add = '''
     \ 'quit': 'q',
     \ }
 
-  nnoremap <Leader>o :<C-u>Deol -split=horizontal<CR>
+  nnoremap <Leader>o :<C-u>Deol -split=floating<CR>
 '''
 repo     = 'Shougo/deol.nvim'
 
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
 
-[[plugins]]
-repo = 'kristijanhusak/defx-icons'
-
-[[plugins]]
-on_event = 'CmdwinEnter'
-repo     = 'markonm/traces.vim'
-
-[[plugins]]
-on_ft = 'vim'
-repo  = 'Shougo/neco-vim'
-
-[[plugins]]
-repo = 'Shougo/neco-syntax'
-
+# markdown preview
 [[plugins]]
 build = 'cd app & yarn install'
 if    = 'executable("yarn")'

@@ -1,4 +1,0 @@
-# "dein_colorscheme.toml
-
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
