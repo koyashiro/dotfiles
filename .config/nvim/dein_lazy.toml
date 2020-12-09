@@ -2,14 +2,14 @@
 
 # filer {{
 [[plugins]]
-depends          = ['vim-devicons', 'defx-icons', 'defx-git']
-hook_add         = '''
+repo = 'Shougo/defx.nvim'
+depends = ['vim-devicons', 'defx-icons', 'defx-git']
+hook_add = '''
   nnoremap <silent> <Leader>t :<C-u> Defx <CR>
 '''
 hook_post_source = '''
   source $XDG_CONFIG_HOME/nvim/rc/defx.rc.vim
 '''
-repo             = 'Shougo/defx.nvim'
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
@@ -20,6 +20,7 @@ repo = 'kristijanhusak/defx-icons'
 
 # floating terminal
 [[plugins]]
+repo = 'Shougo/deol.nvim'
 hook_add = '''
   let g:deol#custom_map = {
     \ 'edit': 'e',
@@ -37,12 +38,10 @@ hook_add = '''
 
   nnoremap <Leader>o :<C-u>Deol -split=floating<CR>
 '''
-repo     = 'Shougo/deol.nvim'
 
 
 # markdown preview
 [[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
 build = 'cd app & yarn install'
-if    = 'executable("yarn")'
 on_ft = 'markdown'
-repo  = 'iamcco/markdown-preview.nvim'

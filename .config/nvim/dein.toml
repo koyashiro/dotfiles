@@ -9,7 +9,8 @@ repo = 'cocopon/iceberg.vim'
 
 # statusline {{
 [[plugins]]
-depends  = ['vim-fugitive', 'vim-devicons']
+repo = 'itchyny/lightline.vim'
+depends = ['vim-fugitive', 'vim-devicons']
 hook_add = '''
   let g:lightline = {
     \ 'active': {
@@ -42,7 +43,6 @@ hook_add = '''
     return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
   endfunction
 '''
-repo     = 'itchyny/lightline.vim'
 # }}
 
 # japanese help
@@ -51,10 +51,10 @@ repo = 'vim-jp/vimdoc-ja'
 
 # indent guides
 [[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
 hook_add = '''
   let g:indent_guides_enable_on_vim_startup = 1
 '''
-repo     = 'nathanaelkane/vim-indent-guides'
 
 # auto parirs
 [[plugins]]
@@ -62,20 +62,20 @@ repo = 'jiangmiao/auto-pairs'
 
 # EditorConfig
 [[plugins]]
+repo = 'editorconfig/editorconfig-vim'
 hook_add = '''
   let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
 '''
-repo     = 'editorconfig/editorconfig-vim'
 
 # git {{
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
+repo = 'airblade/vim-gitgutter'
 hook_add = '''
   set signcolumn=yes
 '''
-repo     = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'kristijanhusak/defx-git'
@@ -83,11 +83,12 @@ repo = 'kristijanhusak/defx-git'
 
 # fzf {{
 [[plugins]]
+repo = 'junegunn/fzf'
 merged = 0
-repo   = 'junegunn/fzf'
 
 [[plugins]]
-depends  = ['fzf']
+repo = 'junegunn/fzf.vim'
+depends = ['fzf']
 hook_add = '''
   nnoremap <Leader>f :<C-u>Files<CR>
   nnoremap <Leader>g :<C-u>Rg<CR>
@@ -100,11 +101,11 @@ hook_add = '''
     \   fzf#vim#with_preview(),
     \   <bang>0)
 '''
-repo     = 'junegunn/fzf.vim'
 # }}
 
 # terminal integration {{
 [[plugins]]
+repo = 'kassio/neoterm'
 hook_add = '''
   let g:neoterm_default_mod='belowright'
   let g:neoterm_size=10
@@ -113,7 +114,6 @@ hook_add = '''
   nnoremap <silent> <C-t> :Ttoggle<CR>
   tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
 '''
-repo     = 'kassio/neoterm'
 # }}
 
 # syntax {{
@@ -129,8 +129,10 @@ repo = 'elzr/vim-json'
 
 # lsp
 [[plugins]]
-hook_source_post = '''
+repo = 'neoclide/coc.nvim'
+trusted = 1
+merged = 0
+rev = 'release'
+hook_add = '''
   source $XDG_CONFIG_HOME/nvim/rc/coc.rc.vim
 '''
-repo             = 'neoclide/coc.nvim'
-rev              = 'release'
