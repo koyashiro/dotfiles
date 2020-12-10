@@ -3,6 +3,6 @@ if [[ -z "$PS1" ]]; then
 fi
 
 # alias
-if [[ -f "$XDG_CONFIG_HOME/zsh/alias.zsh" ]]; then
-  source "$XDG_CONFIG_HOME/zsh/alias.zsh"
+if [[ -f "$ZDOTDIR/rc/alias.zsh" ]]; then
+  source "$ZDOTDIR/rc/alias.zsh"
 fi

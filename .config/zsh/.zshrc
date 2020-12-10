@@ -29,8 +29,8 @@ if [[ -z "$TMUX" ]]; then
 fi
 
 # zsh
-for f in $XDG_CONFIG_HOME/zsh/*.zsh; do
-  if [[ "$f" == "$XDG_CONFIG_HOME/zsh/zinit.zsh" ]]; then
+for f in $ZDOTDIR/rc/*.zsh; do
+  if [[ "$f" == "$ZDOTDIR/rc/zinit.zsh" ]]; then
     continue
   fi
 
@@ -42,10 +42,10 @@ for f in $XDG_CONFIG_HOME/zsh/*.zsh; do
 done
 
 # zinit
-if [[ -f $XDG_CONFIG_HOME/zsh/zinit.zsh ]]; then
-  if [[ ! -f "$XDG_CONFIG_HOME/zsh/zinit.zsh.zwc" ]] || [[ "$XDG_CONFIG_HOME/zsh/zinit.zsh" -nt "$XDG_CONFIG_HOME/zsh/zinit.zsh" ]]; then
-    zcompile "$XDG_CONFIG_HOME/zsh/zinit.zsh"
+if [[ -f $ZDOTDOR/rc/zinit.zsh ]]; then
+  if [[ ! -f "$ZDOTDOR/rc/zinit.zsh.zwc" ]] || [[ "$ZDOTDOR/rc/zinit.zsh" -nt "$ZDOTDOR/rc/zinit.zsh" ]]; then
+    zcompile "$ZDOTDOR/rc/zinit.zsh"
   fi
 
-  source "$XDG_CONFIG_HOME/zsh/zinit.zsh"
+  source "$ZDOTDOR/rc/zinit.zsh"
 fi
