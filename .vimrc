@@ -81,24 +81,9 @@ let mapleader = "\<Space>"
 inoremap <silent> jj <ESC>
 inoremap <silent> っｊ <ESC>
 
-" move cursor in insert mode
-inoremap <C-h> <left>
-inoremap <C-j> <down>
-inoremap <C-k> <up>
-inoremap <C-l> <right>
-
 " move window
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
-for n in range(1, 9)
-  execute 'nnoremap <silent> t'.n  ':<C-u>tabnext'.n.'<CR>'
-endfor
-
-map <silent> tc :tablast <bar> tabnew<CR>
-map <silent> tq :tabclose<CR>
-map <silent> tn :tabnext<CR>
-map <silent> tp :tabprevious<CR>
 " }}
