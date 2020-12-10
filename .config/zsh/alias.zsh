@@ -61,6 +61,7 @@ else
 fi
 alias gswc='git switch -c'
 alias gdf='git diff'
+alias gdfs='git diff --staged'
 alias gsh='git show'
 alias gl='git log'
 alias glf='git log --pretty=fuller'
