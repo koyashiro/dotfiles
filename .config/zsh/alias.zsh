@@ -52,8 +52,13 @@ alias grss.='git restore --staged .'
 alias grb='git rebase'
 alias grbi='git rebase -i'
 alias gbr='git branch'
-alias gbrd='git branch -d'
-alias gsw='git switch'
+if builtin command -v fzf >& /dev/null; then
+  alias gbrd='fzf-git-branch-d'
+  alias gsw='fzf-git-switch'
+else
+  alias gbrd='git branch -d'
+  alias gsw='git switch'
+fi
 alias gswc='git switch -c'
 alias gdf='git diff'
 alias gsh='git show'
