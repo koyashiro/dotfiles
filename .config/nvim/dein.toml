@@ -7,6 +7,10 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 
+# surround
+[[plugins]]
+repo = 'tpope/vim-surround'
+
 # statusline {{
 [[plugins]]
 repo = 'itchyny/lightline.vim'
