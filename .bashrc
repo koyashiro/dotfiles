@@ -2,7 +2,7 @@ if [[ -z "$PS1" ]]; then
   return
 fi
 
-# sh
-for f in $XDG_CONFIG_HOME/sh/*.sh; do
-  source $f
-done
+# alias
+if [[ -f "$XDG_CONFIG_HOME/zsh/alias.zsh" ]]; then
+  source "$XDG_CONFIG_HOME/zsh/alias.zsh"
+fi
