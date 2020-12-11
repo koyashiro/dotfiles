@@ -16,36 +16,36 @@ repo = 'tpope/vim-surround'
 repo = 'itchyny/lightline.vim'
 depends = ['vim-fugitive', 'vim-devicons']
 hook_add = '''
-  let g:lightline = {
-    \ 'active': {
-    \   'left': [
-    \     [ 'mode', 'paste' ],
-    \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
-    \   ],
-    \   'right': [
-    \     [ 'lineinfo' ],
-    \     [ 'percent' ],
-    \     [ 'fileformat', 'fileencoding', 'myfiletype' ],
-    \     [ 'coc' ],
-    \   ],
-    \ },
-    \ 'component_function': {
-    \   'gitbranch': 'MyFugitive',
-    \   'myfiletype': 'MyFileType',
-    \   'coc': 'coc#status',
-    \ },
-    \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-    \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
-    \ }
+let g:lightline = {
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \   ],
+  \   'right': [
+  \     [ 'lineinfo' ],
+  \     [ 'percent' ],
+  \     [ 'fileformat', 'fileencoding', 'myfiletype' ],
+  \     [ 'coc' ],
+  \   ],
+  \ },
+  \ 'component_function': {
+  \   'gitbranch': 'MyFugitive',
+  \   'myfiletype': 'MyFileType',
+  \   'coc': 'coc#status',
+  \ },
+  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+  \ }
 
-  function! MyFugitive()
-    let fugitive_head = FugitiveHead()
-    return strlen(fugitive_head) ? "\ue0a0 " . fugitive_head : ''
-  endfunction
+function! MyFugitive()
+  let fugitive_head = FugitiveHead()
+  return strlen(fugitive_head) ? "\ue0a0 " . fugitive_head : ''
+endfunction
 
-  function! MyFileType()
-    return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
-  endfunction
+function! MyFileType()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
+endfunction
 '''
 
 [[plugins]]
@@ -60,14 +60,14 @@ repo = 'vim-jp/vimdoc-ja'
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 hook_add = '''
-  let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 1
 '''
 
 # increment dates, times, and more
 [[plugins]]
 repo = 'tpope/vim-speeddating'
 hook_add = '''
-  autocmd MyAutoCmd VimEnter * SpeedDatingFormat %Y/%m/%d
+autocmd MyAutoCmd VimEnter * SpeedDatingFormat %Y/%m/%d
 '''
 
 # auto parirs
@@ -78,7 +78,7 @@ repo = 'jiangmiao/auto-pairs'
 [[plugins]]
 repo = 'editorconfig/editorconfig-vim'
 hook_add = '''
-  let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
+let g:EditorConfig_exclude_patterns = [ 'fugitive://.*' ]
 '''
 
 # git {{
@@ -88,7 +88,7 @@ repo = 'tpope/vim-fugitive'
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
-  set signcolumn=yes
+set signcolumn=yes
 '''
 
 [[plugins]]
@@ -104,16 +104,16 @@ merged = 0
 repo = 'junegunn/fzf.vim'
 depends = ['fzf']
 hook_add = '''
-  nnoremap <Leader>f :<C-u>Files<CR>
-  nnoremap <Leader>g :<C-u>Rg<CR>
-  nnoremap <Leader>b :<C-u>Buffers<CR>
+nnoremap <Leader>f :<C-u>Files<CR>
+nnoremap <Leader>g :<C-u>Rg<CR>
+nnoremap <Leader>b :<C-u>Buffers<CR>
 
-  command! -bang -nargs=* Rg
-    \ call fzf#vim#grep(
-    \   "rg --column --line-number --no-heading --color=always --smart-case --hidden -- ".shellescape(<q-args>),
-    \   1,
-    \   fzf#vim#with_preview(),
-    \   <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   "rg --column --line-number --no-heading --color=always --smart-case --hidden -- ".shellescape(<q-args>),
+  \   1,
+  \   fzf#vim#with_preview(),
+  \   <bang>0)
 '''
 # }}
 
@@ -121,12 +121,12 @@ hook_add = '''
 [[plugins]]
 repo = 'kassio/neoterm'
 hook_add = '''
-  let g:neoterm_default_mod='belowright'
-  let g:neoterm_size=10
-  let g:neoterm_autoinsert = 1
-  let g:neoterm_autoscroll=1
-  nnoremap <silent> <C-t> :Ttoggle<CR>
-  tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
+let g:neoterm_default_mod='belowright'
+let g:neoterm_size=10
+let g:neoterm_autoinsert = 1
+let g:neoterm_autoscroll=1
+nnoremap <silent> <C-t> :Ttoggle<CR>
+tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
 '''
 # }}
 
@@ -148,5 +148,5 @@ trusted = 1
 merged = 0
 rev = 'release'
 hook_add = '''
-  source $XDG_CONFIG_HOME/nvim/rc/coc.rc.vim
+source $XDG_CONFIG_HOME/nvim/rc/coc.rc.vim
 '''

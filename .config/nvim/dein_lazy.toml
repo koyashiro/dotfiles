@@ -5,10 +5,10 @@
 repo = 'Shougo/defx.nvim'
 depends = ['vim-devicons', 'defx-icons', 'defx-git']
 hook_add = '''
-  nnoremap <silent> <Leader>t :<C-u> Defx <CR>
+nnoremap <silent> <Leader>t :<C-u> Defx <CR>
 '''
 hook_post_source = '''
-  source $XDG_CONFIG_HOME/nvim/rc/defx.rc.vim
+source $XDG_CONFIG_HOME/nvim/rc/defx.rc.vim
 '''
 
 [[plugins]]
@@ -19,21 +19,21 @@ repo = 'kristijanhusak/defx-icons'
 [[plugins]]
 repo = 'Shougo/deol.nvim'
 hook_add = '''
-  let g:deol#custom_map = {
-    \ 'edit': 'e',
-    \ 'start_insert': 'i',
-    \ 'start_insert_first': 'I',
-    \ 'start_append': 'a',
-    \ 'start_append_last': 'A',
-    \ 'execute_line': '<CR>',
-    \ 'previous_prompt': '<C-p>',
-    \ 'next_prompt': '<C-n>',
-    \ 'paste_prompt': '<C-y>',
-    \ 'bg': '<C-z>',
-    \ 'quit': 'q',
-    \ }
+let g:deol#custom_map = {
+  \ 'edit': 'e',
+  \ 'start_insert': 'i',
+  \ 'start_insert_first': 'I',
+  \ 'start_append': 'a',
+  \ 'start_append_last': 'A',
+  \ 'execute_line': '<CR>',
+  \ 'previous_prompt': '<C-p>',
+  \ 'next_prompt': '<C-n>',
+  \ 'paste_prompt': '<C-y>',
+  \ 'bg': '<C-z>',
+  \ 'quit': 'q',
+  \ }
 
-  nnoremap <Leader>o :<C-u>Deol -split=floating<CR>
+nnoremap <Leader>o :<C-u>Deol -split=floating<CR>
 '''
 
 
