@@ -42,10 +42,10 @@ for f in $ZDOTDIR/rc/*.zsh; do
 done
 
 # zinit
-if [[ -f $ZDOTDOR/rc/zinit.zsh ]]; then
-  if [[ ! -f "$ZDOTDOR/rc/zinit.zsh.zwc" ]] || [[ "$ZDOTDOR/rc/zinit.zsh" -nt "$ZDOTDOR/rc/zinit.zsh" ]]; then
-    zcompile "$ZDOTDOR/rc/zinit.zsh"
+if [[ -f $ZDOTDIR/rc/zinit.zsh ]]; then
+  if [[ ! -f "$ZDOTDIR/rc/zinit.zsh.zwc" ]] || [[ "$ZDOTDIR/rc/zinit.zsh" -nt "$ZDOTDIR/rc/zinit.zsh" ]]; then
+    zcompile "$ZDOTDIR/rc/zinit.zsh"
   fi
 
-  source "$ZDOTDOR/rc/zinit.zsh"
+  source "$ZDOTDIR/rc/zinit.zsh"
 fi
