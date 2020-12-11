@@ -25,7 +25,7 @@ if ! builtin command -v powerline-shell >& /dev/null; then
   install_powerline_shell
 
   if ! builtin command -v powerline-shell >& /dev/null; then
-    exit
+    return
   fi
 fi
 

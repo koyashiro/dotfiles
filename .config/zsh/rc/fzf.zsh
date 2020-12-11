@@ -1,5 +1,5 @@
 if ! builtin command -v fzf >& /dev/null; then
-  exit
+  return
 fi
 
 if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
