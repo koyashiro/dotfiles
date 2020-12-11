@@ -12,9 +12,6 @@ hook_post_source = '''
 '''
 
 [[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
-[[plugins]]
 repo = 'kristijanhusak/defx-icons'
 # }}
 

@@ -47,6 +47,9 @@ hook_add = '''
     return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
   endfunction
 '''
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
 # }}
 
 # japanese help
