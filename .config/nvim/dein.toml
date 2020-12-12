@@ -7,9 +7,13 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 
-# surround
+# surround {{
 [[plugins]]
 repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+# }}
 
 # statusline {{
 [[plugins]]
