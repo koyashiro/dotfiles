@@ -5,13 +5,13 @@ function fzf-git-switch() {
   fi
 
   local -r branches=$(git branch | grep -v '\*')
-  local -r selected=$(echo $branches | fzf --prompt='SWITCH> ' | cut -b 3-)
+  local -r selected=$(echo "$branches" | fzf --prompt='SWITCH> ' | cut -b 3-)
 
   if [[ -z "$selected" ]]; then
     return
   fi
 
-  git switch $selected
+  git switch "$selected"
 }
 
 function fzf-git-branch-d() {
@@ -21,11 +21,11 @@ function fzf-git-branch-d() {
   fi
 
   local -r branches=$(git branch | grep -v '\*')
-  local -r selected=$(echo $branches | fzf --prompt='DELETE> ' | cut -b 3-)
+  local -r selected=$(echo "$branches" | fzf --prompt='DELETE> ' | cut -b 3-)
 
   if [[ -z "$selected" ]]; then
     return
   fi
 
-  git branch -d $selected
+  git branch -d "$selected"
 }

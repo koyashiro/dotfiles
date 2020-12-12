@@ -4,7 +4,7 @@
 alias powershell.exe=/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe
 
 # PowerShell 7
-alias pwsh.exe="/mnt/c/Program\ Files/PowerShell/7/pwsh.exe"
+alias pwsh.exe=/mnt/c/Program"\ "Files/PowerShell/7/pwsh.exe
 
 # cmd.exe
 alias cmd.exe=/mnt/c/Windows/system32/cmd.exe
@@ -13,24 +13,24 @@ alias cmd.exe=/mnt/c/Windows/system32/cmd.exe
 alias explorer.exe=/mnt/c/Windows/explorer.exe
 
 # git.exe
-alias git.exe="/mnt/c/Program\ Files/Git/cmd/git.exe"
+alias git.exe=/mnt/c/Program"\ "Files/Git/cmd/git.exe
 
 # Windows $HOME
-if [[ -f $XDG_CONFIG_HOME/wsl/winhome.sh ]]; then
-  source $XDG_CONFIG_HOME/wsl/winhome.sh
+if [[ -f "$XDG_CONFIG_HOME"/wsl/winhome.sh ]]; then
+  source "$XDG_CONFIG_HOME"/wsl/winhome.sh
 else
   export WINHOME="$(wslpath $(powershell.exe -Command 'Write-Host "$env:USERPROFILE" -NoNewLine'))"
-  echo "export WINHOME='$WINHOME'" > $XDG_CONFIG_HOME/wsl/winhome.sh
+  echo "export WINHOME='$WINHOME'" > "$XDG_CONFIG_HOME"/wsl/winhome.sh
 fi
 
 # VS Code
-alias code="$WINHOME/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
+alias code="$WINHOME"/AppData/Local/Programs/Microsoft"\ "VS"\ "Code/bin/code
 
 # clip.exe
 alias clip.exe='/mnt/c/Windows/System32/clip.exe'
 
 # wsl bin
-PATH=$XDG_DATA_HOME/wsl/bin:$PATH
+PATH="$XDG_DATA_HOME"/wsl/bin:$PATH
 
 # DISPLAY
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0

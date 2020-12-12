@@ -3,6 +3,6 @@ if [[ -z "$PS1" ]]; then
 fi
 
 # alias
-if [[ -f "$ZDOTDIR/rc/alias.zsh" ]]; then
-  source "$ZDOTDIR/rc/alias.zsh"
+if [[ -f "$ZDOTDIR"/rc/alias.zsh ]]; then
+  source "$ZDOTDIR"/rc/alias.zsh
 fi
