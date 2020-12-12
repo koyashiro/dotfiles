@@ -1,12 +1,5 @@
-# .profile
-if [[ -f $HOME/.profile ]]; then
-  source $HOME/.profile
-fi
+export ZDOTDIR="${HOME}/.config/zsh"
 
-# History file
-if [[ ! -d $XDG_DATA_HOME/zsh ]]; then
-  mkdir $XDG_DATA_HOME/zsh
+if [[ -f "${ZDOTDIR}/.zshenv" ]]; then
+  source "${ZDOTDIR}/.zshenv"
 fi
-export HISTFILE=$XDG_DATA_HOME/zsh/history
-
-typeset -U path PATH
