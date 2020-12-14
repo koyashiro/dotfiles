@@ -4,7 +4,7 @@ fi
 
 # tmux
 function launch_tmux() {
-  local sessions=$(tmux list-sessions >& /dev/null)
+  local sessions=$(tmux list-sessions 2> /dev/null)
   if [[ -z "$sessions" ]]; then
     tmux -u new-session
     return
