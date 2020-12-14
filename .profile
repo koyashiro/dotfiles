@@ -73,3 +73,6 @@ fi
 # fzf
 export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+
+# wget
+alias wget=wget\ --hsts-file="$XDG_CACHE_HOME"/wget/wget-hsts
