@@ -59,6 +59,7 @@ export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export GOPATH="$XDG_DATA_HOME"/go
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
