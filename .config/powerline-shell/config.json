@@ -4,7 +4,6 @@
     "cwd",
     "git",
     "jobs",
-    "~/.config/powerline-shell/segments/vimode.py",
     "root"
   ],
   "cwd": {

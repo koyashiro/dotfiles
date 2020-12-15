@@ -47,25 +47,21 @@ if [ "$TERM" != "linux" ]; then
   install_powerline_precmd
 fi
 
-export VIMODE='INSERT'
 function zle-keymap-select zle-line-init {
   case "$KEYMAP" in
     vicmd)
-      export VIMODE='NORMAL'
       echo -ne '\e[1 q'
       ;;
     main|viins)
-      export VIMODE='INSERT'
       echo -ne '\e[5 q'
       ;;
     vivis|vivli)
-      export VIMODE='VISUAL'
       echo -ne '\e[1 q'
       ;;
   esac
 
-  PS1="$(powerline-shell --shell zsh $POWERLINE_SHELL_EXITCODE)"
   zle reset-prompt
+  zle -R
 }
 
 zle -N zle-keymap-select
