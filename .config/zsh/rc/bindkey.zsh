@@ -36,6 +36,4 @@ fi
 
 bindkey -v
 bindkey 'jj' vi-cmd-mode
-bindkey '^h' backward-char
-bindkey '^l' forward-char
 bindkey '^ ' autosuggest-accept
