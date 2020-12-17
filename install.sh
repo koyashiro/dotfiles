@@ -17,13 +17,13 @@ for f in $dotdir/.??*; do
 done
 
 # $XDG_CONFIG_HOME
-[[ ! -d $XDG_CONFIG_HOME ]] && mkdir $XDG_CONFIG_HOME;:
+[[ ! -d $XDG_CONFIG_HOME ]] && mkdir -p $XDG_CONFIG_HOME;:
 for f in $dotdir/.config/??*; do
   ln -fns $f $XDG_CONFIG_HOME/$(basename $f)
 done
 
 # $XDG_DATA_HOME
-[[ ! -d $XDG_DATA_HOME ]] && mkdir $XDG_DATA_HOME;:
+[[ ! -d $XDG_DATA_HOME ]] && mkdir -p $XDG_DATA_HOME;:
 for f in $dotdir/.local/share/??*; do
   ln -fns $f $XDG_DATA_HOME/$(basename $f)
 done
