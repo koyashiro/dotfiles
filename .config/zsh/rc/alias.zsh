@@ -53,7 +53,7 @@ alias grb='git rebase'
 alias grbi='git rebase -i'
 alias gbr='git branch'
 if builtin command -v fzf >& /dev/null; then
-  alias gbrd='fzf-git-branch-d'
+  alias gbrd='fzf-git-branch-delete'
   alias gsw='fzf-git-switch'
 else
   alias gbrd='git branch -d'
