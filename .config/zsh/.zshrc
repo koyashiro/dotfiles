@@ -1,3 +1,7 @@
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 if [[ -z "$PS1" ]]; then
   return
 fi
@@ -48,4 +52,9 @@ if [[ -f "$ZDOTDIR"/rc/zinit.zsh ]]; then
   fi
 
   source "$ZDOTDIR"/rc/zinit.zsh
+fi
+
+# Powerlevel10k
+if [[ -f "$ZDOTDIR"/.p10k.zsh ]]; then
+  source "$ZDOTDIR"/.p10k.zsh
 fi
