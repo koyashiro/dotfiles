@@ -4,10 +4,9 @@ export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
 
 # LANGUAGE
-export LANGUAGE=ja_JP.UTF-8
-export LANG="$LANGUAGE"
-export LC_ALL="$LANGUAGE"
-export LC_CTYPE="$LANGUAGE"
+if locale -a 2> /dev/null | grep ja_JP.utf8 > /dev/null 2>&1; then
+  export LANG=ja_JP.UTF-8
+fi
 
 # Editor
 export EDITOR="$(builtin command -v nvim >/dev/null && echo 'nvim' || echo 'vim')"
