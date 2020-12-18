@@ -41,6 +41,9 @@ set showtabline=2
 set laststatus=2
 set noshowmode
 
+" cmd line
+set cmdheight=1
+
 " Python
 let g:python3_host_prog = 'python'
 
