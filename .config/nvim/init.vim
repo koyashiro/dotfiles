@@ -9,5 +9,8 @@ set viminfo&
 set viminfo+=n"$XDG_DATA_HOME/nvim/viminfo"
 
 " colorscheme
-colorscheme iceberg
-let g:lightline.colorscheme = 'iceberg'
+try
+  colorscheme onedark
+  let g:lightline.colorscheme = 'onedark'
+catch
+endtry

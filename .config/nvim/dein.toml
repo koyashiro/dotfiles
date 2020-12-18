@@ -3,9 +3,13 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-# colorscheme
+# colorscheme {{
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
+
+[[plugins]]
+repo = 'joshdick/onedark.vim'
+# }}
 
 # surround {{
 [[plugins]]
