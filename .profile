@@ -67,7 +67,7 @@ export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 
 # wsl
-if is_wsl; then
+if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   . "$XDG_CONFIG_HOME"/wsl/profile
 fi
 
