@@ -1,5 +1,7 @@
 *.zwc
 .config/git/config.user
 .config/aws/credentials
-.config/wsl/winhome.sh
+.config/wsl/profile
+.local/share/wsl/bin/*.exe
+.local/share/wsl/bin/code
 __pycache__/
