@@ -25,6 +25,7 @@ set number
 
 " cursor
 set cursorline
+set whichwrap=b,s,h,l,<,>,~,[,]
 
 " search
 set hlsearch
