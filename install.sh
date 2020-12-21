@@ -33,3 +33,8 @@ done
 for f in $dotdir/bin/??*; do
   ln -fns $f $HOME/bin/$(basename $f)
 done
+
+# wsl
+if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+  "$XDG_DATA_HOME"/wsl/bin/gen-wslprofile
+fi

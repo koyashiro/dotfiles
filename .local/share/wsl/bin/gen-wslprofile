@@ -6,6 +6,8 @@ if [ ! -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   exit 1
 fi
 
+alias powershell.exe='/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe'
+
 readonly SYSTEMDRIVE=/mnt/c
 readonly SYSTEMROOT="$SYSTEMDRIVE"/Windows
 readonly USERPROFILE="$(wslpath "$(powershell.exe -NoProfile -Command 'Write-Host $ENV:USERPROFILE')")"

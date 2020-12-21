@@ -67,7 +67,9 @@ export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 
 # wsl
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-  . "$XDG_CONFIG_HOME"/wsl/profile
+  if [ -f "$XDG_CONFIG_HOME"/wsl/profile ]; then
+    . "$XDG_CONFIG_HOME"/wsl/profile
+  fi
 fi
 
 # fzf
