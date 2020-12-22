@@ -5,7 +5,7 @@
 	editor = vim -c 'set fenc=utf-8'
 	autoCRLF = false
 	quotepath = false
-	pager = LESSCHARSET=utf-8 less -x4
+	pager = delta
 	whitespace = cr-at-eol
 	eol = lf
 [merge]
@@ -45,3 +45,10 @@
 	prompt = false
 [fetch]
 	prune = true
+[delta]
+	features = side-by-side line-numbers decorations
+	plus-color = "#012800"
+	minus-color = "#340001"
+	syntax-theme = OneHalfDark
+[interactive]
+	diffFilter = delta --color-only
