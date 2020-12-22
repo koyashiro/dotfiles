@@ -28,8 +28,8 @@
         "defaults":
         {
             // Put settings here that you want to apply to all profiles.
-            "fontFace": "Delugia Nerd Font",
-            "fontSize": 13,
+            "fontFace": "HackGenNerd Console",
+            "fontSize": 14,
             "background": "#282c34"
         },
         "list":
