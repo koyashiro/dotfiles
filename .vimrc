@@ -48,9 +48,6 @@ set cmdheight=1
 " Python
 let g:python3_host_prog = 'python'
 
-" clipboard
-set clipboard+=unnamedplus
-
 " viminfo
 set viminfo+=n"$XDG_DATA_HOME/vim/viminfo"
 
