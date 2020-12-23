@@ -16,6 +16,11 @@ export GIT_EDITOR="$EDITOR"
 
 # Pager
 export PAGER=less
+if builtin command -v delta >/dev/null 2>&1; then
+  export GIT_PAGER=delta
+else
+  export GIT_PAGER="$PAGER"
+fi
 
 # Less
 if [ ! -d "$XDG_CONFIG_HOME"/less ]; then
