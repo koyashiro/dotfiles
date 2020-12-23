@@ -151,6 +151,12 @@ repo = 'cespare/vim-toml'
 
 [[plugins]]
 repo = 'elzr/vim-json'
+
+[[plugins]]
+repo = 'oblitum/rainbow'
+hook_add = '''
+let g:rainbow_active = 1
+'''
 # }}
 
 # lsp
