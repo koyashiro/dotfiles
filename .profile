@@ -1,7 +1,16 @@
 # XDG Base Directory Specification
 export XDG_CONFIG_HOME="$HOME"/.config
+if [ ! -d "$XDG_CONFIG_HOME" ]; then
+    mkdir "$XDG_CONFIG_HOME"
+fi
 export XDG_CACHE_HOME="$HOME"/.cache
+if [ ! -d "$XDG_CACHE_HOME" ]; then
+    mkdir "$XDG_CACHE_HOME"
+fi
 export XDG_DATA_HOME="$HOME"/.local/share
+if [ ! -d "$XDG_DATA_HOME" ]; then
+    mkdir "$XDG_DATA_HOME"
+fi
 
 # LANGUAGE
 if locale -a 2> /dev/null | grep ja_JP.utf8 > /dev/null 2>&1; then
