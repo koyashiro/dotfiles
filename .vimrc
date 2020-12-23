@@ -74,6 +74,9 @@ set shiftwidth=2
 set list
 set listchars=eol:↲,tab:>-,space:.,trail:.
 
+" mouse
+set mouse=a
+
 " map {{
 " leader
 let mapleader = "\<Space>"
