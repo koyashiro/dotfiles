@@ -40,9 +40,9 @@ for f in "$dotdir"/.config/??*; do
   ln -fns $f "$XDG_CONFIG_HOME"/$(basename "$f")
 done
 
-# $HOME/bin
-for f in "$dotdir"/bin/??*; do
-  ln -fns "$f" "$HOME"/bin/$(basename "$f")
+# $HOME/.local/bin
+for f in "$dotdir"/.local/bin/??*; do
+  ln -fns "$f" "$HOME"/.local/bin/$(basename "$f")
 done
 
 # docker
