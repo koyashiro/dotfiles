@@ -116,7 +116,7 @@ merged = 0
 repo = 'junegunn/fzf.vim'
 depends = ['fzf']
 hook_add = '''
-nnoremap <Leader>f :<C-u>Files<CR>
+nnoremap <Leader>f :<C-u>GFiles<CR>
 nnoremap <Leader>g :<C-u>Rg<CR>
 nnoremap <Leader>b :<C-u>Buffers<CR>
 
