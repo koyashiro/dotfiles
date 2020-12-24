@@ -79,6 +79,11 @@ export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 
+# tig
+if [ ! -d "$XDG_DATA_HOME"/tig ]; then
+  mkdir -m 700 "$XDG_DATA_HOME"/tig
+fi
+
 # wsl
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   if [ -f "$XDG_CONFIG_HOME"/wsl/profile ]; then
