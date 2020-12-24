@@ -1,15 +1,15 @@
 # XDG Base Directory Specification
 export XDG_CONFIG_HOME="$HOME"/.config
-if [ ! -d "$XDG_CONFIG_HOME" ]; then
-    mkdir "$XDG_CONFIG_HOME"
-fi
 export XDG_CACHE_HOME="$HOME"/.cache
-if [ ! -d "$XDG_CACHE_HOME" ]; then
-    mkdir "$XDG_CACHE_HOME"
-fi
 export XDG_DATA_HOME="$HOME"/.local/share
+if [ ! -d "$XDG_CONFIG_HOME" ]; then
+  mkdir -m 700 "$XDG_CONFIG_HOME"
+fi
+if [ ! -d "$XDG_CACHE_HOME" ]; then
+  mkdir -m 700 "$XDG_CACHE_HOME"
+fi
 if [ ! -d "$XDG_DATA_HOME" ]; then
-    mkdir "$XDG_DATA_HOME"
+  mkdir -m 700 "$XDG_DATA_HOME"
 fi
 
 # LANGUAGE
@@ -33,10 +33,10 @@ fi
 
 # Less
 if [ ! -d "$XDG_CONFIG_HOME"/less ]; then
-  mkdir "$XDG_CONFIG_HOME"/less
+  mkdir -m 700 "$XDG_CONFIG_HOME"/less
 fi
 if [ ! -d "$XDG_CACHE_HOME"/less ]; then
-  mkdir "$XDG_CACHE_HOME"/less
+  mkdir -m 700 "$XDG_CACHE_HOME"/less
 fi
 export LESS='-fiMRfFx4X'
 export LESSCHARSET='utf-8'

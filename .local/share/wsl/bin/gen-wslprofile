@@ -40,7 +40,7 @@ ln -fns "$PROGRAMFILES"/Git/cmd/git.exe "$bin_path"/git.exe
 ln -fns "$LOCALAPPDATA"/Programs/Microsoft\ VS\ Code/bin/code "$bin_path"/code
 
 if [ ! -d "$XDG_CONFIG_HOME"/wsl ]; then
-  mkdir "$XDG_CONFIG_HOME"/wsl
+  mkdir -m 700 "$XDG_CONFIG_HOME"/wsl
 fi
 cat << EOS > $XDG_CONFIG_HOME/wsl/profile
 # Generated on $(date)
