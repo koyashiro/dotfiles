@@ -91,6 +91,11 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   fi
 fi
 
+# bat
+if builtin command -v bat >/dev/null 2>&1; then
+  export BAT_THEME=OneHalfDark
+fi
+
 # fzf
 export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
