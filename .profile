@@ -69,13 +69,26 @@ export SAVEHIST=1000000
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 
+# Rust
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
+
+# Go
 export GOPATH="$XDG_DATA_HOME"/go
+
+# npm
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+
+# yarn
 export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
+
+# Docker
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+
+# Nuget
 export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
+
+# AWS
 export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
 
