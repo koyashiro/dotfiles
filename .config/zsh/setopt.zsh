@@ -2,6 +2,8 @@ setopt auto_cd
 setopt correct
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
 setopt share_history
 setopt globdots
 setopt menu_complete
