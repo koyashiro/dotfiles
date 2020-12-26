@@ -1,12 +1,14 @@
-# .profile
-if [[ -f "$HOME"/.profile ]]; then
-  source "$HOME"/.profile
+# .zshenv
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_DATA_HOME="$HOME"/.local/share
+
+# env
+if [ -f "$XDG_CONFIG_HOME"/sh/env.sh ]; then
+  source "$XDG_CONFIG_HOME"/sh/env.sh
 fi
 
-# History file
-if [[ ! -d "$XDG_DATA_HOME"/zsh ]]; then
-  mkdir "$XDG_DATA_HOME"/zsh
-fi
-export HISTFILE="$XDG_DATA_HOME"/zsh/history
-
+# normalize $PATH
 typeset -U path PATH

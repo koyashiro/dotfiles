@@ -1,14 +1,16 @@
-# .profile
-if [[ -f "$HOME"/.profile ]]; then
-  source "$HOME"/.profile
+# .bash_profile
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_DATA_HOME="$HOME"/.local/share
+
+# env
+if [[ -f "$XDG_CONFIG_HOME"/sh/env.sh ]]; then
+  source "$XDG_CONFIG_HOME"/sh/env.sh
 fi
 
-# History file
-if [[ ! -d "$XDG_DATA_HOME"/bash ]]; then
-  mkdir "$XDG_DATA_HOME"/bash
-fi
-export HISTFILE="$XDG_DATA_HOME"/bash/history
-
-if [[ -f "$HOME"/.bashrc ]]; then
+# .bashrc
+if [[ -n "$PS1" && -f "$HOME"/.bashrc ]]; then
   source "$HOME"/.bashrc
 fi

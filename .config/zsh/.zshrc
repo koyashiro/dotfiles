@@ -1,6 +1,4 @@
-if [[ -z "$PS1" ]]; then
-  return
-fi
+# .zshrc
 
 # tmux
 function launch_tmux() {
@@ -28,16 +26,21 @@ if [[ -z "$TMUX" ]]; then
   launch_tmux
 fi
 
+# History file
+export HISTFILE="$XDG_DATA_HOME"/zsh/history
+if [[ ! -d "$(dirname $HISTFILE)" ]]; then
+  mkdir -m 700 "$(dirname "$HISTFILE")"
+fi
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+
+# Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# zsh
-for f in "$ZDOTDIR"/rc/*.zsh; do
-  if [[ "$f" == "$ZDOTDIR"/rc/zinit.zsh ]]; then
-    continue
-  fi
-
+# sh rc
+for f in "$XDG_CONFIG_HOME"/sh/*.sh; do
   if [[ ! -f "$f".zwc ]] || [[ "$f" -nt "$f".zwc ]]; then
     zcompile "$f"
   fi
@@ -45,16 +48,11 @@ for f in "$ZDOTDIR"/rc/*.zsh; do
   source "$f"
 done
 
-# zinit
-if [[ -f "$ZDOTDIR"/rc/zinit.zsh ]]; then
-  if [[ ! -f "$ZDOTDIR"/rc/zinit.zsh.zwc ]] || [[ "$ZDOTDIR"/rc/zinit.zsh -nt "$ZDOTDIR"/rc/zinit.zsh ]]; then
-    zcompile "$ZDOTDIR"/rc/zinit.zsh
+# zsh rc
+for f in autoload.zsh bindkey.zsh fzf.zsh setopt.zsh zle.zsh zstyle.zsh zinit.zsh .p10k.zsh;do
+  if [[ ! -f "$ZDOTDIR"/"$f".zwc ]] || [[ "$ZDOTDIR"/"$f" -nt "$ZDOTDIR"/"$f".zwc ]]; then
+    zcompile "$ZDOTDIR"/"$f"
   fi
 
-  source "$ZDOTDIR"/rc/zinit.zsh
-fi
-
-# Powerlevel10k
-if [[ -f "$ZDOTDIR"/.p10k.zsh ]]; then
-  source "$ZDOTDIR"/.p10k.zsh
-fi
+  source "$ZDOTDIR"/"$f"
+done
