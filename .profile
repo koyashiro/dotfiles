@@ -11,7 +11,7 @@ if [ -f "$XDG_CONFIG_HOME"/sh/env.sh ]; then
 fi
 
 # rc
-if [[ -n "$PS1" ]]; then
+if [ -n "$PS1" ]; then
   # alias
   source "$XDG_CONFIG_HOME"/sh/alias.sh
 
