@@ -54,7 +54,6 @@ export LESS_TERMCAP_us
 # bin
 PATH="$HOME"/.local/bin:"$PATH"
 PATH="$XDG_DATA_HOME"/docker/bin:"$PATH"
-PATH="$HOME"/bin:"$PATH"
 PATH="$PATH":"$XDG_DATA_HOME"/go/bin
 PATH="$PATH":"$XDG_DATA_HOME"/cargo/bin
 PATH="$PATH":"$XDG_DATA_HOME"/npm/bin
