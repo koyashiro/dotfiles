@@ -6,7 +6,7 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.sh]
+[*.{sh,bash,zsh}]
 charset = utf-8
 end_of_line = lf
 indent_style = space
