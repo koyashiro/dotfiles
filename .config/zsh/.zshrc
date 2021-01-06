@@ -2,6 +2,18 @@
 
 # tmux
 function launch_tmux() {
+  # tmux executable checking
+  if ! builtin command -v tmux > /dev/null 2>&1; then
+    echo 'launch_tmux: command not found: tmux' 1>&2
+    return 127
+  fi
+
+  # fzf executable checking
+  if ! builtin command -v fzf > /dev/null 2>&1; then
+    echo 'launch_tmux: command not found: fzf' 1>&2
+    return 127
+  fi
+
   local sessions=$(tmux list-sessions 2> /dev/null)
   if [[ -z "$sessions" ]]; then
     tmux -u new-session
@@ -22,7 +34,7 @@ function launch_tmux() {
   fi
 }
 
-if [[ -z "$TMUX" ]]; then
+if [[ -z "$TMUX" ]] && builtin command -v fzf > /dev/null 2>&1; then
   launch_tmux
 fi
 
