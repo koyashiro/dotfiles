@@ -90,7 +90,7 @@ end_of_line = lf
 indent_style = space
 indent_size = 4
 
-[*.go]
+[{*.go,go.mod}]
 charset = utf-8
 end_of_line = lf
 indent_style = tab
