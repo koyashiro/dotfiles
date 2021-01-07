@@ -37,6 +37,9 @@ else
   alias tree='tree -a -I "\.git"'
 fi
 
+# ripgrep
+alias rg='rg --hidden --glob "!.git"'
+
 # Git
 alias g=git
 alias gst='git status'
