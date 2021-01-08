@@ -20,3 +20,8 @@ echo '#!/bin/bash\n' | cat - .bashrc | shellcheck -x -
 echo '#!/bin/bash\n' | cat - .zshenv | shellcheck -x -
 echo '#!/bin/bash\n' | cat - .config/zsh/.zshenv | shellcheck -x -
 echo '#!/bin/bash\n' | cat - .config/zsh/.zshrc | shellcheck -x -
+
+# .local/bin
+for f in .local/bin/*; do
+  shellcheck "$f"
+done
