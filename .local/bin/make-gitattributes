@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-if [[ -e .gitattributes ]]; then
+if [ -e .gitattributes ]; then
   # shellcheck disable=SC2016
   printf '\033[31merror:\033[m `.gitattributes` alreadly exists\n' 1>&2
   exit 1
