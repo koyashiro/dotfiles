@@ -22,7 +22,6 @@ repo = 'tpope/vim-repeat'
 # statusline {{
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['vim-fugitive', 'vim-devicons']
 hook_add = '''
 let g:lightline = {
   \ 'active': {
@@ -40,19 +39,35 @@ let g:lightline = {
   \ 'component_function': {
   \   'gitbranch': 'MyFugitive',
   \   'myfiletype': 'MyFileType',
-  \   'coc': 'coc#status',
+  \   'coc': 'MyCocStatus',
   \ },
   \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
   \ }
 
 function! MyFugitive()
-  let fugitive_head = FugitiveHead()
-  return strlen(fugitive_head) ? "\ue0a0 " . fugitive_head : ''
+  try
+    let fugitive_head = FugitiveHead()
+    return strlen(fugitive_head) ? "\ue0a0 " . fugitive_head : ''
+  catch
+    return ''
+  endtry
 endfunction
 
 function! MyFileType()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
+  try
+    return winwidth(0) > 70 ? (strlen(&filetype) ? WebDevIconsGetFileTypeSymbol() . ' ' . &filetype : 'no ft') : ''
+  catch
+    return winwidth(0) > 70 ? (strlen(&filetype) &filetype : 'no ft') : ''
+  endtry
+endfunction
+
+function! MyCocStatus()
+  try
+    return coc#status()
+  catch
+    return ''
+  endtry
 endfunction
 '''
 
@@ -165,6 +180,7 @@ repo = 'neoclide/coc.nvim'
 trusted = 1
 merged = 0
 rev = 'release'
+if = 'executable("node") && executable("npm") && executable("yarn")'
 hook_add = '''
 source $XDG_CONFIG_HOME/nvim/rc/coc.rc.vim
 '''
