@@ -6,9 +6,12 @@ if ! builtin command -v shellcheck > /dev/null; then
   exit 1
 fi
 
-shellcheck -x .profile
-shellcheck -x .bash_profile
-shellcheck -x .bashrc
-shellcheck .config/sh/env.sh
-shellcheck .config/sh/alias.sh
-shellcheck .config/sh/function.sh
+# sh
+echo '#!/bin/sh\n' | cat - .profile | shellcheck -x -
+for f in .config/sh/*.sh; do
+  echo '#!/bin/sh\n' | cat - "$f" | shellcheck -
+done
+
+# bash
+echo '#!/bin/bash\n' | cat - .bash_profile | shellcheck -x -
+echo '#!/bin/bash\n' | cat - .bashrc | shellcheck -x -

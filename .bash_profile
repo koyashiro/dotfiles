@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # .bash_profile
 
 # XDG Base Directory Specification

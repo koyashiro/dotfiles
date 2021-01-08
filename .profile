@@ -1,5 +1,3 @@
-#!/bin/sh
-
 # .profile
 
 # XDG Base Directory Specification

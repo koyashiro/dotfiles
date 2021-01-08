@@ -1,5 +1,3 @@
-#!/bin/sh
-
 alias ..='cd ..'
 
 # enable color support

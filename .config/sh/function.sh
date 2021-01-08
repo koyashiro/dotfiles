@@ -1,5 +1,3 @@
-#!/bin/sh
-
 fzf_git_switch() {
   (
     if [ $# -ne 0 ]; then
