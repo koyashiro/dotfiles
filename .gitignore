@@ -4,4 +4,3 @@
 .config/wsl/profile
 .local/share/wsl/bin/*.exe
 .local/share/wsl/bin/code
-__pycache__/
