@@ -6,6 +6,11 @@ if ! builtin command -v shellcheck > /dev/null; then
   exit 1
 fi
 
+shellcheck "$0"
+
+# install.sh
+shellcheck install.sh
+
 # sh
 printf '#!/bin/sh\n' | cat - .profile | shellcheck -x -
 for f in .config/sh/*.sh; do
