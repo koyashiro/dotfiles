@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/sh
 
 # .config .cache .local .local/share .local/bin
 if [[ ! -d "$HOME"/.config ]]; then
