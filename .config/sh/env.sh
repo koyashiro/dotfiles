@@ -4,7 +4,7 @@ if locale -a 2> /dev/null | grep ja_JP.utf8 > /dev/null 2>&1; then
 fi
 
 # Editor
-if builtin command -v nvim >/dev/null 2>&1; then
+if command -v nvim >/dev/null 2>&1; then
   export EDITOR=nvim
 else
   export EDITOR=vim
@@ -15,7 +15,7 @@ export GIT_EDITOR="$EDITOR"
 
 # Pager
 export PAGER=less
-if builtin command -v delta >/dev/null 2>&1; then
+if command -v delta >/dev/null 2>&1; then
   export GIT_PAGER=delta
 else
   export GIT_PAGER="$PAGER"
@@ -89,7 +89,7 @@ if [ ! -d "$XDG_DATA_HOME"/tig ]; then
 fi
 
 # bat
-if builtin command -v bat >/dev/null 2>&1; then
+if command -v bat >/dev/null 2>&1; then
   export BAT_THEME=OneHalfDark
 fi
 

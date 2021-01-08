@@ -9,7 +9,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-if builtin command -v exa >/dev/null 2>&1; then
+if command -v exa >/dev/null 2>&1; then
   alias ll='exa -alhFg --icons'
 else
   alias ll='ls -alhAF'
@@ -29,7 +29,7 @@ alias tsource='tmux source-file'
 alias emacs=vim
 
 # tree
-if builtin command -v exa >/dev/null 2>&1; then
+if command -v exa >/dev/null 2>&1; then
   alias tree='exa --tree -a --git-ignore --icons --ignore-glob=".git"'
 else
   alias tree='tree -a -I "\.git"'
@@ -52,7 +52,7 @@ alias grss.='git restore --staged .'
 alias grb='git rebase'
 alias grbi='git rebase -i'
 alias gbr='git branch'
-if builtin command -v fzf >/dev/null 2>&1; then
+if command -v fzf >/dev/null 2>&1; then
   alias gbrd='fzf_git_branch_delete'
   alias gsw='fzf_git_switch'
 else
