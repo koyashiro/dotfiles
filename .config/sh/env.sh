@@ -90,14 +90,6 @@ if [ ! -d "$XDG_DATA_HOME"/tig ]; then
   mkdir -m 700 "$XDG_DATA_HOME"/tig
 fi
 
-# wsl
-if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-  if [ -f "$XDG_CONFIG_HOME"/wsl/profile ]; then
-    # shellcheck disable=SC1090,SC1091
-    . "$XDG_CONFIG_HOME"/wsl/profile
-  fi
-fi
-
 # bat
 if builtin command -v bat >/dev/null 2>&1; then
   export BAT_THEME=OneHalfDark

@@ -13,6 +13,14 @@ if [[ -f "$XDG_CONFIG_HOME"/sh/env.sh ]]; then
   source "$XDG_CONFIG_HOME"/sh/env.sh
 fi
 
+# wsl
+if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
+  if [[ -f "$XDG_CONFIG_HOME"/wsl/profile ]]; then
+    # shellcheck disable=SC1090,SC1091
+    source "$XDG_CONFIG_HOME"/wsl/profile
+  fi
+fi
+
 # .bashrc
 if [[ -n "$PS1" && -f "$HOME"/.bashrc ]]; then
   # shellcheck source=.bashrc
