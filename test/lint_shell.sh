@@ -15,3 +15,8 @@ done
 # bash
 echo '#!/bin/bash\n' | cat - .bash_profile | shellcheck -x -
 echo '#!/bin/bash\n' | cat - .bashrc | shellcheck -x -
+
+# zsh
+echo '#!/bin/bash\n' | cat - .zshenv | shellcheck -x -
+echo '#!/bin/bash\n' | cat - .config/zsh/.zshenv | shellcheck -x -
+echo '#!/bin/bash\n' | cat - .config/zsh/.zshrc | shellcheck -x -

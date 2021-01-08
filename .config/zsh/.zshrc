@@ -14,16 +14,20 @@ function launch_tmux() {
     return 127
   fi
 
-  local sessions=$(tmux list-sessions 2> /dev/null)
+  local sessions
+  sessions=$(tmux list-sessions 2> /dev/null)
   if [[ -z "$sessions" ]]; then
     tmux -u new-session
     return
   fi
 
-  local new_session='Create New Session'
-  local all_sessions="${sessions}\n${new_session}:"
+  local new_session
+  new_session='Create New Session'
+  local all_sessions
+  all_sessions="${sessions}\n${new_session}:"
 
-  local target_session="$(echo "$all_sessions" | fzf | cut -d: -f1)"
+  local target_session
+  target_session="$(echo "$all_sessions" | fzf | cut -d: -f1)"
 
   if [[ "$target_session" = "$new_session" ]]; then
     tmux -u new-session
@@ -40,7 +44,7 @@ fi
 
 # History file
 export HISTFILE="$XDG_DATA_HOME"/zsh/history
-if [[ ! -d "$(dirname $HISTFILE)" ]]; then
+if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
   mkdir -m 700 "$(dirname "$HISTFILE")"
 fi
 export HISTSIZE=1000000
@@ -48,6 +52,7 @@ export SAVEHIST=1000000
 
 # Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  # shellcheck disable=SC1090
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
@@ -57,6 +62,7 @@ for f in "$XDG_CONFIG_HOME"/sh/*.sh; do
     zcompile "$f"
   fi
 
+  # shellcheck disable=SC1090
   source "$f"
 done
 
@@ -66,5 +72,6 @@ for f in autoload.zsh bindkey.zsh fzf.zsh setopt.zsh zle.zsh zstyle.zsh zinit.zs
     zcompile "$ZDOTDIR"/"$f"
   fi
 
+  # shellcheck disable=SC1090
   source "$ZDOTDIR"/"$f"
 done
