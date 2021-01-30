@@ -1,9 +1,11 @@
 #!/bin/sh
 
+set -eux
+
 dotdir="$HOME"/.dotfiles
 readonly dotdir
 
-cd || exit
+cd
 
 if [ ! -d "$dotdir" ]; then
   if command -v git > /dev/null 2>&1; then
@@ -28,7 +30,7 @@ if [ ! -d "$dotdir" ]; then
   fi
 fi
 
-cd "$dotdir" || exit
+cd "$dotdir"
 
 # .config .cache .local .local/share .local/bin
 if [ ! -d "$HOME"/.config ]; then
