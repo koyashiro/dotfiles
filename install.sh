@@ -50,9 +50,9 @@ if [ ! -d "$HOME"/.local/bin ]; then
 fi
 
 # XDG Base Directory
-export XDG_CONFIG_HOME="$HOME"/.config
-export XDG_CACHE_HOME="$HOME"/.cache
-export XDG_DATA_HOME="$HOME"/.local/share
+XDG_CONFIG_HOME="$HOME"/.config
+XDG_CACHE_HOME="$HOME"/.cache
+XDG_DATA_HOME="$HOME"/.local/share
 
 # dot files
 for f in .??*; do
