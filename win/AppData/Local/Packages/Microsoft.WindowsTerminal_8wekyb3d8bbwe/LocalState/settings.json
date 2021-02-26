@@ -30,7 +30,8 @@
             // Put settings here that you want to apply to all profiles.
             "fontFace": "HackGenNerd Console",
             "fontSize": 14,
-            "background": "#282c34"
+            "background": "#282c34",
+            "bellStyle": "none"
         },
         "list":
         [
