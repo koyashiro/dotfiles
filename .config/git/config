@@ -35,6 +35,7 @@
 	rb = rebase
 	mg = merge
 	pl = pull
+	ps = push
 	l = log
 	lf = log --pretty=fuller
 	sh = show
