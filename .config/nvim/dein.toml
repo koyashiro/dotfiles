@@ -90,13 +90,6 @@ let g:indent_guides_enable_on_vim_startup = 1
 [[plugins]]
 repo = 'ntpeters/vim-better-whitespace'
 
-# increment dates, times, and more
-[[plugins]]
-repo = 'tpope/vim-speeddating'
-hook_add = '''
-autocmd MyAutoCmd VimEnter * SpeedDatingFormat %Y/%m/%d
-'''
-
 # auto parirs
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
