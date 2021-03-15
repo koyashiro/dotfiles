@@ -169,7 +169,6 @@ let g:coc_global_extensions = [
   \ 'coc-python',
   \ 'coc-html',
   \ 'coc-emmet',
-  \ 'coc-spell-checker',
   \ 'coc-sh',
   \ 'coc-vimlsp',
   \ 'coc-omnisharp',
