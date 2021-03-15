@@ -55,6 +55,7 @@ PATH="$XDG_DATA_HOME"/docker/bin:"$PATH"
 PATH="$PATH":"$XDG_DATA_HOME"/go/bin
 PATH="$PATH":"$XDG_DATA_HOME"/cargo/bin
 PATH="$PATH":"$XDG_DATA_HOME"/npm/bin
+PATH="$PATH":"$XDG_DATA_HOME"/gem/bin
 export PATH
 
 # zsh

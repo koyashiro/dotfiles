@@ -174,6 +174,7 @@ let g:coc_global_extensions = [
   \ 'coc-omnisharp',
   \ 'coc-go',
   \ 'coc-rust-analyzer',
+  \ 'coc-solargraph',
   \ 'coc-markdownlint',
   \ 'coc-sql',
   \ ]
