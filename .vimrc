@@ -91,3 +91,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 " }}
+
+" dein
+source $XDG_CONFIG_HOME/nvim/dein.rc.vim
+
+" colorscheme
+try
+  colorscheme onedark
+  let g:lightline.colorscheme = 'onedark'
+  set cmdheight=1
+catch
+endtry
