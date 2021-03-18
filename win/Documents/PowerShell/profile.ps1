@@ -28,4 +28,4 @@ function ll {
 
 Import-Module posh-git
 Import-Module oh-my-posh
-Set-Theme Paradox
+Set-PoshPrompt -Theme powerlevel10k_classic
