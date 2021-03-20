@@ -101,8 +101,13 @@ if has('nvim')
   let s:vim_plug_path = expand(stdpath('data') . '/site/autoload/plug.vim')
   let s:plugged_path = expand(stdpath('data') . '/plugged')
 else
-  let s:vim_plug_path = expand('~/.vim/autoload/plug.vim')
-  let s:plugged_path = expand('~/.vim/plugged')
+  if has('unix') || has('mac')
+    let s:vim_plug_path = expand('~/.vim/autoload/plug.vim')
+    let s:plugged_path = expand('~/.vim/plugged')
+  elseif has('win32') || has('win64')
+    let s:vim_plug_path = expand('~/vimfiles/autoload/plug.vim')
+    let s:plugged_path = expand('~/vimfiles/plugged')
+  endif
 endif
 let s:vim_plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 " }}}
