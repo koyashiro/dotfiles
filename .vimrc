@@ -22,6 +22,7 @@ set fileformats=unix,dos,mac
 
 " row number
 set number
+set signcolumn=yes
 
 " cursor
 set cursorline
@@ -74,10 +75,13 @@ set shiftwidth=2
 set list
 set listchars=eol:↲,tab:>-,space:.,trail:.
 
+" folding
+set foldmethod=marker
+
 " mouse
 set mouse=a
 
-" map {{
+" map {{{
 " leader
 let mapleader = "\<Space>"
 
@@ -90,15 +94,143 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" }}
+" }}}
 
-" dein
-source $XDG_CONFIG_HOME/nvim/dein.rc.vim
+" vim-plug variables {{{
+if has('nvim')
+  let s:vim_plug_path = expand(stdpath('data') . '/site/autoload/plug.vim')
+  let s:plugged_path = expand(stdpath('data') . '/plugged')
+else
+  let s:vim_plug_path = expand('~/.vim/autoload/plug.vim')
+  let s:plugged_path = expand('~/.vim/plugged')
+endif
+let s:vim_plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+" }}}
 
+" download vim-plug {{{
+if !filereadable(s:vim_plug_path)
+  echo 'download vim-plg to ' . s:vim_plug_path
+  if has('unix') || has('mac')
+    call system('curl -fLo ' . s:vim_plug_path . ' --create-dirs ' . s:vim_plug_url)
+  elseif has('win32') || has('win64')
+    echo 'download vim-plg to ' . s:vim_plug_path
+    call system('powershell.exe -Command "iwr -useb ' . s:vim_plug_url . ' | ni -Force ' . s:vim_plug_path . '"')
+  endif
+endif
+" }}}
+
+" vim-plug plugins {{{
+call plug#begin(s:plugged_path)
 " colorscheme
-try
-  colorscheme onedark
-  let g:lightline.colorscheme = 'onedark'
-  set cmdheight=1
-catch
-endtry
+Plug 'joshdick/onedark.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'ghifarit53/tokyonight-vim'
+
+" status line {{{
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \   ],
+  \   'right': [
+  \     [ 'lineinfo' ],
+  \     [ 'percent' ],
+  \     [ 'fileformat', 'fileencoding', 'devicons_filetype' ],
+  \   ],
+  \ },
+  \ 'component_function': {
+  \   'devicons_filetype': 'WebDevIconsGetFileTypeSymbol',
+  \   'gitbranch': 'LightLineGitBranch',
+  \ },
+  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
+  \ }
+
+function! LightLineGitBranch()
+  let l:branch_name = FugitiveHead()
+  if strlen(l:branch_name)
+    return "\ue0a0 " . l:branch_name
+  else
+    return ''
+  endif
+endfunction
+" }}}
+
+" filer
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+nnoremap <C-e> :NERDTreeToggle<CR>
+Plug 'ryanoasis/vim-devicons'
+
+" japanese documentation
+Plug 'vim-jp/vimdoc-ja'
+
+" surround
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+
+" fuzzy finder
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+nnoremap <C-p> :<C-u>GFiles<CR>
+
+" lsp {{{
+Plug 'prabirshrestha/vim-lsp'
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> gs <plug>(lsp-document-symbol-search)
+  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+  nmap <buffer> gr <plug>(lsp-references)
+  nmap <buffer> gi <plug>(lsp-implementation)
+  nmap <buffer> gt <plug>(lsp-type-definition)
+  nmap <buffer> <leader>rn <plug>(lsp-rename)
+  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
+  inoremap <buffer> <expr><c-f> lsp#scroll(+4)
+  inoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+  let g:lsp_format_sync_timeout = 1000
+
+  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+Plug 'mattn/vim-lsp-settings'
+" }}}
+
+" completion
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+
+" EditorConfig
+Plug 'editorconfig/editorconfig-vim'
+
+" syntax
+Plug 'sheerun/vim-polyglot'
+Plug 'cespare/vim-toml'
+Plug 'elzr/vim-json'
+
+" git
+if executable('git')
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
+endif
+
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] }
+call plug#end()
+" }}}
+
+colorscheme tokyonight
+let g:lightline.colorscheme = 'tokyonight'
