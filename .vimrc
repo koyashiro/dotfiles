@@ -237,5 +237,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 call plug#end()
 " }}}
 
-colorscheme tokyonight
-let g:lightline.colorscheme = 'tokyonight'
+try
+  colorscheme tokyonight
+  let g:lightline.colorscheme = 'tokyonight'
+catch
+  echo 'colorscheme is not exists.'
+endtry
