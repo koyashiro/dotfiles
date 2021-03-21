@@ -18,7 +18,9 @@ $excludes = @(
   '.git',
   '.gitattributes',
   '.gitconfig',
-  '.local'
+  '.local',
+  '.editorconfig',
+  '.prettierrc'
 )
 
 # dotfiles

@@ -61,6 +61,8 @@ for f in .??*; do
   [ "$f" = '.gitattributes' ] && continue
   [ "$f" = '.gitignore' ] && continue
   [ "$f" = '.local' ] && continue
+  [ "$f" = '.editorconfig' ] && continue
+  [ "$f" = '.prettierrc' ] && continue
 
   ln -fns "$dotdir"/"$f" "$HOME"/"$f"
 done
