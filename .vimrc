@@ -146,12 +146,17 @@ let g:lightline = {
   \   ],
   \ },
   \ 'component_function': {
-  \   'devicons_filetype': 'WebDevIconsGetFileTypeSymbol',
+  \   'devicons_filetype': 'LightLineFileType',
   \   'gitbranch': 'LightLineGitBranch',
   \ },
   \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
   \ }
+
+function! LightLineFileType()
+  let l:file_type_icon = WebDevIconsGetFileTypeSymbol()
+  return l:file_type_icon . ' ' . &filetype
+endfunction
 
 function! LightLineGitBranch()
   let l:branch_name = FugitiveHead()
