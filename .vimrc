@@ -185,6 +185,9 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 nnoremap <C-p> :<C-u>GFiles<CR>
 
+" easy motion
+Plug 'easymotion/vim-easymotion'
+
 " lsp {{{
 Plug 'prabirshrestha/vim-lsp'
 function! s:on_lsp_buffer_enabled() abort
