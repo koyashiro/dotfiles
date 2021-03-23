@@ -208,7 +208,7 @@ Plug 'tpope/vim-repeat'
 " fuzzy finder
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-nnoremap <C-p> :<C-u>GFiles<CR>
+nnoremap <C-p> :<C-u>Files<CR>
 
 " easy motion
 Plug 'easymotion/vim-easymotion'
