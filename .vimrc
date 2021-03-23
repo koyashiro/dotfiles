@@ -208,14 +208,22 @@ function! s:on_lsp_buffer_enabled() abort
   inoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
   let g:lsp_format_sync_timeout = 1000
-
   autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+
+  let g:lsp_diagnostics_float_cursor = 1
+  let g:lsp_diagnostics_signs_priority = 11
+  let g:lsp_diagnostics_virtual_text_prefix = '    : '
 endfunction
 
 augroup lsp_install
   au!
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+let g:lsp_diagnostics_signs_error = {'text': ''}
+let g:lsp_diagnostics_signs_warning = {'text': ''}
+let g:lsp_diagnostics_signs_information = {'text': ''}
+let g:lsp_diagnostics_signs_hint = {'text': 'ﯦ'}
 Plug 'mattn/vim-lsp-settings'
 " }}}
 
@@ -225,6 +233,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+imap <c-space> <Plug>(asyncomplete_force_refresh)
 
 " snippet
 Plug 'Shougo/neosnippet.vim'
