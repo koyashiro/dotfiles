@@ -170,7 +170,7 @@ endfunction
 
 " filer
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
-nnoremap <C-e> :NERDTreeToggle<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
 Plug 'ryanoasis/vim-devicons'
 
 " japanese documentation
