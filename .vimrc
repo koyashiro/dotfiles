@@ -142,16 +142,37 @@ let g:lightline = {
   \   'right': [
   \     [ 'lineinfo' ],
   \     [ 'percent' ],
-  \     [ 'fileformat', 'fileencoding', 'devicons_filetype' ],
+  \     [ 'lspstatus', 'fileformat', 'fileencoding', 'devicons_filetype' ],
   \   ],
   \ },
   \ 'component_function': {
+  \   'lspstatus': 'LightLineLSPStatus',
   \   'devicons_filetype': 'LightLineFileType',
   \   'gitbranch': 'LightLineGitBranch',
   \ },
   \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
   \ }
+
+function! LightLineLSPStatus()
+  let l:counts = lsp#get_buffer_diagnostics_counts()
+  let l:error_count = l:counts.error
+  let l:warning_count = l:counts.warning
+
+  let l:ok_label = '✔'
+  let l:error_label = ''
+  let l:warning_label = ''
+
+  if l:warning_count == 0 && l:error_count == 0
+    return l:ok_label
+  elseif l:warning_count == 0 && l:error_count != 0
+    return l:error_label . ' ' . l:error_count
+  elseif l:warning_count != 0 && l:error_count == 0
+    return l:warning_label . ' ' . l:warning_count
+  else
+    return l:warning_label . ' ' . l:error_count . ' ' . l:error_label . ' ' . l:error_count
+  endif
+endfunction
 
 function! LightLineFileType()
   let l:file_type_icon = WebDevIconsGetFileTypeSymbol()
