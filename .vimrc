@@ -28,6 +28,10 @@ set signcolumn=yes
 set cursorline
 set whichwrap=b,s,h,l,<,>,~,[,]
 
+" window
+set splitbelow
+set splitright
+
 " search
 set hlsearch
 set incsearch
