@@ -159,23 +159,19 @@ let g:lightline = {
   \ }
 
 function! LightLineLSPStatus()
-  let l:counts = lsp#get_buffer_diagnostics_counts()
+  try
+    let l:counts = lsp#get_buffer_diagnostics_counts()
+  catch
+    return ''
+  endtry
+
   let l:error_count = l:counts.error
   let l:warning_count = l:counts.warning
 
-  let l:ok_label = '✔'
-  let l:error_label = ''
-  let l:warning_label = ''
+  let l:error_label = ''
+  let l:warning_label = ''
 
-  if l:warning_count == 0 && l:error_count == 0
-    return l:ok_label
-  elseif l:warning_count == 0 && l:error_count != 0
-    return l:error_label . ' ' . l:error_count
-  elseif l:warning_count != 0 && l:error_count == 0
-    return l:warning_label . ' ' . l:warning_count
-  else
-    return l:warning_label . ' ' . l:error_count . ' ' . l:error_label . ' ' . l:error_count
-  endif
+  return l:error_label . ' ' . l:error_count . ' ' . l:warning_label . ' ' . l:warning_count
 endfunction
 
 function! LightLineFileType()
@@ -191,6 +187,11 @@ function! LightLineGitBranch()
     return ''
   endif
 endfunction
+
+augroup LightLineUpdateOnLSP
+  autocmd!
+  autocmd User lsp_diagnostics_updated call lightline#update()
+augroup END
 " }}}
 
 " filer
