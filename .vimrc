@@ -214,7 +214,15 @@ nnoremap <C-p> :<C-u>Files<CR>
 " easy motion
 Plug 'easymotion/vim-easymotion'
 
-" lsp {{{
+" asyncomplete {{{
+Plug 'prabirshrestha/asyncomplete.vim'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+imap <c-space> <Plug>(asyncomplete_force_refresh)
+
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
 Plug 'prabirshrestha/vim-lsp'
 function! s:on_lsp_buffer_enabled() abort
   setlocal omnifunc=lsp#complete
@@ -234,7 +242,7 @@ function! s:on_lsp_buffer_enabled() abort
   inoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
   let g:lsp_format_sync_timeout = 1000
-  autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+  autocmd! BufWritePre *.js,*.json,*.ts,*.rs,*.go call execute('LspDocumentFormatSync')
 
   let g:lsp_diagnostics_float_cursor = 1
   let g:lsp_diagnostics_signs_priority = 11
@@ -250,16 +258,9 @@ let g:lsp_diagnostics_signs_error = {'text': ''}
 let g:lsp_diagnostics_signs_warning = {'text': ''}
 let g:lsp_diagnostics_signs_information = {'text': ''}
 let g:lsp_diagnostics_signs_hint = {'text': 'ﯦ'}
+
 Plug 'mattn/vim-lsp-settings'
 " }}}
-
-" completion
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
-imap <c-space> <Plug>(asyncomplete_force_refresh)
 
 " snippet
 Plug 'Shougo/neosnippet.vim'
