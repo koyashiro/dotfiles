@@ -1,0 +1,14 @@
+{
+  "suggest.noselect": false,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "markdown",
+    "json",
+    "yaml",
+    "toml",
+    "rust",
+    "go",
+    "javascript",
+    "typescript"
+  ]
+}

@@ -85,6 +85,13 @@ set foldmethod=marker
 " mouse
 set mouse=a
 
+" lsp
+if executable("nodejs") || executable("node")
+  let s:lsp = "coc.nvim"
+else
+  let s:lsp = "vim-lsp"
+endif
+
 " map {{{
 " leader
 let mapleader = "\<Space>"
@@ -92,6 +99,9 @@ let mapleader = "\<Space>"
 " Esc
 inoremap <silent> jj <ESC>
 inoremap <silent> っｊ <ESC>
+
+" Indent
+inoremap <S-Tab> <C-h>
 
 " move window
 nnoremap <C-h> <C-w>h
@@ -159,20 +169,38 @@ let g:lightline = {
   \ }
 
 function! LightLineLSPStatus()
-  try
-    let l:counts = lsp#get_buffer_diagnostics_counts()
-  catch
+  if s:lsp == 'coc.nvim'
+    try
+      return coc#status() . get(b:, 'coc_current_function', '')
+    catch
+      return ''
+    endtry
+  elseif s:lsp == 'vim-lsp'
+    try
+      let l:counts = lsp#get_buffer_diagnostics_counts()
+    catch
+      return ''
+    endtry
+
+    let l:error_count = l:counts.error
+    let l:warning_count = l:counts.warning
+
+    let l:error_label = ''
+    let l:warning_label = ''
+
+    return l:error_label . ' ' . l:error_count . ' ' . l:warning_label . ' ' . l:warning_count
+  else
     return ''
-  endtry
+  endif
 
-  let l:error_count = l:counts.error
-  let l:warning_count = l:counts.warning
-
-  let l:error_label = ''
-  let l:warning_label = ''
-
-  return l:error_label . ' ' . l:error_count . ' ' . l:warning_label . ' ' . l:warning_count
 endfunction
+
+if s:lsp == 'vim-lsp'
+  augroup LightLineUpdateOnLSP
+    autocmd!
+    autocmd User lsp_diagnostics_updated call lightline#update()
+  augroup END
+endif
 
 function! LightLineFileType()
   let l:file_type_icon = WebDevIconsGetFileTypeSymbol()
@@ -187,11 +215,6 @@ function! LightLineGitBranch()
     return ''
   endif
 endfunction
-
-augroup LightLineUpdateOnLSP
-  autocmd!
-  autocmd User lsp_diagnostics_updated call lightline#update()
-augroup END
 " }}}
 
 " filer
@@ -214,52 +237,116 @@ nnoremap <C-p> :<C-u>Files<CR>
 " easy motion
 Plug 'easymotion/vim-easymotion'
 
+" coc.nvim {{{
+if s:lsp == 'coc.nvim'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  inoremap <silent><expr> <c-space> coc#refresh()
+
+  inoremap <silent><expr> <Tab> pumvisible()
+    \ ? coc#_select_confirm()
+    \ : "\<Tab>"
+
+  inoremap <silent><expr> <cr> pumvisible()
+    \ ? coc#_select_confirm()
+    \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+  nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+      call CocActionAsync('doHover')
+    else
+      execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+  endfunction
+
+  nmap <leader>rn <Plug>(coc-rename)
+
+  command! -nargs=0 Format :call CocAction('format')
+
+  let g:coc_global_extensions = [
+    \ 'coc-json',
+    \ 'coc-yaml',
+    \ 'coc-tsserver',
+    \ 'coc-prettier',
+    \ 'coc-eslint',
+    \ 'coc-deno',
+    \ 'coc-python',
+    \ 'coc-html',
+    \ 'coc-emmet',
+    \ 'coc-sh',
+    \ 'coc-vimlsp',
+    \ 'coc-omnisharp',
+    \ 'coc-go',
+    \ 'coc-rust-analyzer',
+    \ 'coc-solargraph',
+    \ 'coc-markdownlint',
+    \ ]
+endif
+" }}}
+
 " asyncomplete {{{
-Plug 'prabirshrestha/asyncomplete.vim'
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
-imap <c-space> <Plug>(asyncomplete_force_refresh)
+if s:lsp == 'vim-lsp'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
+  imap <c-space> <Plug>(asyncomplete_force_refresh)
 
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-Plug 'prabirshrestha/vim-lsp'
-function! s:on_lsp_buffer_enabled() abort
-  setlocal omnifunc=lsp#complete
-  setlocal signcolumn=yes
-  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-  nmap <buffer> gd <plug>(lsp-definition)
-  nmap <buffer> gs <plug>(lsp-document-symbol-search)
-  nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-  nmap <buffer> gr <plug>(lsp-references)
-  nmap <buffer> gi <plug>(lsp-implementation)
-  nmap <buffer> gy <plug>(lsp-type-definition)
-  nmap <buffer> <leader>rn <plug>(lsp-rename)
-  nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-  nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-  nmap <buffer> K <plug>(lsp-hover)
-  inoremap <buffer> <expr><c-f> lsp#scroll(+4)
-  inoremap <buffer> <expr><c-d> lsp#scroll(-4)
+  Plug 'prabirshrestha/vim-lsp'
+  function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gy <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+    nmap <buffer> K <plug>(lsp-hover)
+    inoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    inoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
-  let g:lsp_format_sync_timeout = 1000
-  autocmd! BufWritePre *.js,*.json,*.ts,*.rs,*.go call execute('LspDocumentFormatSync')
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.js,*.json,*.ts,*.rs,*.go call execute('LspDocumentFormatSync')
 
-  let g:lsp_diagnostics_float_cursor = 1
-  let g:lsp_diagnostics_signs_priority = 11
-  let g:lsp_diagnostics_virtual_text_prefix = '    : '
-endfunction
+    let g:lsp_diagnostics_float_cursor = 1
+    let g:lsp_diagnostics_signs_priority = 11
+    let g:lsp_diagnostics_virtual_text_prefix = '    : '
+  endfunction
 
-augroup lsp_install
-  au!
-  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+  augroup lsp_install
+    au!
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+  augroup END
 
-let g:lsp_diagnostics_signs_error = {'text': ''}
-let g:lsp_diagnostics_signs_warning = {'text': ''}
-let g:lsp_diagnostics_signs_information = {'text': ''}
-let g:lsp_diagnostics_signs_hint = {'text': 'ﯦ'}
+  let g:lsp_diagnostics_signs_error = {'text': ''}
+  let g:lsp_diagnostics_signs_warning = {'text': ''}
+  let g:lsp_diagnostics_signs_information = {'text': ''}
+  let g:lsp_diagnostics_signs_hint = {'text': 'ﯦ'}
 
-Plug 'mattn/vim-lsp-settings'
+  Plug 'mattn/vim-lsp-settings'
+endif
 " }}}
 
 " EditorConfig
