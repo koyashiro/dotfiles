@@ -156,11 +156,12 @@ let g:lightline = {
   \   'right': [
   \     [ 'lineinfo' ],
   \     [ 'percent' ],
-  \     [ 'lspstatus', 'fileformat', 'fileencoding', 'devicons_filetype' ],
+  \     [ 'lsp_diagnostic_status','lsp_status', 'fileformat', 'fileencoding', 'devicons_filetype' ],
   \   ],
   \ },
   \ 'component_function': {
-  \   'lspstatus': 'LightLineLSPStatus',
+  \   'lsp_diagnostic_status': 'LightLineLSPDiagnosticStatus',
+  \   'lsp_status': 'LightLineLSPStatus',
   \   'devicons_filetype': 'LightLineFileType',
   \   'gitbranch': 'LightLineGitBranch',
   \ },
@@ -168,13 +169,21 @@ let g:lightline = {
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
   \ }
 
-function! LightLineLSPStatus()
+function! LightLineLSPDiagnosticStatus()
+  let l:error_sign = ''
+  let l:warning_sign = '⚠︎'
+
   if s:lsp == 'coc.nvim'
-    try
-      return coc#status() . get(b:, 'coc_current_function', '')
-    catch
-      return ''
-    endtry
+	  let l:info = get(b:, 'coc_diagnostic_info', {})
+	  if empty(info)
+      let l:info = { 'error': 0, 'warning': 0 }
+    endif
+
+	  let msgs = []
+    call add(msgs, l:error_sign . ' ' . info['error'])
+    call add(msgs, l:warning_sign . ' ' . info['warning'])
+
+	  return join(msgs, ' ')
   elseif s:lsp == 'vim-lsp'
     try
       let l:counts = lsp#get_buffer_diagnostics_counts()
@@ -185,14 +194,18 @@ function! LightLineLSPStatus()
     let l:error_count = l:counts.error
     let l:warning_count = l:counts.warning
 
-    let l:error_label = ''
-    let l:warning_label = ''
-
-    return l:error_label . ' ' . l:error_count . ' ' . l:warning_label . ' ' . l:warning_count
+    return l:error_sign . ' ' . l:error_count . ' ' . l:warning_sign . ' ' . l:warning_count
   else
     return ''
   endif
+endfunction
 
+function! LightLineLSPStatus()
+  if s:lsp == 'coc.nvim'
+	  return get(g:, 'coc_status', '')
+  else
+    return ''
+  endif
 endfunction
 
 if s:lsp == 'vim-lsp'
