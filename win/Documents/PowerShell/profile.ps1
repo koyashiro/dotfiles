@@ -26,6 +26,10 @@ function ll {
   ls -alhAF $args
 }
 
+Set-PSReadlineKeyHandler -Key 'Ctrl+u' -Function BackwardDeleteLine
+Set-PSReadlineKeyHandler -Key 'Ctrl+p' -Function HistorySearchBackward
+Set-PSReadlineKeyHandler -Key 'Ctrl+n' -Function HistorySearchForward
+
 Import-Module posh-git
 Import-Module oh-my-posh
 Set-PoshPrompt -Theme powerlevel10k_classic
