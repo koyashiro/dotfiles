@@ -223,7 +223,7 @@ endfunction
 function! LightLineGitBranch()
   let l:branch_name = FugitiveHead()
   if strlen(l:branch_name)
-    return "\ue0a0 " . l:branch_name
+    return ' ' . l:branch_name
   else
     return ''
   endif
