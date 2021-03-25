@@ -296,6 +296,8 @@ if s:lsp == 'coc.nvim'
   nmap <leader>rn <Plug>(coc-rename)
 
   command! -nargs=0 Format :call CocAction('format')
+  command! -nargs=? Fold :call CocAction('fold', <f-args>)
+  command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
   let g:coc_global_extensions = [
     \ 'coc-json',
@@ -324,7 +326,11 @@ if s:lsp == 'vim-lsp'
   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
   inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
-  imap <c-space> <Plug>(asyncomplete_force_refresh)
+  if has('nvim')
+    inoremap <silent><expr> <C-Space> coc#refresh()
+  else
+    inoremap <silent><expr> <C-@> coc#refresh()
+  endif
 
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
