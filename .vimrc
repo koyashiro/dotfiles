@@ -237,7 +237,7 @@ augroup nerdtree
   autocmd!
   autocmd FileType nerdtree setlocal signcolumn=auto
 augroup END
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-e> :NERDTreeToggle<CR>
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 
@@ -373,6 +373,13 @@ if s:lsp == 'vim-lsp'
   Plug 'mattn/vim-lsp-settings'
 endif
 " }}}
+
+Plug 'kassio/neoterm'
+let g:neoterm_default_mod = 'belowright'
+let g:neoterm_autoinsert = 1
+let g:neoterm_autoscroll = 1
+nnoremap <silent> <C-t> :Ttoggle<CR>
+tnoremap <silent> <C-t> <C-\><C-n>:Ttoggle<CR>
 
 " EditorConfig
 Plug 'editorconfig/editorconfig-vim'
