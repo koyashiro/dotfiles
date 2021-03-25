@@ -232,7 +232,13 @@ endfunction
 
 " filer
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+let g:NERDTreeShowHidden = 1
+augroup nerdtree
+  autocmd!
+  autocmd FileType nerdtree setlocal signcolumn=auto
+augroup END
 nnoremap <C-t> :NERDTreeToggle<CR>
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 
 " japanese documentation
