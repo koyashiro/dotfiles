@@ -156,12 +156,13 @@ let g:lightline = {
   \   'right': [
   \     [ 'lineinfo' ],
   \     [ 'percent' ],
-  \     [ 'lsp_diagnostic_status','lsp_status', 'fileformat', 'fileencoding', 'devicons_filetype' ],
+  \     [ 'lsp_diagnostic_status','lsp_status', 'eol', 'fileencoding', 'devicons_filetype' ],
   \   ],
   \ },
   \ 'component_function': {
   \   'lsp_diagnostic_status': 'LightLineLSPDiagnosticStatus',
   \   'lsp_status': 'LightLineLSPStatus',
+  \   'eol': 'LightLineEOL',
   \   'devicons_filetype': 'LightLineFileType',
   \   'gitbranch': 'LightLineGitBranch',
   \ },
@@ -214,6 +215,18 @@ if s:lsp == 'vim-lsp'
     autocmd User lsp_diagnostics_updated call lightline#update()
   augroup END
 endif
+
+function! LightLineEOL()
+  if &fileformat == 'dos'
+    return 'CRLF'
+  elseif &fileformat == 'unix'
+    return 'LF'
+  elseif &fileformat == 'mac'
+    return 'CR'
+  else
+    return &filetype
+  endif
+endfunction
 
 function! LightLineFileType()
   let l:file_type_icon = WebDevIconsGetFileTypeSymbol()
