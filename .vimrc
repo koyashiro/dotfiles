@@ -156,91 +156,19 @@ let g:lightline = {
   \   'right': [
   \     [ 'lineinfo' ],
   \     [ 'percent' ],
-  \     [ 'lsp_diagnostic_status','lsp_status', 'eol', 'fileencoding', 'devicons_filetype' ],
+  \     [ 'lsp_diagnostic_info','lsp_status', 'fileformat', 'fileencoding', 'filetype' ],
   \   ],
   \ },
   \ 'component_function': {
-  \   'lsp_diagnostic_status': 'LightLineLSPDiagnosticStatus',
-  \   'lsp_status': 'LightLineLSPStatus',
-  \   'eol': 'LightLineEOL',
-  \   'devicons_filetype': 'LightLineFileType',
-  \   'gitbranch': 'LightLineGitBranch',
+  \   'gitbranch': 'llu#fugitive#gitbranch',
+  \   'lsp_diagnostic_info': 'llu#coc#diagnostic_info',
+  \   'lsp_status': 'llu#coc#status',
+  \   'fileformat': 'llu#fileformat',
+  \   'filetype': 'llu#filetype',
   \ },
   \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
   \ }
-
-function! LightLineLSPDiagnosticStatus()
-  let l:error_sign = ''
-  let l:warning_sign = '⚠︎'
-
-  if s:lsp == 'coc.nvim'
-	  let l:info = get(b:, 'coc_diagnostic_info', {})
-	  if empty(info)
-      let l:info = { 'error': 0, 'warning': 0 }
-    endif
-
-	  let msgs = []
-    call add(msgs, l:error_sign . ' ' . info['error'])
-    call add(msgs, l:warning_sign . ' ' . info['warning'])
-
-	  return join(msgs, ' ')
-  elseif s:lsp == 'vim-lsp'
-    try
-      let l:counts = lsp#get_buffer_diagnostics_counts()
-    catch
-      return ''
-    endtry
-
-    let l:error_count = l:counts.error
-    let l:warning_count = l:counts.warning
-
-    return l:error_sign . ' ' . l:error_count . ' ' . l:warning_sign . ' ' . l:warning_count
-  else
-    return ''
-  endif
-endfunction
-
-function! LightLineLSPStatus()
-  if s:lsp == 'coc.nvim'
-	  return get(g:, 'coc_status', '')
-  else
-    return ''
-  endif
-endfunction
-
-if s:lsp == 'vim-lsp'
-  augroup LightLineUpdateOnLSP
-    autocmd!
-    autocmd User lsp_diagnostics_updated call lightline#update()
-  augroup END
-endif
-
-function! LightLineEOL()
-  if &fileformat == 'dos'
-    return 'CRLF'
-  elseif &fileformat == 'unix'
-    return 'LF'
-  elseif &fileformat == 'mac'
-    return 'CR'
-  else
-    return &filetype
-  endif
-endfunction
-
-function! LightLineFileType()
-  let l:file_type_icon = WebDevIconsGetFileTypeSymbol()
-  return l:file_type_icon . ' ' . &filetype
-endfunction
-
-function! LightLineGitBranch()
-  let l:branch_name = FugitiveHead()
-  if strlen(l:branch_name)
-    return ' ' . l:branch_name
-  else
-    return ''
-  endif
-endfunction
 " }}}
 
 " filer
@@ -383,6 +311,11 @@ if s:lsp == 'vim-lsp'
   let g:lsp_diagnostics_signs_information = {'text': ''}
   let g:lsp_diagnostics_signs_hint = {'text': 'ﯦ'}
 
+  augroup LightLineUpdateOnLSP
+    autocmd!
+    autocmd User lsp_diagnostics_updated call lightline#update()
+  augroup END
+
   Plug 'mattn/vim-lsp-settings'
 endif
 " }}}
@@ -414,6 +347,8 @@ if executable('node') && executable('yarn')
 else
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] }
 endif
+
+Plug 'KoyashiroKohaku/llu.vim'
 call plug#end()
 " }}}
 
