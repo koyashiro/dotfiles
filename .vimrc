@@ -352,9 +352,14 @@ Plug 'KoyashiroKohaku/llu.vim'
 call plug#end()
 " }}}
 
-try
-  colorscheme tokyonight
-  let g:lightline.colorscheme = 'tokyonight'
-catch
-  echo 'colorscheme is not exists.'
-endtry
+" colorscheme {{{
+let s:colorscheme = 'tokyonight'
+if index(map(split(globpath(&rtp, 'colors/*.vim'), '\n'), "fnamemodify(v:val, ':t:r')"), s:colorscheme) + 1
+  execute 'colorscheme ' . s:colorscheme
+  if exists('g:lightline')
+    let g:lightline.colorscheme = s:colorscheme
+  else
+    let g:lightline = { 'colorscheme': s:colorscheme }
+  endif
+endif
+" }}}
