@@ -414,9 +414,6 @@ if executable('node') && executable('yarn')
 else
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] }
 endif
-
-" Emmet
-Plug 'mattn/emmet-vim', { 'for': 'html' }
 call plug#end()
 " }}}
 
