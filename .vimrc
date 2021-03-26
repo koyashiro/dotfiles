@@ -80,7 +80,7 @@ set list
 set listchars=eol:↲,tab:>-,space:.,trail:.
 
 " folding
-set foldmethod=marker
+set foldmethod=manual
 
 " mouse
 set mouse=a
