@@ -156,15 +156,18 @@ let g:lightline = {
   \   'right': [
   \     [ 'lineinfo' ],
   \     [ 'percent' ],
-  \     [ 'lsp_diagnostic_info','lsp_status', 'fileformat', 'fileencoding', 'filetype' ],
+  \     [ 'lsp_status', 'lsp_diagnostic_info', 'fileencoding', 'fileformat', 'filetype' ],
   \   ],
   \ },
   \ 'component_function': {
-  \   'gitbranch': 'llu#fugitive#gitbranch',
-  \   'lsp_diagnostic_info': 'llu#coc#diagnostic_info',
-  \   'lsp_status': 'llu#coc#status',
+  \   'filename': 'llu#filename',
+  \   'fileencoding': 'llu#fileencoding',
   \   'fileformat': 'llu#fileformat',
   \   'filetype': 'llu#filetype',
+  \   'lineinfo': 'llu#lineinfo',
+  \   'gitbranch': 'llu#fugitive#gitbranch',
+  \   'lsp_status': 'llu#coc#status',
+  \   'lsp_diagnostic_info': 'llu#coc#diagnostic_info',
   \ },
   \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
