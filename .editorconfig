@@ -36,6 +36,18 @@ end_of_line = lf
 indent_style = space
 indent_size = 2
 
+[*.toml]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
+[{.vimrc,*.vim}]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+
 [*.cs]
 charset = utf-8
 end_of_line = lf
