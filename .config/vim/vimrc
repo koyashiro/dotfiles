@@ -179,14 +179,14 @@ let g:lightline = {
   \   ],
   \ },
   \ 'component_function': {
-  \   'filename': 'llu#get_relative_path',
-  \   'fileencoding': 'llu#get_upper_fileencoding',
-  \   'fileformat': 'llu#get_eol',
-  \   'filetype': 'llu#get_formatted_filetype',
-  \   'lineinfo': 'llu#get_formatted_lineinfo',
-  \   'gitbranch': 'llu#fugitive#get_head_branch',
-  \   'lsp_status': 'llu#coc#get_status',
-  \   'lsp_diagnostic_info': 'llu#coc#get_diagnostic_info',
+  \   'filename': 'lightline#additional#get_relative_path',
+  \   'fileencoding': 'lightline#additional#get_encoding',
+  \   'fileformat': 'lightline#additional#get_eol',
+  \   'filetype': 'lightline#additional#get_formatted_filetype',
+  \   'lineinfo': 'lightline#additional#get_formatted_lineinfo',
+  \   'gitbranch': 'lightline#additional#fugitive#get_head_branch',
+  \   'lsp_status': 'lightline#additional#coc#get_status',
+  \   'lsp_diagnostic_info': 'lightline#additional#coc#get_diagnostic_info',
   \ },
   \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
@@ -370,7 +370,7 @@ else
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug'] }
 endif
 
-Plug 'KoyashiroKohaku/llu.vim'
+Plug 'KoyashiroKohaku/lightline-additional.vim'
 call plug#end()
 " }}}
 
