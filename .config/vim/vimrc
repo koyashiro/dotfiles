@@ -181,7 +181,7 @@ let g:lightline = {
   \ 'component_function': {
   \   'filename': 'llu#get_relative_path',
   \   'fileencoding': 'llu#get_upper_fileencoding',
-  \   'fileformat': 'llu#get_formatted_fileformat',
+  \   'fileformat': 'llu#get_eol',
   \   'filetype': 'llu#get_formatted_filetype',
   \   'lineinfo': 'llu#get_formatted_lineinfo',
   \   'gitbranch': 'llu#fugitive#get_head_branch',
