@@ -1,3 +1,28 @@
+" XDG Base Directory {{{
+if empty($XDG_DATA_HOME) | let $XDG_DATA_HOME = expnad('$HOME/.local/share') | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = expand('$HOME/.config') | endif
+if empty($XDG_CACHE_HOME) | let $XDG_CACHE_HOME = expand('$HOME/.cache') | endif
+
+if has('nvim')
+  let s:data_home = expand('$XDG_DATA_HOME/nvim')
+  let s:config_home = expand('$XDG_CONFIG_HOME/nvim')
+  let s:cache_home = expand('$XDG_CACHE_HOME/nvim')
+else
+  let s:data_home = expand('$XDG_DATA_HOME/vim')
+  let s:config_home = expand('$XDG_CONFIG_HOME/vim')
+  let s:cache_home = expand('$XDG_CACHE_HOME/vim')
+  if !isdirectory(s:data_home) | call mkdir(s:data_home, 'p', 0700) | endif
+  if !isdirectory(s:config_home) | call mkdir(s:config_home, 'p', 0700) | endif
+  if !isdirectory(s:cache_home) | call mkdir(s:cache_home, 'p', 0700) | endif
+  set undodir=$XDG_DATA_HOME/vim/undo | call mkdir(&undodir, 'p', 0700)
+  set directory=$XDG_DATA_HOME/vim/swap | call mkdir(&directory, 'p', 0700)
+  set backupdir=$XDG_DATA_HOME/vim/backup | call mkdir(&backupdir, 'p', 0700)
+  set viewdir=$XDG_DATA_HOME/vim/view | call mkdir(&viewdir, 'p', 0700)
+  set viminfo+='1000,n$XDG_DATA_HOME/vim/viminfo
+  set runtimepath=$XDG_DATA_HOME/vim,$VIMRUNTIME,$XDG_DATA_HOME/vim/after
+endif
+" }}}
+
 " syntax
 syntax enable
 set smartindent
@@ -53,9 +78,6 @@ set cmdheight=1
 " Python
 let g:python3_host_prog = 'python'
 
-" viminfo
-set viminfo+=n"$XDG_DATA_HOME/vim/viminfo"
-
 " hel and decimal
 set nrformats=hex
 
@@ -110,36 +132,33 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 " }}}
 
-" vim-plug variables {{{
-if has('nvim')
-  let s:vim_plug_path = expand(stdpath('data') . '/site/autoload/plug.vim')
-  let s:plugged_path = expand(stdpath('data') . '/plugged')
-else
-  if has('unix') || has('mac')
-    let s:vim_plug_path = expand('~/.vim/autoload/plug.vim')
-    let s:plugged_path = expand('~/.vim/plugged')
-  elseif has('win32') || has('win64')
-    let s:vim_plug_path = expand('~/vimfiles/autoload/plug.vim')
-    let s:plugged_path = expand('~/vimfiles/plugged')
+" vim-plug checking {{{
+function! s:install_vim_plug() abort
+  let l:plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  if has('nvim')
+    let l:autoload_dir = expand('$XDG_DATA_HOME/nvim/site/autoload')
+  else
+    let l:autoload_dir = expand('$XDG_DATA_HOME/vim/autoload')
   endif
-endif
-let s:vim_plug_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-" }}}
+  if !isdirectory(l:autoload_dir) | call mkdir(l:autoload_dir, 'p', 0700) | endif
+  let l:plug_path = expand(l:autoload_dir . '/plug.vim')
 
-" download vim-plug {{{
-if !filereadable(s:vim_plug_path)
-  echo 'download vim-plg to ' . s:vim_plug_path
+  echo 'download vim-plg to ' . l:plug_path
   if has('unix') || has('mac')
-    call system('curl -fLo ' . s:vim_plug_path . ' --create-dirs ' . s:vim_plug_url)
+    call system('curl -fLo ' . l:plug_path . ' ' . l:plug_url)
   elseif has('win32') || has('win64')
-    echo 'download vim-plg to ' . s:vim_plug_path
-    call system('powershell.exe -Command "iwr -useb ' . s:vim_plug_url . ' | ni -Force ' . s:vim_plug_path . '"')
+    echo 'download vim-plg to ' . l:autoload_dir . '/plug.vim'
+    call system('powershell.exe -Command "iwr -useb ' . l:plug_url . ' | ni -Force ' . s:plug_path . '"')
   endif
+endfunction
+
+if empty(globpath(&runtimepath, '*/plug.vim'))
+  call s:install_vim_plug()
 endif
 " }}}
 
 " vim-plug plugins {{{
-call plug#begin(s:plugged_path)
+call plug#begin(s:data_home . '/plugged')
 " colorscheme
 Plug 'joshdick/onedark.vim'
 Plug 'cocopon/iceberg.vim'
