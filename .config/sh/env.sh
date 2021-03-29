@@ -62,7 +62,7 @@ export PATH
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 
 # Vim
-export VIMINIT='source $XDG_CONFIG_HOME/vim/vimrc'
+export VIMINIT='let $MYVIMRC = "$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
 # Rust
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
