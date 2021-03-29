@@ -376,7 +376,7 @@ call plug#end()
 
 " colorscheme {{{
 let s:colorscheme = 'tokyonight'
-if index(map(split(globpath(&rtp, 'colors/*.vim'), '\n'), "fnamemodify(v:val, ':t:r')"), s:colorscheme) + 1
+if index(map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'), "fnamemodify(v:val, ':t:r')"), s:colorscheme) + 1
   execute 'colorscheme ' . s:colorscheme
   if exists('g:lightline')
     let g:lightline.colorscheme = s:colorscheme
