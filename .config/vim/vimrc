@@ -257,6 +257,7 @@ if s:lsp == 'coc.nvim'
   endfunction
 
   nmap <leader>rn <Plug>(coc-rename)
+  nmap <leader>ac <Plug>(coc-codeaction)
 
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=? Fold :call CocAction('fold', <f-args>)
