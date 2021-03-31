@@ -80,6 +80,8 @@ export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
 # Ruby
 export GEM_HOME="$XDG_DATA_HOME"/gem
 export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
+export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
+export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph/cache
 
 # Docker
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
