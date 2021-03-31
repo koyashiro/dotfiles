@@ -13,12 +13,12 @@ cd
 
 if [ ! -d "$dotdir" ]; then
   if executable git; then
-    repo_url=https://github.com/KoyashiroKohaku/dotfiles
+    repo_url=https://github.com/koyashiro/dotfiles
     readonly repo_url
 
     git clone "$repo_url" "$dotdir"
   elif executable curl || executable wget; then
-    archive_url=https://github.com/KoyashiroKohaku/dotfiles/archive/master.tar.gz
+    archive_url=https://github.com/koyashiro/dotfiles/archive/master.tar.gz
     readonly archive_url
 
     if executable curl; then

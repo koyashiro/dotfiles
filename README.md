@@ -91,7 +91,7 @@
 ### Linux
 
 ```sh
-git clone git@github.com:KoyashiroKohaku/dotfiles.git ~/.dotfiles
+git clone git@github.com:koyashiro/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 ./install.sh
 ```
@@ -100,7 +100,7 @@ cd ~/.dotfiles
 
 ```ps1
 Set-ExecutionPolicy RemoteSigned
-git clone git@github.com:KoyashiroKohaku/dotfiles.git ~\.dotfiles
+git clone git@github.com:koyashiro/dotfiles.git ~\.dotfiles
 cd ~\.dotfiles
 .\install.ps1
 ```
