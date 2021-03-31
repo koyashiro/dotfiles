@@ -5,21 +5,25 @@ set -eu
 dotdir="$HOME"/.dotfiles
 readonly dotdir
 
+executable() {
+  command -v "$1" > /dev/null 2>&1
+}
+
 cd
 
 if [ ! -d "$dotdir" ]; then
-  if command -v git > /dev/null 2>&1; then
+  if executable git; then
     repo_url=https://github.com/KoyashiroKohaku/dotfiles
     readonly repo_url
 
     git clone "$repo_url" "$dotdir"
-  elif command -v curl > /dev/null 2>&1 || command -v wget > /dev/null 2>&1; then
+  elif executable curl || executable wget; then
     archive_url=https://github.com/KoyashiroKohaku/dotfiles/archive/master.tar.gz
     readonly archive_url
 
-    if command -v curl > /dev/null 2>&1; then
+    if executable curl; then
       curl -L "$archive_url"
-    elif command -v wget > /dev/null 2>&1; then
+    elif executable wget; then
       wget -O - "$archive_url"
     fi | tar -zxv
 
