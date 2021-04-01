@@ -269,6 +269,7 @@ if s:lsp == 'coc.nvim'
     \ 'coc-tsserver',
     \ 'coc-prettier',
     \ 'coc-eslint',
+    \ 'coc-vetur',
     \ 'coc-deno',
     \ 'coc-python',
     \ 'coc-html',
@@ -317,7 +318,7 @@ if s:lsp == 'vim-lsp'
     inoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
     let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.js,*.json,*.ts,*.rs,*.go call execute('LspDocumentFormatSync')
+    autocmd! BufWritePre *.js,*.json,*.ts,*.vue,*.rs,*.go call execute('LspDocumentFormatSync')
 
     let g:lsp_diagnostics_float_cursor = 1
     let g:lsp_diagnostics_signs_priority = 11
