@@ -13,7 +13,9 @@
     "rust",
     "go",
     "javascript",
-    "typescript"
+    "typescript",
+    "vue",
+    "ruby"
   ],
   "solargraph.diagnostics": true,
   "solargraph.formatting": true
