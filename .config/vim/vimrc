@@ -365,7 +365,6 @@ if executable('git')
   Plug 'airblade/vim-gitgutter'
 endif
 
-Plug 'tpope/vim-endwise'
 
 " Markdown
 if executable('node') && executable('yarn')
