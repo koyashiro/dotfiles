@@ -14,5 +14,7 @@
     "go",
     "javascript",
     "typescript"
-  ]
+  ],
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true
 }
