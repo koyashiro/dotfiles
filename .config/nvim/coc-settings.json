@@ -18,5 +18,6 @@
     "ruby"
   ],
   "solargraph.diagnostics": true,
-  "solargraph.formatting": true
+  "solargraph.formatting": true,
+  "snippets.priority": 99
 }
