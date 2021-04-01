@@ -282,6 +282,7 @@ if s:lsp == 'coc.nvim'
     \ 'coc-solargraph',
     \ 'coc-markdownlint',
     \ ]
+Plug 'honza/vim-snippets'
 endif
 " }}}
 
@@ -365,6 +366,8 @@ if executable('git')
   Plug 'airblade/vim-gitgutter'
 endif
 
+" Rails
+Plug 'tpope/vim-rails'
 
 " Markdown
 if executable('node') && executable('yarn')
