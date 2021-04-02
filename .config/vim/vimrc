@@ -281,6 +281,7 @@ if s:lsp == 'coc.nvim'
     \ 'coc-rust-analyzer',
     \ 'coc-solargraph',
     \ 'coc-markdownlint',
+    \ 'coc-snippets',
     \ ]
 Plug 'honza/vim-snippets'
 endif
