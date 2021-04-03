@@ -38,7 +38,7 @@ function launch_tmux() {
   fi
 }
 
-if [[ -z "$TMUX" ]] && builtin command -v fzf > /dev/null 2>&1; then
+if [[ -z "$TMUX" && -z "$SSH_TTY" ]] && builtin command -v fzf > /dev/null 2>&1; then
   launch_tmux
 fi
 
