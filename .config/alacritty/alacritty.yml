@@ -5,16 +5,16 @@ window:
   dynamic_title: false
 font:
   normal:
-    family: Delugia Nerd Font
+    family: HackGenNerd Console
     style: Regular
   bold:
-    family: Delugia Nerd Font
+    family: HackGenNerd Console
     style: Bold
   italic:
-    family: Delugia Nerd Font
+    family: HackGenNerd Console
     style: Italic
   bold_italic:
-    family: Delugia Nerd Font
+    family: HackGenNerd Console
     style: Bold Italic
   size: 14.0
 shell:
