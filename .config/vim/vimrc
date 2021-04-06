@@ -207,6 +207,9 @@ Plug 'tpope/vim-repeat'
 " insert or delete pairs
 Plug 'jiangmiao/auto-pairs'
 
+" comment out and uncomment
+Plug 'tpope/vim-commentary'
+
 " fuzzy finder
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
