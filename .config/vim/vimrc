@@ -204,6 +204,9 @@ Plug 'vim-jp/vimdoc-ja'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 
+" insert or delete pairs
+Plug 'jiangmiao/auto-pairs'
+
 " fuzzy finder
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
