@@ -107,13 +107,6 @@ set foldmethod=manual
 " mouse
 set mouse=a
 
-" lsp
-if executable("nodejs") || executable("node")
-  let s:lsp = "coc.nvim"
-else
-  let s:lsp = "vim-lsp"
-endif
-
 " map {{{
 " leader
 let mapleader = "\<Space>"
@@ -220,7 +213,7 @@ nnoremap <C-p> :<C-u>Files<CR>
 Plug 'easymotion/vim-easymotion'
 
 " coc.nvim {{{
-if s:lsp == 'coc.nvim'
+if executable('node') || executable('nodejs')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   function! s:check_back_space() abort
@@ -284,65 +277,6 @@ if s:lsp == 'coc.nvim'
     \ 'coc-snippets',
     \ ]
 Plug 'honza/vim-snippets'
-endif
-" }}}
-
-" asyncomplete {{{
-if s:lsp == 'vim-lsp'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-  inoremap <expr> <CR> pumvisible() ? asyncomplete#close_popup() : "\<CR>"
-  if has('nvim')
-    inoremap <silent><expr> <C-Space> coc#refresh()
-  else
-    inoremap <silent><expr> <C-@> coc#refresh()
-  endif
-
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-  Plug 'prabirshrestha/vim-lsp'
-  function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gy <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-    inoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    inoremap <buffer> <expr><c-d> lsp#scroll(-4)
-
-    let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.js,*.json,*.ts,*.vue,*.rs,*.go call execute('LspDocumentFormatSync')
-
-    let g:lsp_diagnostics_float_cursor = 1
-    let g:lsp_diagnostics_signs_priority = 11
-    let g:lsp_diagnostics_virtual_text_prefix = '    : '
-  endfunction
-
-  augroup lsp_install
-    au!
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-  augroup END
-
-  let g:lsp_diagnostics_signs_error = {'text': ''}
-  let g:lsp_diagnostics_signs_warning = {'text': ''}
-  let g:lsp_diagnostics_signs_information = {'text': ''}
-  let g:lsp_diagnostics_signs_hint = {'text': 'ﯦ'}
-
-  augroup LightLineUpdateOnLSP
-    autocmd!
-    autocmd User lsp_diagnostics_updated call lightline#update()
-  augroup END
-
-  Plug 'mattn/vim-lsp-settings'
 endif
 " }}}
 
