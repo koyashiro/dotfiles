@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if ! builtin command -v shellcheck > /dev/null; then
   # shellcheck disable=SC2016

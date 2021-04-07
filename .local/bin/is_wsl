@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   exit 0

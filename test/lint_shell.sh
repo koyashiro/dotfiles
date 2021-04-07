@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if ! builtin command -v shellcheck > /dev/null; then
   # shellcheck disable=SC2016
@@ -12,19 +12,19 @@ shellcheck "$0"
 shellcheck install.sh
 
 # sh
-printf '#!/bin/sh\n' | cat - .profile | shellcheck -x -
+printf '#!/usr/bin/env sh\n' | cat - .profile | shellcheck -x -
 for f in .config/sh/*.sh; do
-  printf '#!/bin/sh\n' | cat - "$f" | shellcheck -
+  printf '#!/usr/bin/env sh\n' | cat - "$f" | shellcheck -
 done
 
 # bash
-printf '#!/bin/bash\n' | cat - .bash_profile | shellcheck -x -
-printf '#!/bin/bash\n' | cat - .bashrc | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - .bash_profile | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - .bashrc | shellcheck -x -
 
 # zsh
-printf '#!/bin/bash\n' | cat - .zshenv | shellcheck -x -
-printf '#!/bin/bash\n' | cat - .config/zsh/.zshenv | shellcheck -x -
-printf '#!/bin/bash\n' | cat - .config/zsh/.zshrc | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - .zshenv | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - .config/zsh/.zshenv | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - .config/zsh/.zshrc | shellcheck -x -
 
 # .local/bin
 for f in .local/bin/*; do
