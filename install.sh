@@ -22,7 +22,7 @@ if [ ! -d "$dotdir" ]; then
     readonly archive_url
 
     if executable curl; then
-      curl -L "$archive_url"
+      curl -fsSL "$archive_url"
     elif executable wget; then
       wget -O - "$archive_url"
     fi | tar -zxv
