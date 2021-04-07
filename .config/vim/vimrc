@@ -23,6 +23,8 @@ else
 endif
 " }}}
 
+if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
+
 " syntax
 syntax enable
 set smartindent
