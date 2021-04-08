@@ -74,3 +74,15 @@ New-Item `
   -Force `
   -Value $(Convert-Path $(Join-Path $documentsDir $f)) `
   -Path $(Join-Path $([Environment]::GetFolderPath('Personal')) $f) `
+
+# WSL
+$envs = @(
+  'SystemDrive/p',
+  'SystemRoot/p'
+  'ComSpec/p',
+  'USERPROFILE/p',
+  'APPDATA/p',
+  'LOCALAPPDATA/p'
+)
+$ENV:WSLENV = "$($envs -Join ':')"
+[Environment]::SetEnvironmentVariable('WSLENV', $ENV:WSLENV, 'User')
