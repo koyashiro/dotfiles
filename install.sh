@@ -58,25 +58,18 @@ XDG_CONFIG_HOME="$HOME"/.config
 XDG_DATA_HOME="$HOME"/.local/share
 
 # dot files
-for f in .??*; do
-  [ "$f" = '.config' ] && continue
-  [ "$f" = '.git' ] && continue
-  [ "$f" = '.gitattributes' ] && continue
-  [ "$f" = '.gitignore' ] && continue
-  [ "$f" = '.local' ] && continue
-  [ "$f" = '.editorconfig' ] && continue
-  [ "$f" = '.prettierrc' ] && continue
-
-  ln -fns "$dotdir"/"$f" "$HOME"/"$f"
-done
+ln -fns "$dotdir"/profile "$HOME"/.profile
+ln -fns "$dotdir"/bash_profile "$HOME"/.bash_profile
+ln -fns "$dotdir"/bashrc "$HOME"/.bashrc
+ln -fns "$dotdir"/zshenv "$HOME"/.zshenv
 
 # $XDG_CONFIG_HOME
-for f in .config/??*; do
+for f in config/??*; do
   ln -fns "$dotdir"/"$f" "$XDG_CONFIG_HOME"/"$(basename "$f")"
 done
 
 # $HOME/.local/bin
-for f in .local/bin/??*; do
+for f in local/bin/??*; do
   ln -fns "$dotdir"/"$f" "$HOME"/.local/bin/"$(basename "$f")"
 done
 
@@ -85,6 +78,6 @@ ln -fns "$dotdir"/.local/share/docker "$XDG_DATA_HOME"/docker
 
 # wsl
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-  ln -fns "$dotdir"/.local/share/wsl "$XDG_DATA_HOME"/wsl
+  ln -fns "$dotdir"/local/share/wsl "$XDG_DATA_HOME"/wsl
   "$XDG_DATA_HOME"/wsl/bin/gen-wslprofile
 fi

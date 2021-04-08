@@ -22,31 +22,11 @@ if (!(Get-Module oh-my-posh)) {
   Install-Module oh-my-posh
 }
 
-# exclude dotfiles
-$excludes = @(
-  '.config',
-  '.git',
-  '.gitattributes',
-  '.gitconfig',
-  '.local',
-  '.editorconfig',
-  '.prettierrc'
-)
-
-# dotfiles
-foreach ($f in Get-ChildItem -Name $DOTDIR\.*) {
-  if ($f -in $excludes) {
-    continue
-  }
-
-  New-Item -ItemType SymbolicLink -Value $(Convert-Path $f) -Path $(Join-Path $HOME $f) -Force
-}
-
 # XDG_CONFIG_HOME
 if (!(Test-Path $ENV:XDG_CONFIG_HOME)) {
   New-Item -ItemType Directory $ENV:XDG_CONFIG_HOME
 }
-foreach ($f in Get-ChildItem $DOTDIR\.config\*) {
+foreach ($f in Get-ChildItem $DOTDIR\config\*) {
   New-Item -ItemType SymbolicLink -Value $f -Path $(Join-Path $ENV:XDG_CONFIG_HOME $([System.IO.Path]::GetFileName($f))) -Force
 }
 
@@ -69,7 +49,7 @@ New-Item `
   -Path $(Join-Path $env:LOCALAPPDATA $f)
 
 # Alacritty
-$configDir = '.config'
+$configDir = 'config'
 $f = 'alacritty'
 New-Item `
   -ItemType SymbolicLink `
@@ -78,7 +58,7 @@ New-Item `
   -Path $(Join-Path $env:APPDATA $f)
 
 # Inkdrop
-$configDir = '.config'
+$configDir = 'config'
 $f = 'inkdrop'
 New-Item `
   -ItemType SymbolicLink `
