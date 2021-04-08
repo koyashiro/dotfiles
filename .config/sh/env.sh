@@ -71,10 +71,8 @@ export CARGO_HOME="$XDG_DATA_HOME"/cargo
 # Go
 export GOPATH="$XDG_DATA_HOME"/go
 
-# npm
+# JavaScript / TypeScript
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
-
-# yarn
 export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
 
 # Ruby
