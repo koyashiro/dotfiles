@@ -1,6 +1,16 @@
 $DOTDIR = "$HOME\.dotfiles"
 
+# XDG Base Directory
 $ENV:XDG_CONFIG_HOME = "$HOME\.config"
+$ENV:XDG_CACHE_HOME = "$HOME\.cache"
+$ENV:XDG_DATA_HOME = "$HOME\.local\share"
+[Environment]::SetEnvironmentVariable('XDG_CONFIG_HOME', $ENV:XDG_CONFIG_HOME, 'User')
+[Environment]::SetEnvironmentVariable('XDG_CACHE_HOME', $ENV:XDG_CACHE_HOME, 'User')
+[Environment]::SetEnvironmentVariable('XDG_DATA_HOME', $ENV:XDG_DATA_HOME, 'User')
+
+# VIMINIT
+$ENV:VIMINIT = "if has('nvim') | source $ENV:XDG_CONFIG_HOME\nvim\init.vim | else | source $ENV:XDG_CONFIG_HOME\vim\vimrc | endif"
+[Environment]::SetEnvironmentVariable('VIMINIT', $ENV:VIMINIT, 'User')
 
 # install posh-git
 if (!(Get-Module posh-git)) {
