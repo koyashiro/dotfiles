@@ -86,15 +86,6 @@ New-Item `
   -Value $(Convert-Path $(Join-Path $configDir $f | Join-Path -ChildPath 'keymap.cson')) `
   -Path $(Join-Path $env:APPDATA $f | Join-Path -ChildPath 'keymap.cson')
 
-# Windows PowerShell
-$documentsDir = 'win\Documents'
-$f = 'WindowsPowerShell\profile.ps1'
-New-Item `
-  -ItemType SymbolicLink `
-  -Force `
-  -Value $(Convert-Path $(Join-Path $documentsDir $f)) `
-  -Path $(Join-Path $([Environment]::GetFolderPath('Personal')) $f) `
-
 # PowerShell 7
 $documentsDir = 'win\Documents'
 $f = 'PowerShell\profile.ps1'
