@@ -114,7 +114,10 @@ if command -v ruby >/dev/null 2>&1; then
 fi
 
 # anyenv
-if command -v anyenv >/dev/null 2>&1; then
+if [ -d "$XDG_DATA_HOME"/anyenv ]; then
+  export ANYENV_ROOT="$XDG_DATA_HOME"/anyenv
+  export ANYENV_DEFINITION_ROOT="$XDG_CONFIG_HOME"/anyenv/anyenv-install
+  export PATH="$PATH":"$ANYENV_ROOT"/bin
   eval "$(anyenv init -)"
 fi
 
