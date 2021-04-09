@@ -74,6 +74,7 @@ export GOPATH="$XDG_DATA_HOME"/go
 # JavaScript / TypeScript
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
 export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
+export NODENV_ROOT="$XDG_DATA_HOME"/nodenv
 
 # Ruby
 export GEM_HOME="$XDG_DATA_HOME"/gem
@@ -83,6 +84,9 @@ export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
 export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
 export RBENV_ROOT="$XDG_DATA_HOME"/rbenv
 export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph/cache
+
+# Python
+export PYENV_ROOT="$XDG_DATA_HOME"/pyenv
 
 # Docker
 export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
@@ -107,3 +111,18 @@ fi
 # fzf
 export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
 export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+
+# nodenv
+if command -v nodenv > /dev/null 2>&1; then
+  eval "$(nodenv init -)"
+fi
+
+# rbenv
+if command -v rbenv > /dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
+
+# pyenv
+if command -v pyenv > /dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
