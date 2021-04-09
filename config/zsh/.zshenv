@@ -5,6 +5,11 @@ export XDG_CONFIG_HOME="$HOME"/.config
 export XDG_CACHE_HOME="$HOME"/.cache
 export XDG_DATA_HOME="$HOME"/.local/share
 
+# data
+if [ ! -d "$XDG_DATA_HOME"/zsh ]; then
+  mkdir -m 700 "$XDG_DATA_HOME"/zsh
+fi
+
 # env
 if [ -f "$XDG_CONFIG_HOME"/sh/env.sh ]; then
   # shellcheck source=config/sh/env.sh
