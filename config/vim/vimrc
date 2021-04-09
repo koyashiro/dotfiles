@@ -77,9 +77,6 @@ set noshowmode
 " cmd line
 set cmdheight=1
 
-" Python
-let g:python3_host_prog = 'python'
-
 " hel and decimal
 set nrformats=hex
 
