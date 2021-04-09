@@ -1,5 +1,5 @@
-# LANGUAGE
-if locale -a 2> /dev/null | grep ja_JP.utf8 > /dev/null 2>&1; then
+# Language
+if locale -a 2>/dev/null | grep ja_JP.utf8 >/dev/null 2>&1; then
   export LANG=ja_JP.UTF-8
 fi
 
@@ -9,17 +9,9 @@ if command -v nvim >/dev/null 2>&1; then
 else
   export EDITOR=vim
 fi
-export CVSEDITOR="$EDITOR"
-export SVN_EDITOR="$EDITOR"
-export GIT_EDITOR="$EDITOR"
 
 # Pager
 export PAGER=less
-if command -v delta >/dev/null 2>&1; then
-  export GIT_PAGER=delta
-else
-  export GIT_PAGER="$PAGER"
-fi
 
 # Less
 if [ ! -d "$XDG_CONFIG_HOME"/less ]; then
@@ -49,49 +41,19 @@ export LESS_TERMCAP_so
 export LESS_TERMCAP_ue
 export LESS_TERMCAP_us
 
-# bin
-PATH="$HOME"/.local/bin:"$PATH"
-PATH="$XDG_DATA_HOME"/docker/bin:"$PATH"
-PATH="$PATH":"$XDG_DATA_HOME"/go/bin
-PATH="$PATH":"$XDG_DATA_HOME"/cargo/bin
-PATH="$PATH":"$XDG_DATA_HOME"/npm/bin
-PATH="$PATH":"$XDG_DATA_HOME"/gem/bin
-export PATH
-
 # zsh
 export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
 
 # Vim
 export VIMINIT="if has('nvim') | source $XDG_CONFIG_HOME/nvim/init.vim | else | source $XDG_CONFIG_HOME/vim/vimrc | endif"
 
-# Rust
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
-
-# Go
-export GOPATH="$XDG_DATA_HOME"/go
-
-# JavaScript / TypeScript
-export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
-export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
-
-# Ruby
-export GEM_HOME="$XDG_DATA_HOME"/gem
-export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
-export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
-export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
-export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
-export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph/cache
-
-# Docker
-export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
-
-# Nuget
-export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
-
-# AWS
-export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
-export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
+# Git
+export GIT_EDITOR="$EDITOR"
+if command -v delta >/dev/null 2>&1; then
+  export GIT_PAGER=delta
+else
+  export GIT_PAGER="$PAGER"
+fi
 
 # tig
 if [ ! -d "$XDG_DATA_HOME"/tig ]; then
@@ -104,10 +66,59 @@ if command -v bat >/dev/null 2>&1; then
 fi
 
 # fzf
-export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
-export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+if command -v fzf >/dev/null 2>&1; then
+  export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
+fi
+
+# Docker
+if command -v docker >/dev/null 2>&1; then
+  export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+fi
+
+# AWS
+if command -v aws >/dev/null 2>&1; then
+  export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
+  export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
+fi
+
+# Rust
+if command -v rustup >/dev/null 2>&1; then
+  export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+  export CARGO_HOME="$XDG_DATA_HOME"/cargo
+  export PATH="$PATH":"$CARGO_HOME"/bin
+fi
+
+# Go
+if command -v go >/dev/null 2>&1; then
+  export GOPATH="$XDG_DATA_HOME"/go
+  export PATH="$PATH":"$GOPATH"/bin
+fi
+
+# JavaScript / TypeScript
+if command -v npm >/dev/null 2>&1; then
+  export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+fi
+if command -v yarn >/dev/null 2>&1; then
+  export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
+fi
+
+# Ruby
+if command -v ruby >/dev/null 2>&1; then
+  export GEM_HOME="$XDG_DATA_HOME"/gem
+  export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
+  export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
+  export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
+  export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
+  export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph/cache
+fi
 
 # anyenv
-if command -v anyenv > /dev/null 2>&1; then
+if command -v anyenv >/dev/null 2>&1; then
   eval "$(anyenv init -)"
+fi
+
+# ~/.local/bin
+if [ -d "$HOME"/.local/bin ]; then
+  export PATH="$HOME"/.local/bin:"$PATH"
 fi
