@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+
+set -eu
+
+# Git executable cheking.
+if ! command -v git >/dev/null 2>&1; then
+  echo 'install_anyenv: git required.' 1>&2
+  exit 127
+fi
+
+# Install anyenv.
+readonly ANYENV_REPO_URL=https://github.com/anyenv/anyenv
+readonly ANYENV_ROOT="${XDG_DATA_HOME:-~/.local/share}"/anyenv
+export ANYENV_ROOT
+if [ -d "$ANYENV_ROOT" ]; then
+  echo "install_anyenv: '$ANYENV_ROOT' already exists."
+else
+  echo "install_anyenv: Clone '$ANYENV_REPO_URL' to '$ANYENV_ROOT'."
+  git clone "$ANYENV_REPO_URL" "$ANYENV_ROOT"
+fi
+
+# Initialize anyenv.
+readonly ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-~/.config}"/anyenv/anyenv-install
+export ANYENV_DEFINITION_ROOT
+if [ -d "$ANYENV_DEFINITION_ROOT" ]; then
+  echo "install_anyenv: '$ANYENV_DEFINITION_ROOT' already exists."
+else
+  echo 'install_anyenv: Execute `'"$ANYENV_ROOT"'/bin/anyenv install --init`.'
+  echo y | "$ANYENV_ROOT"/bin/anyenv install --init
+fi
+
+# Create anyenv plugins directory.
+readonly ANYENV_PLUGINS_DIR=$ANYENV_ROOT/plugins
+if [ ! -d "$ANYENV_PLUGINS_DIR" ]; then
+  mkdir "$ANYENV_PLUGINS_DIR"
+fi
+
+# Install anyenv-update.
+readonly ANYENV_UPDATE_REPO_URL=https://github.com/znz/anyenv-update
+readonly ANYENV_UPDATE_DIR=$ANYENV_PLUGINS_DIR/anyenv-update
+if [ -d "$ANYENV_UPDATE_DIR" ]; then
+  echo "install_anyenv: '$ANYENV_UPDATE_DIR' already exists."
+else
+  echo "install_anyenv: Clone '$ANYENV_UPDATE_REPO_URL' to '$ANYENV_UPDATE_DIR'."
+  git clone "$ANYENV_UPDATE_REPO_URL" "$ANYENV_UPDATE_DIR"
+fi
