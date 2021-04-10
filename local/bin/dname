@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+set -eu
+
+cat /etc/os-release | sed -rn 's/^NAME="(.*)"$/\1/p'
