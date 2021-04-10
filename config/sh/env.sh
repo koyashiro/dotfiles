@@ -14,16 +14,16 @@ fi
 export PAGER=less
 
 # Less
-if [ ! -d "$XDG_CONFIG_HOME"/less ]; then
-  mkdir -m 700 "$XDG_CONFIG_HOME"/less
+if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}"/less ]; then
+  mkdir -m 700 "${XDG_CONFIG_HOME:-$HOME/.config}"/less
 fi
-if [ ! -d "$XDG_CACHE_HOME"/less ]; then
-  mkdir -m 700 "$XDG_CACHE_HOME"/less
+if [ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}"/less ]; then
+  mkdir -m 700 "${XDG_CACHE_HOME:-$HOME/.cache}"/less
 fi
 export LESS='-fiMRfFx4X'
 export LESSCHARSET='utf-8'
-export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
-export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+export LESSKEY="${XDG_CONFIG_HOME:-$HOME/.config}"/less/lesskey
+export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/less/history
 
 # LESS man page colors (makes Man pages more readable).
 LESS_TERMCAP_mb=$(printf "\e[01;31m")
@@ -42,10 +42,10 @@ export LESS_TERMCAP_ue
 export LESS_TERMCAP_us
 
 # zsh
-export ZDOTDIR="$XDG_CONFIG_HOME"/zsh
+export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}"/zsh
 
 # Vim
-export VIMINIT="if has('nvim') | source $XDG_CONFIG_HOME/nvim/init.vim | else | source $XDG_CONFIG_HOME/vim/vimrc | endif"
+export VIMINIT="if has('nvim') | source ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/init.vim | else | source ${XDG_CONFIG_HOME:-~/.config}/vim/vimrc | endif"
 
 # Git
 export GIT_EDITOR="$EDITOR"
@@ -56,8 +56,8 @@ else
 fi
 
 # tig
-if [ ! -d "$XDG_DATA_HOME"/tig ]; then
-  mkdir -m 700 "$XDG_DATA_HOME"/tig
+if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}"/tig ]; then
+  mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}"/tig
 fi
 
 # bat
@@ -73,55 +73,55 @@ fi
 
 # Docker
 if command -v docker >/dev/null 2>&1; then
-  export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+  export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
 fi
 
 # AWS
 if command -v aws >/dev/null 2>&1; then
-  export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
-  export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
+  export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}"/aws/credentials
+  export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}"/aws/config
 fi
 
 # Rust
 if command -v rustup >/dev/null 2>&1; then
-  export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
-  export CARGO_HOME="$XDG_DATA_HOME"/cargo
+  export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/rustup
+  export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/cargo
   export PATH="$PATH":"$CARGO_HOME"/bin
 fi
 
 # Go
 if command -v go >/dev/null 2>&1; then
-  export GOPATH="$XDG_DATA_HOME"/go
+  export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
   export PATH="$PATH":"$GOPATH"/bin
 fi
 
 # JavaScript / TypeScript
 if command -v npm >/dev/null 2>&1; then
-  export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+  export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npm/npmrc
 fi
 if command -v yarn >/dev/null 2>&1; then
-  export YARN_CONFIG="$XDG_CONFIG_HOME"/yarn/yarnrc
+  export YARN_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/yarn/yarnrc
 fi
 
 # Ruby
 if command -v ruby >/dev/null 2>&1; then
-  export GEM_HOME="$XDG_DATA_HOME"/gem
-  export GEM_SPEC_CACHE="$XDG_CACHE_HOME"/gem
-  export BUNDLE_USER_CONFIG="$XDG_CONFIG_HOME"/bundle
-  export BUNDLE_USER_CACHE="$XDG_CACHE_HOME"/bundle
-  export BUNDLE_USER_PLUGIN="$XDG_DATA_HOME"/bundle
-  export SOLARGRAPH_CACHE="$XDG_CACHE_HOME"/solargraph/cache
+  export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/gem
+  export GEM_SPEC_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/gem
+  export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/bundle
+  export BUNDLE_USER_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/bundle
+  export BUNDLE_USER_PLUGIN="${XDG_DATA_HOME:-$HOME/.local/share}"/bundle
+  export SOLARGRAPH_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/solargraph/cache
 fi
 
 # anyenv
-if [ -d "$XDG_DATA_HOME"/anyenv ]; then
-  export ANYENV_ROOT="$XDG_DATA_HOME"/anyenv
-  export ANYENV_DEFINITION_ROOT="$XDG_CONFIG_HOME"/anyenv/anyenv-install
+if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv ]; then
+  export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
+  export ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"/anyenv/anyenv-install
   export PATH="$PATH":"$ANYENV_ROOT"/bin
   eval "$(anyenv init -)"
 fi
 
-# ~/.local/bin
+# $HOME/.local/bin
 if [ -d "$HOME"/.local/bin ]; then
   export PATH="$HOME"/.local/bin:"$PATH"
 fi

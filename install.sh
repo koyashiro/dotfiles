@@ -63,12 +63,12 @@ ln -fns "$dotdir"/bash_profile "$HOME"/.bash_profile
 ln -fns "$dotdir"/bashrc "$HOME"/.bashrc
 ln -fns "$dotdir"/zshenv "$HOME"/.zshenv
 
-# $XDG_CONFIG_HOME
+# config
 for f in config/??*; do
-  ln -fns "$dotdir"/"$f" "$XDG_CONFIG_HOME"/"$(basename "$f")"
+  ln -fns "$dotdir"/"$f" "${XDG_CONFIG_HOME:-$HOME/.config}"/"$(basename "$f")"
 done
 
-# $HOME/.local/bin
+# local/bin
 for f in local/bin/??*; do
   ln -fns "$dotdir"/"$f" "$HOME"/.local/bin/"$(basename "$f")"
 done

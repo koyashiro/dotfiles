@@ -43,7 +43,7 @@ if [[ -z "$TMUX" && -z "$SSH_TTY" ]] && builtin command -v fzf > /dev/null 2>&1;
 fi
 
 # History file
-export HISTFILE="$XDG_DATA_HOME"/zsh/history
+export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/history
 if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
   mkdir -m 700 "$(dirname "$HISTFILE")"
 fi
@@ -57,7 +57,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # sh rc
-for f in "$XDG_CONFIG_HOME"/sh/*.sh; do
+for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/*.sh; do
   if [[ ! -f "$f".zwc ]] || [[ "$f" -nt "$f".zwc ]]; then
     zcompile "$f"
   fi
