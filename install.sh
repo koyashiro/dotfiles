@@ -2,41 +2,35 @@
 
 set -eu
 
-dotdir="$HOME"/.dotfiles
-readonly dotdir
+# dotfiles variables
+readonly DOTDIR="$HOME"/.dotfiles
+readonly REPO_URL=https://github.com/koyashiro/dotfiles
+readonly ARCHIVE_URL="$REPO_URL"/archive/main.tar.gz
 
-executable() {
-  command -v "$1" > /dev/null 2>&1
-}
+# XDG Base Directory variables
+readonly XDG_CONFIG_HOME="$HOME"/.config
+readonly XDG_DATA_HOME="$HOME"/.local/share
 
-cd
-
-if [ ! -d "$dotdir" ]; then
-  if executable git; then
-    repo_url=https://github.com/koyashiro/dotfiles
-    readonly repo_url
-
-    git clone "$repo_url" "$dotdir"
-  elif executable curl || executable wget; then
-    archive_url=https://github.com/koyashiro/dotfiles/archive/main.tar.gz
-    readonly archive_url
-
-    if executable curl; then
-      curl -fsSL "$archive_url"
-    elif executable wget; then
-      wget -O - "$archive_url"
-    fi | tar -zxv
-
-    mv -f dotfiles-main "$dotdir"
+# dotfiles directory checking
+if [ ! -d "$DOTDIR" ]; then
+  # Clone repository by Git
+  if command -v git >/dev/null 2>&1; then
+    git clone "$REPO_URL" "$DOTDIR"
+  # Download archive by curl
+  elif command -v curl >/dev/null 2>&1; then
+    mkdir "$DOTDIR"
+    curl -fsSL "$ARCHIVE_URL" | tar -xz -C "$DOTDIR" --strip 1
+  # Download archive by wget
+  elif command -v wget >/dev/null 2>&1; then
+    mkdir "$DOTDIR"
+    wget -q -O - "$ARCHIVE_URL" | tar -xz -C "$DOTDIR" --strip 1
   else
-    echo 'install.sh: git, curl or wget required' 1>&2
+    echo 'error: git, curl or wget required.' 1>&2
     exit 127
   fi
 fi
 
-cd "$dotdir"
-
-# .config .cache .local .local/share .local/bin
+# Create XDG Base Directories
 if [ ! -d "$HOME"/.config ]; then
   mkdir -m 700 "$HOME"/.config
 fi
@@ -53,31 +47,22 @@ if [ ! -d "$HOME"/.local/bin ]; then
   mkdir -m 700 "$HOME"/.local/bin
 fi
 
-# XDG Base Directory
-XDG_CONFIG_HOME="$HOME"/.config
-XDG_DATA_HOME="$HOME"/.local/share
+# Create symbolic link
+ln -fns "$DOTDIR"/profile "$HOME"/.profile
+ln -fns "$DOTDIR"/bash_profile "$HOME"/.bash_profile
+ln -fns "$DOTDIR"/bashrc "$HOME"/.bashrc
+ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
+(
+  for d in "$DOTDIR"/config/*; do
+    ln -fns "$d" "$XDG_CONFIG_HOME"/"$(basename "$d")"
+  done
+  for f in "$DOTDIR"/local/bin/*; do
+    ln -fns "$f" "$HOME"/.local/bin/"$(basename "$f")"
+  done
+)
 
-# dot files
-ln -fns "$dotdir"/profile "$HOME"/.profile
-ln -fns "$dotdir"/bash_profile "$HOME"/.bash_profile
-ln -fns "$dotdir"/bashrc "$HOME"/.bashrc
-ln -fns "$dotdir"/zshenv "$HOME"/.zshenv
-
-# config
-for f in config/??*; do
-  ln -fns "$dotdir"/"$f" "${XDG_CONFIG_HOME:-$HOME/.config}"/"$(basename "$f")"
-done
-
-# local/bin
-for f in local/bin/??*; do
-  ln -fns "$dotdir"/"$f" "$HOME"/.local/bin/"$(basename "$f")"
-done
-
-# docker
-ln -fns "$dotdir"/.local/share/docker "$XDG_DATA_HOME"/docker
-
-# wsl
+# WSL
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
-  ln -fns "$dotdir"/local/share/wsl "$XDG_DATA_HOME"/wsl
+  ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
   "$XDG_DATA_HOME"/wsl/bin/gen-wslprofile
 fi
