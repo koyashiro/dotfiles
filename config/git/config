@@ -46,7 +46,7 @@
 [fetch]
 	prune = true
 [delta]
-	features = side-by-side line-numbers decorations
+	features = line-numbers decorations
 	plus-color = "#012800"
 	minus-color = "#340001"
 	syntax-theme = OneHalfDark
