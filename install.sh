@@ -18,7 +18,7 @@ if [ ! -d "$dotdir" ]; then
 
     git clone "$repo_url" "$dotdir"
   elif executable curl || executable wget; then
-    archive_url=https://github.com/koyashiro/dotfiles/archive/master.tar.gz
+    archive_url=https://github.com/koyashiro/dotfiles/archive/main.tar.gz
     readonly archive_url
 
     if executable curl; then
@@ -27,7 +27,7 @@ if [ ! -d "$dotdir" ]; then
       wget -O - "$archive_url"
     fi | tar -zxv
 
-    mv -f dotfiles-master "$dotdir"
+    mv -f dotfiles-main "$dotdir"
   else
     echo 'install.sh: git, curl or wget required' 1>&2
     exit 127
