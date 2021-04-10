@@ -1,4 +1,5 @@
 alias ..='cd ..'
+alias renv=". ${XDG_CONFIG_HOME:-~/.config}/sh/env.sh"
 
 # enable color support
 if [ -x /usr/bin/dircolors ]; then
