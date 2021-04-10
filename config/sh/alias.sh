@@ -11,7 +11,7 @@ fi
 
 # ls
 if command -v exa >/dev/null 2>&1; then
-  alias ll='exa -alhFg --icons --git'
+  alias ll='exa -alhFg --time-style iso --icons --git'
 else
   alias ll='ls -alhAF'
 fi
