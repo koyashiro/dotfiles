@@ -1,6 +1,3 @@
-$ENV:Path = "$HOME\bin;${ENV:Path}"
-$ENV:TERM = 'xterm-256color'
-
 $removeAliases = @(
   'ls',
   'cat',
