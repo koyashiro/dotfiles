@@ -60,11 +60,6 @@ if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}"/tig ]; then
   mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}"/tig
 fi
 
-# bat
-if command -v bat >/dev/null 2>&1; then
-  export BAT_THEME=OneHalfDark
-fi
-
 # fzf
 if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
