@@ -93,6 +93,7 @@ fi
 # JavaScript / TypeScript
 if command -v npm >/dev/null 2>&1; then
   export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npm/npmrc
+  export PATH="$PATH":"${XDG_DATA_HOME:-$HOME/.local/share}"/npm/bin
 fi
 if command -v yarn >/dev/null 2>&1; then
   export YARN_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/yarn/yarnrc
@@ -106,6 +107,7 @@ if command -v ruby >/dev/null 2>&1; then
   export BUNDLE_USER_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/bundle
   export BUNDLE_USER_PLUGIN="${XDG_DATA_HOME:-$HOME/.local/share}"/bundle
   export SOLARGRAPH_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/solargraph/cache
+  export PATH="$PATH":"$GEM_HOME"/bin
 fi
 
 # anyenv
