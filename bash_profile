@@ -11,16 +11,16 @@ if [ ! -d "$XDG_DATA_HOME"/bash ]; then
 fi
 
 # env
-if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh ]]; then
+if [[ -f "$XDG_CONFIG_HOME"/sh/env.sh ]]; then
   # shellcheck source=config/sh/env.sh
-  source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh
+  source "$XDG_CONFIG_HOME"/sh/env.sh
 fi
 
 # wsl
 if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
-  if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/wsl/profile ]]; then
+  if [[ -f "$XDG_CONFIG_HOME"/wsl/profile ]]; then
     # shellcheck disable=SC1090,SC1091
-    source "${XDG_CONFIG_HOME:-$HOME/.config}"/wsl/profile
+    source "$XDG_CONFIG_HOME"/wsl/profile
   fi
 fi
 
