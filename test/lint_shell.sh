@@ -12,17 +12,17 @@ shellcheck "$0"
 shellcheck install.sh
 
 # sh
-printf '#!/usr/bin/env sh\n' | cat - .profile | shellcheck -x -
+printf '#!/usr/bin/env sh\n' | cat - profile | shellcheck -x -
 for f in config/sh/*.sh; do
   printf '#!/usr/bin/env sh\n' | cat - "$f" | shellcheck -
 done
 
 # bash
-printf '#!/usr/bin/env bash\n' | cat - .bash_profile | shellcheck -x -
-printf '#!/usr/bin/env bash\n' | cat - .bashrc | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - bash_profile | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - bashrc | shellcheck -x -
 
 # zsh
-printf '#!/usr/bin/env bash\n' | cat - .zshenv | shellcheck -x -
+printf '#!/usr/bin/env bash\n' | cat - zshenv | shellcheck -x -
 printf '#!/usr/bin/env bash\n' | cat - config/zsh/.zshenv | shellcheck -x -
 printf '#!/usr/bin/env bash\n' | cat - config/zsh/.zshrc | shellcheck -x -
 
