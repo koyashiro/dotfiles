@@ -1,0 +1,6 @@
+if [ ! -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+  return
+fi
+
+export PATH="${XDG_DATA_HOME:-$HOME/.local/share}"/wsl/bin:"$PATH"
+export DISPLAY="$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}')":0

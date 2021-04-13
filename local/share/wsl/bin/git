@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ "$(readlink -f .)/" =~ ^/mnt/[cd]/.* ]]; then
-  git.exe "$@"
-else
-  /bin/git "$@"
-fi
