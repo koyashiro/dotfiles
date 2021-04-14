@@ -1,6 +1,6 @@
-[include]
-	# path = ${XDG_CONFIG_HOME:-$HOME/.config}/git/config.user
-	path = config.user
+[user]
+	name = koyashiro
+	email = develop@koyashiro.net
 [core]
 	editor = vim -c 'set fenc=utf-8'
 	autoCRLF = false
