@@ -64,5 +64,4 @@ ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
 # WSL
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
-  "$XDG_DATA_HOME"/wsl/bin/gen-wslprofile
 fi
