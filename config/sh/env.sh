@@ -66,6 +66,12 @@ if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 fi
 
+# AWS CLI
+if command -v aws >/dev/null 2>&1; then
+  export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
+  export AWS_SHARED_CREDENTIALS_FILE="$XDG_DATA_HOME"/aws/credentials
+fi
+
 # Docker
 if command -v docker >/dev/null 2>&1; then
   export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
