@@ -31,7 +31,8 @@
             "fontFace": "HackGenNerd Console",
             "fontSize": 14,
             "background": "#282c34",
-            "bellStyle": "none"
+            "bellStyle": "none",
+            "colorScheme": "Tango Dark"
         },
         "list":
         [
