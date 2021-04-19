@@ -16,6 +16,11 @@ if [ -f "$XDG_CONFIG_HOME"/sh/env.sh ]; then
   source "$XDG_CONFIG_HOME"/sh/env.sh
 fi
 
+# direnv
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
 # wsl
 if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
   if [[ -f "$XDG_CONFIG_HOME"/wsl/profile ]]; then
