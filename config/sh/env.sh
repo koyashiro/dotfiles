@@ -98,6 +98,7 @@ fi
 
 # JavaScript / TypeScript
 if command -v npm >/dev/null 2>&1; then
+  export NODE_REPL_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}"/node/history
   export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npm/npmrc
   export TS_NODE_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}"/ts-node/history
   export PATH="$PATH":"${XDG_DATA_HOME:-$HOME/.local/share}"/npm/bin
