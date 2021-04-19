@@ -1,3 +1,5 @@
 * text=auto
 
 *.ps1 text eol=crlf
+
+config/npm/npmrc filter=ignore-npmrc
