@@ -10,7 +10,7 @@ fi
 
 # Install anyenv
 readonly ANYENV_REPO_URL=https://github.com/anyenv/anyenv
-readonly ANYENV_ROOT="${XDG_DATA_HOME:-~/.local/share}"/anyenv
+readonly ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
 export ANYENV_ROOT
 if [ -d "$ANYENV_ROOT" ]; then
   echo "[install_anyenv] '$ANYENV_ROOT' already exists."
@@ -20,7 +20,7 @@ else
 fi
 
 # Initialize anyenv
-readonly ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-~/.config}"/anyenv/anyenv-install
+readonly ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"/anyenv/anyenv-install
 export ANYENV_DEFINITION_ROOT
 if [ -d "$ANYENV_DEFINITION_ROOT" ]; then
   echo "[install_anyenv] '$ANYENV_DEFINITION_ROOT' already exists."
