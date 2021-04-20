@@ -2,6 +2,8 @@
 
 set -eu
 
+readonly YAY_REPO_URL=https://aur.archlinux.org/yay.git
+
 # Distribution checking
 readonly DISTRO="$(cat /etc/os-release | sed -rn 's/^NAME="(.*)"$/\1/p')"
 if [ "$DISTRO" != 'Arch Linux' ] || ! command -v pacman >/dev/null 2>&1; then
@@ -28,14 +30,10 @@ if [ "$(pacman -Sg base-devel)" != "$(pacman -Qg base-devel)" ]; then
 fi
 
 # Work directory checking
-readonly WORK_DIR=~/yay
-if [ -e "$WORK_DIR" ]; then
-  echo 'error: `'"$WORK_DIR"'` already exists.' 1>&2
-  exit 1
-fi
+readonly WORK_DIR="$(mktemp -d)"
+echo '[install_yay] Create `'"$WORK_DIR"'`.' 1>&2
 
 # Clone and install yay
-readonly YAY_REPO_URL=https://aur.archlinux.org/yay.git
 echo "[install_yay] Cloning yay...."
 git clone $YAY_REPO_URL "$WORK_DIR"
 
