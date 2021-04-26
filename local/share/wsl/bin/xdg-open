@@ -1,3 +1,16 @@
 #!/usr/bin/env sh
 
-/mnt/c/Program\ Files\ \(x86\)/Google/Chrome/Application/chrome.exe "$@"
+set -eu
+
+readonly CHROME_PATH='/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+
+if echo "$@" | grep -E '^(http|https):\/\/' >/dev/null; then
+  "$CHROME_PATH" "$@"
+else
+  if ! command -v wslpath >/dev/null 2>&1; then
+    echo 'error: `wslpath` not exists.' 1>&2
+    exit 127
+  fi
+
+  "$CHROME_PATH" "$(wslpath -w "$@")"
+fi
