@@ -64,4 +64,13 @@ ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
 # WSL
 if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
   ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
+
+  # Create `/etc/wsl.con`
+  if [ ! -e /etc/wsl.conf ]; then
+    if command -v sudo >/dev/null 2>&1; then
+      sudo cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
+    else
+      cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
+    fi
+  fi
 fi
