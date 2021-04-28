@@ -126,6 +126,11 @@ if [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv ]; then
   eval "$(anyenv init -)"
 fi
 
+# brew
+if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
 # $HOME/.local/bin
 if [ -d "$HOME"/.local/bin ]; then
   export PATH="$HOME"/.local/bin:"$PATH"
