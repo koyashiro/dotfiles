@@ -128,7 +128,7 @@ if command -v anyenv >/dev/null 2>&1; then
   export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
   export ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"/anyenv/anyenv-install
   eval "$(anyenv init -)"
-elif [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv ]; then
+elif [ -d "${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv/bin/anyenv ]; then
   export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
   export ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"/anyenv/anyenv-install
   export PATH="$PATH":"$ANYENV_ROOT"/bin
