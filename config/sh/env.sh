@@ -55,11 +55,6 @@ else
   export GIT_PAGER="$PAGER"
 fi
 
-# brew
-if [ -f "/home/linuxbrew/.linuxbrew/bin/brew" ]; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-fi
-
 # tig
 if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}"/tig ]; then
   mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}"/tig
