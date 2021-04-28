@@ -31,3 +31,5 @@ fi
 
 # shellcheck disable=SC2034
 typeset -U path PATH
+
+skip_global_compinit=1
