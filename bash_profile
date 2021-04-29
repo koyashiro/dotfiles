@@ -31,6 +31,6 @@ fi
 
 # .bashrc
 if [[ -n "${PS1:-}" && -f "$HOME"/.bashrc ]]; then
-  # shellcheck source=.bashrc
+  # shellcheck source=bashrc
   source "$HOME"/.bashrc
 fi
