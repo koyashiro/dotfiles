@@ -30,7 +30,7 @@ if [[ -f /proc/sys/fs/binfmt_misc/WSLInterop ]]; then
 fi
 
 # .bashrc
-if [[ -n "$PS1" && -f "$HOME"/.bashrc ]]; then
+if [[ -n "${PS1:-}" && -f "$HOME"/.bashrc ]]; then
   # shellcheck source=.bashrc
   source "$HOME"/.bashrc
 fi

@@ -20,7 +20,7 @@ if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
 fi
 
 # rc
-if [ -n "$PS1" ]; then
+if [ -n "${PS1:-}" ]; then
   # shellcheck source=config/sh/alias.sh
   . "$XDG_CONFIG_HOME"/sh/alias.sh
 
