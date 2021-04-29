@@ -10,6 +10,7 @@ on:
 
 jobs:
   lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +25,7 @@ jobs:
             koalaman/shellcheck-alpine
 
   test-on-alpine:
+    name: Test on Alpine Linux
     runs-on: ubuntu-latest
 
     steps:
@@ -38,6 +40,7 @@ jobs:
             alpine:latest
 
   test-on-archlinux:
+    name: Test on Arch Linux
     runs-on: ubuntu-latest
 
     steps:
@@ -52,6 +55,7 @@ jobs:
             archlinux:latest
 
   test-on-debian:
+    name: Test on Debian
     runs-on: ubuntu-latest
 
     steps:
@@ -66,6 +70,7 @@ jobs:
             debian:latest
 
   test-on-ubuntu:
+    name: Test on Ubuntu
     runs-on: ubuntu-latest
 
     steps:
