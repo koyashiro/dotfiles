@@ -16,13 +16,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: lint
+      - name: shfmt
         run: |
           docker run \
             --rm \
             --volume "$PWD":/root/.dotfiles:ro \
-            --entrypoint /root/.dotfiles/lint/lint.sh \
-            koalaman/shellcheck-alpine
+            --entrypoint /root/.dotfiles/lint/shfmt.sh \
+            mvdan/shfmt:latest-alpine
+
+      - name: shellcheck
+        run: |
+          docker run \
+            --rm \
+            --volume "$PWD":/root/.dotfiles:ro \
+            --entrypoint /root/.dotfiles/lint/shellcheck.sh \
+            koalaman/shellcheck-alpine:latest
 
   test-on-alpine:
     name: Test on Alpine Linux
