@@ -3,19 +3,19 @@
 # tmux
 function launch_tmux() {
   # tmux executable checking
-  if ! builtin command -v tmux > /dev/null 2>&1; then
+  if ! builtin command -v tmux >/dev/null 2>&1; then
     echo 'launch_tmux: command not found: tmux' 1>&2
     return 127
   fi
 
   # fzf executable checking
-  if ! builtin command -v fzf > /dev/null 2>&1; then
+  if ! builtin command -v fzf >/dev/null 2>&1; then
     echo 'launch_tmux: command not found: fzf' 1>&2
     return 127
   fi
 
   local sessions
-  sessions=$(tmux list-sessions 2> /dev/null)
+  sessions=$(tmux list-sessions 2>/dev/null)
   if [[ -z "$sessions" ]]; then
     tmux -u new-session
     return
@@ -38,7 +38,7 @@ function launch_tmux() {
   fi
 }
 
-if [[ -z "$TMUX" && -z "$SSH_TTY" ]] && builtin command -v fzf > /dev/null 2>&1; then
+if [[ -z "$TMUX" && -z "$SSH_TTY" ]] && builtin command -v fzf >/dev/null 2>&1; then
   launch_tmux
 fi
 
@@ -51,9 +51,9 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 
 # Powerlevel10k instant prompt
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}"/p10k-instant-prompt-"$(id -u -n)".zsh ]]; then
   # shellcheck disable=SC1090
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+  source "${XDG_CACHE_HOME:-$HOME/.cache}"/p10k-instant-prompt-"$(id -u -n)".zsh
 fi
 
 # sh rc
@@ -67,7 +67,7 @@ for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/*.sh; do
 done
 
 # zsh rc
-for f in autoload.zsh bindkey.zsh fzf.zsh setopt.zsh zle.zsh zstyle.zsh zinit.zsh .p10k.zsh;do
+for f in autoload.zsh bindkey.zsh fzf.zsh setopt.zsh zle.zsh zstyle.zsh zinit.zsh .p10k.zsh; do
   if [[ ! -f "$ZDOTDIR"/"$f".zwc ]] || [[ "$ZDOTDIR"/"$f" -nt "$ZDOTDIR"/"$f".zwc ]]; then
     zcompile "$ZDOTDIR"/"$f"
   fi
