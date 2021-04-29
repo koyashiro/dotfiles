@@ -17,8 +17,11 @@ jobs:
 
       - name: lint
         run: |
-          docker build --file ./lint/Dockerfile --tag dotfiles-lint .
-          docker run --rm dotfiles-lint
+          docker run \
+            --rm \
+            --volume "$PWD":/root/.dotfiles:ro \
+            --entrypoint /root/.dotfiles/lint/lint.sh \
+            koalaman/shellcheck-alpine
 
   test-on-alpine:
     runs-on: ubuntu-latest
