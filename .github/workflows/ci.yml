@@ -17,7 +17,7 @@ jobs:
 
       - name: lint
         run: |
-          docker build --file ./dockerfiles/lint/Dockerfile --tag dotfiles-lint .
+          docker build --file ./lint/Dockerfile --tag dotfiles-lint .
           docker run --rm dotfiles-lint
 
   test-on-alpine:
