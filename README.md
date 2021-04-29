@@ -1,5 +1,7 @@
 # dotfiles
 
+[![CI](https://github.com/koyashiro/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/ci.yml)
+
 ## Installation
 
 ### Linux
