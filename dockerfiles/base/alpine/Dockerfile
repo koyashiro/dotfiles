@@ -1,5 +1,5 @@
 FROM alpine:latest
-WORKDIR $HOME
+WORKDIR /root
 
 RUN apk add --no-cache \
   curl \

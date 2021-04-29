@@ -1,5 +1,5 @@
 FROM debian:latest
-WORKDIR $HOME
+WORKDIR /root
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
