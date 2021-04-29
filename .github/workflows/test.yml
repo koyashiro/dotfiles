@@ -19,22 +19,22 @@ jobs:
         run: |
           docker build --file ./dockerfiles/base/alpine/Dockerfile --tag dotfiles-alpine .
           docker build --file ./dockerfiles/test/alpine/Dockerfile --tag dotfiles-alpine-test .
-          docker run --rm -it dotfiles-alpine-test
+          docker run --rm dotfiles-alpine-test
 
       - name: test on archlinux container
         run: |
           docker build --file ./dockerfiles/base/archlinux/Dockerfile --tag dotfiles-archlinux .
           docker build --file ./dockerfiles/test/archlinux/Dockerfile --tag dotfiles-archlinux-test .
-          docker run --rm -it dotfiles-archlinux-test
+          docker run --rm dotfiles-archlinux-test
 
       - name: test on debian container
         run: |
           docker build --file ./dockerfiles/base/debian/Dockerfile --tag dotfiles-debian .
           docker build --file ./dockerfiles/test/debian/Dockerfile --tag dotfiles-debian-test .
-          docker run --rm -it dotfiles-debian-test
+          docker run --rm dotfiles-debian-test
 
       - name: test on ubuntu container
         run: |
           docker build --file ./dockerfiles/base/ubuntu/Dockerfile --tag dotfiles-ubuntu .
           docker build --file ./dockerfiles/test/ubuntu/Dockerfile --tag dotfiles-ubuntu-test .
-          docker run --rm -it dotfiles-ubuntu-test
+          docker run --rm dotfiles-ubuntu-test
