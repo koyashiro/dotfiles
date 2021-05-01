@@ -96,6 +96,9 @@ assert_directory "$HOME"/.local/bin
 # `$XDG_CONFIG_HOME`
 assert_env XDG_CONFIG_HOME
 assert_equal "$XDG_CONFIG_HOME" "$HOME"/.config
+for d in "$DOTDIR"/config/*; do
+  assert_symboliclink "$XDG_CONFIG_HOME"/"$(basename $d)" "$d"
+done
 
 # `$XDG_CACHE_HOME`
 assert_env XDG_CACHE_HOME
