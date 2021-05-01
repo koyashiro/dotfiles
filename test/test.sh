@@ -39,6 +39,10 @@ assert_equal() {
   fi
 }
 
+assert_symboliclink() {
+  assert_equal "$(readlink -f "$1")" "$2"
+}
+
 assert_env() {
   if [ -z "$(eval "$(printf 'echo ${%s:-}' $1)")" ]; then
     printf '[sh test] assertion failed!\n'
@@ -57,19 +61,19 @@ assert_directory "$DOTDIR"
 # `$HOME/.profile`
 readonly DOT_PROFILE="$HOME"/.profile
 assert_file "$HOME"/.profile
-assert_equal "$(readlink -f "$HOME"/.profile)" "$DOTDIR"/profile
+assert_symboliclink "$HOME"/.profile "$DOTDIR"/profile
 
 # `$HOME/.bash_profile`
 assert_file "$HOME"/.bash_profile
-assert_equal "$(readlink -f "$HOME"/.bash_profile)" "$DOTDIR"/bash_profile
+assert_symboliclink "$HOME"/.bash_profile "$DOTDIR"/bash_profile
 
 # `$HOME/.bshrc`
 assert_file "$HOME"/.bashrc
-assert_equal "$(readlink -f "$HOME"/.bashrc)" "$DOTDIR"/bashrc
+assert_symboliclink "$HOME"/.bashrc "$DOTDIR"/bashrc
 
 # `$HOME/.zshenv`
 assert_file "$HOME"/.zshenv
-assert_equal "$(readlink -f "$HOME"/.zshenv)" "$DOTDIR"/zshenv
+assert_symboliclink "$HOME"/.zshenv "$DOTDIR"/zshenv
 
 # `$HOME/.config`
 assert_directory "$HOME"/.config
