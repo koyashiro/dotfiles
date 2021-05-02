@@ -6,7 +6,7 @@ if [ -e .editorconfig ]; then
   exit 1
 fi
 
-cat << EOS > .editorconfig
+cat <<EOS >.editorconfig
 root = true
 
 [*]
