@@ -21,3 +21,8 @@ shellcheck --shell bash --external-source bashrc
 shellcheck --shell bash --external-source zshenv
 shellcheck --shell bash --external-source config/zsh/.zshenv
 shellcheck --shell bash --external-source config/zsh/.zshrc
+
+# local/bin
+for f in "$DOTDIR"/local/bin/*; do
+  shellcheck "$f"
+done
