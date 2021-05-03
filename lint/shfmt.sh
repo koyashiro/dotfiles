@@ -26,3 +26,6 @@ shfmt -d -i 2 config/zsh/.zshrc
 for f in "$DOTDIR"/local/bin/*; do
   shfmt -d -i 2 "$f"
 done
+
+# wsl profile
+shfmt -d -i 2 config/wsl/profile

@@ -26,3 +26,6 @@ shellcheck --shell bash --external-source config/zsh/.zshrc
 for f in "$DOTDIR"/local/bin/*; do
   shellcheck "$f"
 done
+
+# wsl profile
+shellcheck --shell sh config/wsl/profile
