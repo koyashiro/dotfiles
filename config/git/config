@@ -27,16 +27,20 @@
 	br = branch
 	brd = branch -d
 	df = diff
+	dfs = diff --staged
 	ad = add
 	cm = commit
 	cma = commit --amend
 	ft = fetch
 	rb = rebase
+	rbi = rebase -i
 	mg = merge
 	pl = pull
 	ps = push
 	l = log
+	lp = log -p
 	lf = log --pretty=fuller
+	lg = log --grep
 	sh = show
 	cp = cherry-pick
 [diff]
