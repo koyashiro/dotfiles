@@ -17,6 +17,7 @@
     "vue",
     "ruby"
   ],
+  "solargraph.useBundler": true,
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
   "snippets.priority": 99
