@@ -111,7 +111,7 @@ fi
 if command -v ruby >/dev/null 2>&1; then
   export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/gem
   export GEM_SPEC_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/gem
-  export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/bundle
+  export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/bundle/config
   export BUNDLE_USER_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/bundle
   export BUNDLE_USER_PLUGIN="${XDG_DATA_HOME:-$HOME/.local/share}"/bundle
   export SOLARGRAPH_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/solargraph/cache
