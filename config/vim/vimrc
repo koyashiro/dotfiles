@@ -271,6 +271,7 @@ if executable('node') || executable('nodejs')
     \ 'coc-deno',
     \ 'coc-python',
     \ 'coc-html',
+    \ 'coc-css',
     \ 'coc-tailwindcss',
     \ 'coc-emmet',
     \ 'coc-sh',
