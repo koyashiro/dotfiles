@@ -13,7 +13,9 @@
     "rust",
     "go",
     "javascript",
+    "javascriptreact",
     "typescript",
+    "typescriptreact",
     "vue",
     "ruby"
   ],
