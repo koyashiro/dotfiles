@@ -86,6 +86,8 @@ fi
 # Rust
 if command -v rustup >/dev/null 2>&1; then
   export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/rustup
+fi
+if command -v cargo >/dev/null 2>&1; then
   export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/cargo
   export PATH="$PATH":"$CARGO_HOME"/bin
 fi
