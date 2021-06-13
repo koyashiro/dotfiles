@@ -106,6 +106,10 @@ fi
 if command -v yarn >/dev/null 2>&1; then
   export YARN_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/yarn/yarnrc
 fi
+if command -v deno >/dev/null 2>&1; then
+  export DENO_INSTALL_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/deno/bin
+  export PATH="$PATH":"$DENO_INSTALL_ROOT"
+fi
 
 # Ruby
 if command -v ruby >/dev/null 2>&1; then
