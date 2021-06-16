@@ -26,6 +26,11 @@ alias tmux='tmux -u'
 alias t='tmux -u'
 alias tsource='tmux source-file'
 
+# neovim
+if command -v nvim >/dev/null 2>&1; then
+  alias vim=nvim
+fi
+
 # emacs
 alias emacs=vim
 
