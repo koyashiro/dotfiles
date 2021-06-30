@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+if [ -n "$WSL_INTEROP" ]; then
   exit 0
 else
   exit 1

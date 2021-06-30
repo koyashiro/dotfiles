@@ -1,4 +1,4 @@
-if [ ! -f /proc/sys/fs/binfmt_misc/WSLInterop ]; then
+if [ -z "$WSL_INTEROP" ]; then
   return
 fi
 
