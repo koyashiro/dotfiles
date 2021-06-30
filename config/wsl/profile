@@ -1,4 +1,4 @@
-if [ -z "$WSL_INTEROP" ]; then
+if [ -z "${WSL_INTEROP:-}" ]; then
   return
 fi
 

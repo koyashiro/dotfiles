@@ -12,7 +12,7 @@ if [ -f "$XDG_CONFIG_HOME"/sh/env.sh ]; then
 fi
 
 # wsl
-if [ -n "$WSL_INTEROP" ]; then
+if [ -n "${WSL_INTEROP:-}" ]; then
   if [ -f "$XDG_CONFIG_HOME"/wsl/profile ]; then
     # shellcheck source=config/wsl/profile
     . "$XDG_CONFIG_HOME"/wsl/profile
