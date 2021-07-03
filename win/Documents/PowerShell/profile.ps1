@@ -14,6 +14,7 @@ foreach ($removeAlias in $removeAliases) {
   }
 }
 
+Set-Alias vim nvim
 Set-Alias clr Clear-Host
 Set-Alias g git
 Set-Alias d docker
