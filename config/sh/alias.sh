@@ -81,8 +81,8 @@ alias d=docker
 
 # Docker Compose
 alias dc=docker-compose
-alias dcu='docker-compose up'
-alias dcud='docker-compose up --detach'
+alias dcb='docker-compose build'
+alias dcu='docker-compose up --detach'
 alias dcd='docker-compose down'
 alias dcr='docker-compose run --rm'
 alias dce='docker-compose exec'
