@@ -110,10 +110,6 @@ set mouse=a
 " leader
 let mapleader = "\<Space>"
 
-" Esc
-inoremap <silent> jj <ESC>
-inoremap <silent> っｊ <ESC>
-
 " Indent
 inoremap <S-Tab> <C-h>
 
