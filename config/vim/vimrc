@@ -8,11 +8,13 @@ if has('nvim')
   let s:config_home = expand('$XDG_CONFIG_HOME/nvim')
   let s:cache_home = expand('$XDG_CACHE_HOME/nvim')
   let $MYVIMRC = expand('$XDG_CONFIG_HOME/nvim/init.vim')
+  let g:netrw_home = expand('$XDG_CONFIG_HOME/nvim')
 else
   let s:data_home = expand('$XDG_DATA_HOME/vim')
   let s:config_home = expand('$XDG_CONFIG_HOME/vim')
   let s:cache_home = expand('$XDG_CACHE_HOME/vim')
   let $MYVIMRC = expand('$XDG_CONFIG_HOME/vim/vimrc')
+  let g:netrw_home = expand('$XDG_CACHE_HOME/vim')
   if !isdirectory(s:data_home) | call mkdir(s:data_home, 'p', 0700) | endif
   if !isdirectory(s:config_home) | call mkdir(s:config_home, 'p', 0700) | endif
   if !isdirectory(s:cache_home) | call mkdir(s:cache_home, 'p', 0700) | endif
