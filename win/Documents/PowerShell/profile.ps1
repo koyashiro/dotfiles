@@ -1,3 +1,5 @@
+$env:TERM = 'xterm-256color'
+
 $removeAliases = @(
   'ls',
   'cat',
