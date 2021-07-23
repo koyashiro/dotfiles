@@ -2,6 +2,7 @@
   "experimentalFeatures": {
     "experimentalMSStore": true,
     "list": true,
-    "upgrade": true
+    "upgrade": true,
+    "uninstall": true
   }
 }
