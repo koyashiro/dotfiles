@@ -35,7 +35,6 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
 fi
 
 bindkey -v
-bindkey 'jj' vi-cmd-mode
 bindkey '^ ' autosuggest-accept
 bindkey '^p' up-line-or-history
 bindkey '^n' down-line-or-history
