@@ -304,6 +304,10 @@ Plug 'sheerun/vim-polyglot'
 Plug 'cespare/vim-toml'
 Plug 'elzr/vim-json'
 
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+endif
+
 " git
 if executable('git')
   Plug 'tpope/vim-fugitive'
