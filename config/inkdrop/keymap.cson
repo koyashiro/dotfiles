@@ -1,2 +1,0 @@
-".CodeMirror.vim-mode.insert-mode textarea":
-  "j j": "vim:exit-insert-mode"
