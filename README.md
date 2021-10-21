@@ -4,7 +4,7 @@
 
 ## Installation
 
-### Linux
+### Linux / macOS
 
 ```sh
 git clone git@github.com:koyashiro/dotfiles.git ~/.dotfiles
