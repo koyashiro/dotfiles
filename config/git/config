@@ -1,6 +1,6 @@
 [user]
 	name = koyashiro
-	email = develop@koyashiro.net
+	email = develop@koyashi.ro
 [core]
 	editor = vim -c 'set fenc=utf-8'
 	autoCRLF = false
