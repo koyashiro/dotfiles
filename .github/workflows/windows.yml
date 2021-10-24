@@ -1,0 +1,21 @@
+name: Windows
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-on-windows:
+    name: Test on Windows
+    runs-on: windows-latest
+    steps:
+      - name: Clone
+        run: git clone https://github.com/koyashiro/dotfiles.git $ENV:USERPROFILE\.dotfiles
+
+      - name: Install
+        run: pwsh.exe -Command '. $ENV:USERPROFILE\.dotfiles\install.ps1'

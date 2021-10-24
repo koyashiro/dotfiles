@@ -8,6 +8,7 @@
 [![Ubuntu](https://github.com/koyashiro/dotfiles/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/ubuntu.yml)
 [![Alpine Linux](https://github.com/koyashiro/dotfiles/actions/workflows/alpine.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/alpine.yml)
 [![macOS](https://github.com/koyashiro/dotfiles/actions/workflows/macos.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/macos.yml)
+[![Windows](https://github.com/koyashiro/dotfiles/actions/workflows/windows.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/windows.yml)
 
 ## Installation
 
