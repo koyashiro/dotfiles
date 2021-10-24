@@ -1,0 +1,25 @@
+name: Arch Linux
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-on-archlinux:
+    name: Test on Arch Linux
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: test on archlinux container
+        run: |
+          docker run \
+            --rm \
+            --volume "$PWD":/root/.dotfiles:ro \
+            --entrypoint /root/.dotfiles/test/test.sh \
+            archlinux:latest

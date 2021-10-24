@@ -1,0 +1,25 @@
+name: Ubuntu
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-on-ubuntu:
+    name: Test on Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: test on ubuntu container
+        run: |
+          docker run \
+            --rm \
+            --volume "$PWD":/root/.dotfiles:ro \
+            --entrypoint /root/.dotfiles/test/test.sh \
+            ubuntu:latest

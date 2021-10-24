@@ -1,0 +1,25 @@
+name: Debian
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-on-debian:
+    name: Test on Debian
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: test on debian container
+        run: |
+          docker run \
+            --rm \
+            --volume "$PWD":/root/.dotfiles:ro \
+            --entrypoint /root/.dotfiles/test/test.sh \
+            debian:latest

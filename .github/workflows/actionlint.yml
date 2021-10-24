@@ -1,4 +1,4 @@
-name: Check workflows
+name: actionlint
 
 on:
   push:
@@ -9,14 +9,14 @@ on:
   pull_request:
     paths:
       - ".github/workflows/**"
+  workflow_dispatch:
 
 jobs:
-  test:
+  actionlint:
     name: Lint workflows
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Download actionlint
         id: get_actionlint
