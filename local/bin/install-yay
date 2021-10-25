@@ -37,19 +37,19 @@ fi
 # Work directory checking
 WORK_DIR="$(mktemp -d)"
 readonly WORK_DIR
-echo '[install_yay] Create `'"$WORK_DIR"'`.' 1>&2
+echo '[install-yay] Create `'"$WORK_DIR"'`.' 1>&2
 
 # Clone and install yay
-echo "[install_yay] Cloning yay...."
+echo "[install-yay] Cloning yay...."
 git clone $YAY_REPO_URL "$WORK_DIR"
 
 cd "$WORK_DIR"
-echo '[install_yay] Installing yay....'
+echo '[install-yay] Installing yay....'
 makepkg -si
 cd
 
 # Remove work directory
-echo "[install_yay] Removing $WORK_DIR...."
+echo "[install-yay] Removing $WORK_DIR...."
 rm -rf "$WORK_DIR"
 
-echo '[install_yay] Installation complete.'
+echo '[install-yay] Installation complete.'
