@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+set -eu
+
+comm -23 <(pacman -Qenq | grep -v '^base$' | sort) <(pacman -Qgq base-devel | sort) >pacman.dump

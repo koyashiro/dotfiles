@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+set -eu
+
+pacman -Qemq | grep -v -E '^genie-systemd$|^yay$' >yay.dump
