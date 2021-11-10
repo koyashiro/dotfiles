@@ -1,3 +1,4 @@
+bash
 bat
 bind
 deno
@@ -7,8 +8,10 @@ exa
 fd
 fzf
 git
+git-delta
 github-cli
 go
+inetutils
 jq
 less
 man-db
