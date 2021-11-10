@@ -227,7 +227,7 @@ if executable('node') || executable('nodejs')
     return !col || getline('.')[col - 1]  =~# '\s'
   endfunction
 
-  inoremap <silent><expr> <c-space> coc#refresh()
+  inoremap <expr> <C-i> coc#refresh()
 
   inoremap <silent><expr> <Tab> pumvisible()
     \ ? coc#_select_confirm()
