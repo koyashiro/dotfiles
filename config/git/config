@@ -59,3 +59,5 @@
 [filter "ignore-npmrc"]
 	smudge = cat
 	clean = sed '/^\\/\\/npm\\.pkg\\.github\\.com\\/:_authToken/d'
+[init]
+	defaultBranch = main
