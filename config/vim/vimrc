@@ -268,13 +268,10 @@ if executable('node') || executable('nodejs')
     \ 'coc-tsserver',
     \ 'coc-prettier',
     \ 'coc-eslint',
-    \ 'coc-vetur',
+    \ '@yaegassy/coc-volar',
     \ 'coc-deno',
     \ 'coc-python',
-    \ 'coc-html',
-    \ 'coc-css',
     \ 'coc-tailwindcss',
-    \ 'coc-emmet',
     \ 'coc-sh',
     \ 'coc-vimlsp',
     \ 'coc-omnisharp',
@@ -282,9 +279,7 @@ if executable('node') || executable('nodejs')
     \ 'coc-rust-analyzer',
     \ 'coc-solargraph',
     \ 'coc-markdownlint',
-    \ 'coc-snippets',
     \ ]
-Plug 'honza/vim-snippets'
 endif
 " }}}
 
