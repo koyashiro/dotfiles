@@ -1,7 +1,7 @@
 # install zinit
 if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit ]]; then
   mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit
-  git clone https://github.com/zdharma/zinit.git "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit/bin
+  git clone https://github.com/zdharma-continuum/zinit.git "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit/bin
 fi
 
 declare -A ZINIT
@@ -17,7 +17,7 @@ autoload -Uz _zinit
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light ascii-soup/zsh-url-highlighter
 zinit light mollifier/cd-gitroot
 zinit ice depth=1; zinit light romkatv/powerlevel10k
