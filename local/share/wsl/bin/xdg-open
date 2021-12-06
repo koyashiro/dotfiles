@@ -2,7 +2,7 @@
 
 set -eu
 
-readonly CHROME_PATH='/mnt/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+readonly CHROME_PATH='/mnt/c/Program Files/Google/Chrome/Application/chrome.exe'
 
 if echo "$@" | grep -E '^(http|https):\/\/' >/dev/null; then
   "$CHROME_PATH" "$@"
