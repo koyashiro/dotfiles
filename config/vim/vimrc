@@ -291,6 +291,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'cespare/vim-toml'
 Plug 'elzr/vim-json'
+Plug 'pantharshit00/vim-prisma'
 
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
