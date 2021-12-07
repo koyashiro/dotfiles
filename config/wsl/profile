@@ -11,6 +11,6 @@ DISPLAY="$(ipconfig.exe | awk 'BEGIN { RS="\r\n"; } /vEthernet \(WSL\):/ { targe
 export PATH
 export DISPLAY
 
-if command -v genie >/dev/null 2>&1 && [ -z "$INSIDE_GENIE" ]; then
-  exec genie -s
+if command -v genie >/dev/null 2>&1 && [ -z "$INSIDE_GENIE" ] && ! genie --is-running >/dev/null; then
+  genie --initialize
 fi
