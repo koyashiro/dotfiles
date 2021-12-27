@@ -66,11 +66,9 @@ if [ -n "${WSL_INTEROP:-}" ]; then
   ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
 
   # Create `/etc/wsl.con`
-  if [ ! -e /etc/wsl.conf ]; then
-    if command -v sudo >/dev/null 2>&1; then
-      sudo cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
-    else
-      cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
-    fi
+  if command -v sudo >/dev/null 2>&1; then
+    sudo cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
+  else
+    cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
   fi
 fi
