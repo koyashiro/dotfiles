@@ -269,7 +269,7 @@ if executable('node') || executable('nodejs')
     \ 'coc-tsserver',
     \ 'coc-prettier',
     \ 'coc-eslint',
-    \ '@yaegassy/coc-volar',
+    \ 'coc-vetur',
     \ 'coc-deno',
     \ 'coc-python',
     \ 'coc-tailwindcss',
