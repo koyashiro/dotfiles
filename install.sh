@@ -11,6 +11,15 @@ readonly ARCHIVE_URL="$REPO_URL"/archive/main.tar.gz
 readonly XDG_CONFIG_HOME="$HOME"/.config
 readonly XDG_DATA_HOME="$HOME"/.local/share
 
+cat <<EOF
+\$(whoami)    : $(whoami)
+\$HOME        : $HOME
+\$DOTDIR      : $DOTDIR
+\$REPO_URL    : $REPO_URL
+\$ARCHIVE_URL : $ARCHIVE_URL
+
+EOF
+
 # dotfiles directory checking
 if [ ! -d "$DOTDIR" ]; then
   # Clone repository by Git
