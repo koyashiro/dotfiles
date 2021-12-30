@@ -27,16 +27,36 @@ if [ -z "${XDG_DATA_HOME:-}" ]; then
   XDG_DATA_HOME="$DEFAULT_XDG_DATA_HOME"
 fi
 
+if [ -r /etc/os-release ]; then
+  DISTRO="$(. /etc/os-release && echo "$NAME")"
+else
+  DISTRO='(UNKNOWN)'
+fi
+
+if [ "$(uname)" = Darwin ]; then
+  IS_DARWIN=true
+else
+  IS_DARWIN=false
+fi
+
+if [ -n "${WSL_INTEROP:-}" ]; then
+  IS_WSL=true
+else
+  IS_WSL=false
+fi
+
 cat <<EOF
 [install.sh] koyashiro's dotfiles <https://github.com/koyashiro/dotfiles>
 
-[install.sh] \$(whoami)        : $(whoami)
-[install.sh] \$HOME            : $HOME
-[install.sh] \$DOTDIR          : $DOTDIR
-[install.sh] \$REPO_URL        : $REPO_URL
-[install.sh] \$ARCHIVE_URL     : $ARCHIVE_URL
-[install.sh] \$XDG_CONFIG_HOME : $XDG_CONFIG_HOME
-[install.sh] \$XDG_DATA_HOME   : $XDG_DATA_HOME
+[install.sh] (whoami)        : $(whoami)
+[install.sh] HOME            : $HOME
+[install.sh] DOTDIR          : $DOTDIR
+[install.sh] REPO_URL        : $REPO_URL
+[install.sh] ARCHIVE_URL     : $ARCHIVE_URL
+[install.sh] XDG_CONFIG_HOME : $XDG_CONFIG_HOME
+[install.sh] XDG_DATA_HOME   : $XDG_DATA_HOME
+[install.sh] IS_DARWIN       : $IS_DARWIN
+[install.sh] IS_WSL          : $IS_WSL
 
 EOF
 
@@ -113,7 +133,7 @@ ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
 )
 
 # WSL
-if [ -n "${WSL_INTEROP:-}" ]; then
+if [ "$IS_WSL" = true ]; then
   echo "[install.sh] ln -fns $DOTDIR/local/share/wsl $XDG_DATA_HOME/wsl"
   ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
 
