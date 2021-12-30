@@ -2,21 +2,41 @@
 
 set -eu
 
-# dotfiles variables
-readonly DOTDIR="$HOME"/.dotfiles
-readonly REPO_URL=https://github.com/koyashiro/dotfiles
-readonly ARCHIVE_URL="$REPO_URL"/archive/main.tar.gz
+readonly DEFAULT_DOTDIR="$HOME"/.dotfiles
+if [ -z "${DOTDIR:-}" ]; then
+  DOTDIR="$DEFAULT_DOTDIR"
+fi
 
-# XDG Base Directory variables
-readonly XDG_CONFIG_HOME="$HOME"/.config
-readonly XDG_DATA_HOME="$HOME"/.local/share
+readonly DEFAULT_REPO_URL=https://github.com/koyashiro/dotfiles
+if [ -z "${REPO_URL:-}" ]; then
+  REPO_URL="$DEFAULT_REPO_URL"
+fi
+
+readonly DEFAULT_ARCHIVE_URL="$REPO_URL"/archive/main.tar.gz
+if [ -z "${ARCHIVE_URL:-}" ]; then
+  ARCHIVE_URL="$DEFAULT_ARCHIVE_URL"
+fi
+
+readonly DEFAULT_XDG_CONFIG_HOME="$HOME"/.config
+if [ -z "${XDG_CONFIG_HOME:-}" ]; then
+  XDG_CONFIG_HOME="$DEFAULT_XDG_CONFIG_HOME"
+fi
+
+readonly DEFAULT_XDG_DATA_HOME="$HOME"/.local/share
+if [ -z "${XDG_DATA_HOME:-}" ]; then
+  XDG_DATA_HOME="$DEFAULT_XDG_DATA_HOME"
+fi
 
 cat <<EOF
-\$(whoami)    : $(whoami)
-\$HOME        : $HOME
-\$DOTDIR      : $DOTDIR
-\$REPO_URL    : $REPO_URL
-\$ARCHIVE_URL : $ARCHIVE_URL
+[install.sh] koyashiro's dotfiles <https://github.com/koyashiro/dotfiles>
+
+[install.sh] \$(whoami)        : $(whoami)
+[install.sh] \$HOME            : $HOME
+[install.sh] \$DOTDIR          : $DOTDIR
+[install.sh] \$REPO_URL        : $REPO_URL
+[install.sh] \$ARCHIVE_URL     : $ARCHIVE_URL
+[install.sh] \$XDG_CONFIG_HOME : $XDG_CONFIG_HOME
+[install.sh] \$XDG_DATA_HOME   : $XDG_DATA_HOME
 
 EOF
 
