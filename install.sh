@@ -81,11 +81,6 @@ ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
     echo "ln -fns $d $XDG_CONFIG_HOME/$(basename $d)"
     ln -fns "$d" "$XDG_CONFIG_HOME"/"$(basename "$d")"
   done
-
-  for f in "$DOTDIR"/local/bin/*; do
-    echo "ln -fns $f $HOME/.local/bin/$(basename $f)"
-    ln -fns "$f" "$HOME"/.local/bin/"$(basename "$f")"
-  done
 )
 
 # WSL
