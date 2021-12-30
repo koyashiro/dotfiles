@@ -15,14 +15,21 @@ readonly XDG_DATA_HOME="$HOME"/.local/share
 if [ ! -d "$DOTDIR" ]; then
   # Clone repository by Git
   if command -v git >/dev/null 2>&1; then
+    echo "git clone $REPO_URL $DOTDIR"
     git clone "$REPO_URL" "$DOTDIR"
   # Download archive by curl
   elif command -v curl >/dev/null 2>&1; then
+    echo "mkdir $DOTDIR"
     mkdir "$DOTDIR"
+
+    echo "curl -fsSL $ARCHIVE_URL | tar -xz -C $DOTDIR --strip 1"
     curl -fsSL "$ARCHIVE_URL" | tar -xz -C "$DOTDIR" --strip 1
   # Download archive by wget
   elif command -v wget >/dev/null 2>&1; then
+    echo "mkdir $DOTDIR"
     mkdir "$DOTDIR"
+
+    echo "wget -q -O - $ARCHIVE_URL | tar -xz -C $DOTDIR --strip 1"
     wget -q -O - "$ARCHIVE_URL" | tar -xz -C "$DOTDIR" --strip 1
   else
     echo 'error: git, curl or wget required.' 1>&2
@@ -32,43 +39,66 @@ fi
 
 # Create XDG Base Directories
 if [ ! -d "$HOME"/.config ]; then
+  echo "mkdir -m 700 $HOME/.config"
   mkdir -m 700 "$HOME"/.config
 fi
+
 if [ ! -d "$HOME"/.cache ]; then
+  echo "mkdir -m 700 $HOME/.cache"
   mkdir -m 700 "$HOME"/.cache
 fi
+
 if [ ! -d "$HOME"/.local ]; then
+  echo "mkdir -m 700 $HOME/.local"
   mkdir -m 700 "$HOME"/.local
 fi
+
 if [ ! -d "$HOME"/.local/share ]; then
+  echo "mkdir -m 700 $HOME/.local/share"
   mkdir -m 700 "$HOME"/.local/share
 fi
+
 if [ ! -d "$HOME"/.local/bin ]; then
+  echo "mkdir -m 700 $HOME/.local/bin"
   mkdir -m 700 "$HOME"/.local/bin
 fi
 
 # Create symbolic link
+echo "ln -fns $DOTDIR/profile $HOME/.profile"
 ln -fns "$DOTDIR"/profile "$HOME"/.profile
+
+echo "ln -fns $DOTDIR/bash_profile $HOME/.bash_profile"
 ln -fns "$DOTDIR"/bash_profile "$HOME"/.bash_profile
+
+echo "ln -fns $DOTDIR/bashrc $HOME/.bashrc"
 ln -fns "$DOTDIR"/bashrc "$HOME"/.bashrc
+
+echo "ln -fns $DOTDIR/zshenv $HOME/.zshenv"
 ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
+
 (
   for d in "$DOTDIR"/config/*; do
+    echo "ln -fns $d $XDG_CONFIG_HOME/$(basename $d)"
     ln -fns "$d" "$XDG_CONFIG_HOME"/"$(basename "$d")"
   done
+
   for f in "$DOTDIR"/local/bin/*; do
+    echo "ln -fns $f $HOME/.local/bin/$(basename $f)"
     ln -fns "$f" "$HOME"/.local/bin/"$(basename "$f")"
   done
 )
 
 # WSL
 if [ -n "${WSL_INTEROP:-}" ]; then
+  echo "ln -fns $DOTDIR/local/share/wsl $XDG_DATA_HOME/wsl"
   ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
 
   # Create `/etc/wsl.con`
   if command -v sudo >/dev/null 2>&1; then
+    echo "sudo cp $DOTDIR/etc/wsl.conf /etc/wsl.conf"
     sudo cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
   else
+    echo "cp $DOTDIR/etc/wsl.conf /etc/wsl.conf"
     cp "$DOTDIR"/etc/wsl.conf /etc/wsl.conf
   fi
 fi
