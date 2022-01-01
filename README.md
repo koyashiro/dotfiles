@@ -1,6 +1,7 @@
 # dotfiles
 
-[![Lint](https://github.com/koyashiro/dotfiles/actions/workflows/lint.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/lint.yml)
+[![shellcheck](https://github.com/koyashiro/dotfiles/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/shellcheck.yml)
+[![shfmt](https://github.com/koyashiro/dotfiles/actions/workflows/shfmt.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/shfmt.yml)
 [![actionlint](https://github.com/koyashiro/dotfiles/actions/workflows/actionlint.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/actionlint.yml)
 
 [![Arch Linux](https://github.com/koyashiro/dotfiles/actions/workflows/archlinux.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/archlinux.yml)
