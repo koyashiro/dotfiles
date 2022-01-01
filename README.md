@@ -15,9 +15,7 @@
 ### Linux / macOS
 
 ```sh
-git clone git@github.com:koyashiro/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./install.sh
+curl -fsSL https://dotfiles.koyashiro.sh | sh
 ```
 
 ### Windows
