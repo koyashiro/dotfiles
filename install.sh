@@ -36,45 +36,31 @@ set_variables() {
   fi
 }
 
-show_info() {
-  cat <<EOF
-[install.sh] koyashiro's dotfiles <https://github.com/koyashiro/dotfiles>
+create_directory_if_does_not_exist() {
+  printf "\x1b[32mChecking\x1b[39m directory: \x1b[36m%s\x1b[39m\n" "$1"
+  if [ ! -d "$1" ]; then
+    printf "  Directory does not exist: \x1b[34m%s\x1b[39m\n" "$1"
 
-[install.sh] USER            : ${USER:-$(whoami)}
-[install.sh] HOME            : $HOME
-[install.sh] DOTDIR          : $DOTDIR
-[install.sh] DISTRO          : $DISTRO
-[install.sh] IS_DARWIN       : $IS_DARWIN
-[install.sh] IS_WSL          : $IS_WSL
-
-EOF
+    printf "  \x1b[32mCreating\x1b[39m directory: \x1b[36m%s\x1b[39m\n" "$1"
+    mkdir -m 700 "$1"
+    printf "    Created: \x1b[34m%s\x1b[39m\n" "$1"
+  else
+    printf "  Directory exists: \x1b[34m%s\x1b[39m\n" "$1"
+  fi
 }
 
 create_xdg_base_directories() {
-  if [ ! -d "$HOME"/.config ]; then
-    echo "[install.sh] mkdir -m 700 $HOME/.config"
-    mkdir -m 700 "$HOME"/.config
-  fi
+  create_directory_if_does_not_exist "$HOME/.config"
 
-  if [ ! -d "$HOME"/.cache ]; then
-    echo "[install.sh] mkdir -m 700 $HOME/.cache"
-    mkdir -m 700 "$HOME"/.cache
-  fi
+  create_directory_if_does_not_exist "$HOME/.cache"
 
-  if [ ! -d "$HOME"/.local ]; then
-    echo "[install.sh] mkdir -m 700 $HOME/.local"
-    mkdir -m 700 "$HOME"/.local
-  fi
+  create_directory_if_does_not_exist "$HOME/.local"
 
-  if [ ! -d "$HOME"/.local/share ]; then
-    echo "[install.sh] mkdir -m 700 $HOME/.local/share"
-    mkdir -m 700 "$HOME"/.local/share
-  fi
+  create_directory_if_does_not_exist "$HOME/.local/share"
 
-  if [ ! -d "$HOME"/.local/bin ]; then
-    echo "[install.sh] mkdir -m 700 $HOME/.local/bin"
-    mkdir -m 700 "$HOME"/.local/bin
-  fi
+  create_directory_if_does_not_exist "$HOME/.local/bin"
+
+  echo
 }
 
 set_xdg_base_directories() {
@@ -83,36 +69,35 @@ set_xdg_base_directories() {
   XDG_DATA_HOME="$HOME/.local/share"
 }
 
+create_symbolic_link() {
+  printf "\x1b[32mCreating\x1b[39m symbolic link: \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
+  ln -fns "$1" "$2"
+  printf "  Created: \x1b[34m%s\x1b[39m\n" "$2"
+}
+
 create_symbolic_links() {
-  echo "[install.sh] ln -fns $DOTDIR/profile $HOME/.profile"
-  ln -fns "$DOTDIR"/profile "$HOME"/.profile
+  create_symbolic_link "$DOTDIR/profile" "$HOME/.profile"
 
-  echo "[install.sh] ln -fns $DOTDIR/bash_profile $HOME/.bash_profile"
-  ln -fns "$DOTDIR"/bash_profile "$HOME"/.bash_profile
+  create_symbolic_link "$DOTDIR/bash_profile" "$HOME/.bash_profile"
 
-  echo "[install.sh] ln -fns $DOTDIR/bashrc $HOME/.bashrc"
-  ln -fns "$DOTDIR"/bashrc "$HOME"/.bashrc
+  create_symbolic_link "$DOTDIR/bashrc" "$HOME/.bashrc"
 
-  echo "[install.sh] ln -fns $DOTDIR/zshenv $HOME/.zshenv"
-  ln -fns "$DOTDIR"/zshenv "$HOME"/.zshenv
+  create_symbolic_link "$DOTDIR/zshenv" "$HOME/.zshenv"
 
   (
-    for d in "$DOTDIR"/config/*; do
-      echo "[install.sh] ln -fns $d $XDG_CONFIG_HOME/$(basename "$d")"
-      ln -fns "$d" "$XDG_CONFIG_HOME"/"$(basename "$d")"
+    for src in "$DOTDIR"/config/*; do
+      dist="$XDG_CONFIG_HOME"/"$(basename "$src")"
+      create_symbolic_link "$src" "$dist"
     done
   )
 }
 
 create_wsl_symbolic_links() {
-  echo "[install.sh] ln -fns $DOTDIR/local/share/wsl $XDG_DATA_HOME/wsl"
-  ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
+  create_symbolic_link "$DOTDIR/local/share/wsl" "$XDG_DATA_HOME/wsl"
 }
 
 main() {
   set_variables
-
-  show_info
 
   create_xdg_base_directories
 
