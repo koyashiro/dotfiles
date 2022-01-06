@@ -109,16 +109,20 @@ create_wsl_symbolic_links() {
   ln -fns "$DOTDIR"/local/share/wsl "$XDG_DATA_HOME"/wsl
 }
 
-set_variables
+main() {
+  set_variables
 
-show_info
+  show_info
 
-create_xdg_base_directories
+  create_xdg_base_directories
 
-set_xdg_base_directories
+  set_xdg_base_directories
 
-create_symbolic_links
+  create_symbolic_links
 
-if [ "$IS_WSL" = true ]; then
-  create_wsl_symbolic_links
-fi
+  if [ "$IS_WSL" = true ]; then
+    create_wsl_symbolic_links
+  fi
+}
+
+main
