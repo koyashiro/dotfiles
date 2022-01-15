@@ -41,6 +41,9 @@ export LESS_TERMCAP_so
 export LESS_TERMCAP_ue
 export LESS_TERMCAP_us
 
+# Readline
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME.config}"/readline/inputrc
+
 # zsh
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}"/zsh
 
