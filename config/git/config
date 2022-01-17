@@ -2,7 +2,6 @@
 	name = koyashiro
 	email = develop@koyashi.ro
 [core]
-	editor = vim -c 'set fenc=utf-8'
 	autoCRLF = false
 	quotepath = false
 	pager = delta
