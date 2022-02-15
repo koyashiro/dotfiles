@@ -50,9 +50,7 @@
 [fetch]
 	prune = true
 [delta]
-	features = line-numbers decorations
-	plus-color = "#012800"
-	minus-color = "#340001"
+	features = line-numbers decorations side-by-side
 	syntax-theme = OneHalfDark
 [interactive]
 	diffFilter = delta --color-only
