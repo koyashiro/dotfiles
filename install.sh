@@ -2,7 +2,10 @@
 
 set -eu
 
-DOTDIR="$(cd "$(dirname "$0")"; pwd)"
+DOTDIR="$(
+  cd "$(dirname "$0")"
+  pwd
+)"
 
 is_darwin() {
   [ "$(uname)" = Darwin ]
