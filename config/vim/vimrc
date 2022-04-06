@@ -105,6 +105,9 @@ set listchars=eol:↲,tab:>-,space:.,trail:.
 " folding
 set foldmethod=manual
 
+" netrwhist
+let g:netrw_dirhistmax = 0
+
 " mouse
 set mouse=a
 
