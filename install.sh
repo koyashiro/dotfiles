@@ -76,16 +76,16 @@ create_symbolic_link() {
 }
 
 create_symbolic_links() {
-  create_symbolic_link "$DOTDIR/profile" "$HOME/.profile"
+  create_symbolic_link "$DOTDIR/.profile" "$HOME/.profile"
 
-  create_symbolic_link "$DOTDIR/bash_profile" "$HOME/.bash_profile"
+  create_symbolic_link "$DOTDIR/.bash_profile" "$HOME/.bash_profile"
 
-  create_symbolic_link "$DOTDIR/bashrc" "$HOME/.bashrc"
+  create_symbolic_link "$DOTDIR/.bashrc" "$HOME/.bashrc"
 
-  create_symbolic_link "$DOTDIR/zshenv" "$HOME/.zshenv"
+  create_symbolic_link "$DOTDIR/.zshenv" "$HOME/.zshenv"
 
   (
-    for src in "$DOTDIR"/config/*; do
+    for src in "$DOTDIR"/.config/*; do
       dist="$XDG_CONFIG_HOME"/"$(basename "$src")"
       create_symbolic_link "$src" "$dist"
     done
@@ -93,7 +93,7 @@ create_symbolic_links() {
 }
 
 create_wsl_symbolic_links() {
-  create_symbolic_link "$DOTDIR/local/share/wsl" "$XDG_DATA_HOME/wsl"
+  create_symbolic_link "$DOTDIR/.local/share/wsl" "$XDG_DATA_HOME/wsl"
 }
 
 main() {
