@@ -42,9 +42,6 @@ export INPUTRC="${XDG_CONFIG_HOME:-$HOME.config}"/readline/inputrc
 # zsh
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}"/zsh
 
-# Vim
-export VIMINIT="if has('nvim') | source ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/init.vim | else | source ${XDG_CONFIG_HOME:-~/.config}/vim/vimrc | endif"
-
 # Git
 export GIT_EDITOR="$EDITOR"
 if command -v delta >/dev/null 2>&1; then

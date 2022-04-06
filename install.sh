@@ -84,6 +84,8 @@ create_symbolic_links() {
 
   create_symbolic_link "$DOTDIR/.zshenv" "$HOME/.zshenv"
 
+  create_symbolic_link "$DOTDIR/.vimrc" "$HOME/.vimrc"
+
   (
     for src in "$DOTDIR"/.config/*; do
       dist="$XDG_CONFIG_HOME"/"$(basename "$src")"
