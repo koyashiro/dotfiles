@@ -61,19 +61,19 @@ assert_directory "$DOTDIR"
 # `$HOME/.profile`
 readonly DOT_PROFILE="$HOME"/.profile
 assert_file "$HOME"/.profile
-assert_symboliclink "$HOME"/.profile "$DOTDIR"/profile
+assert_symboliclink "$HOME"/.profile "$DOTDIR"/.profile
 
 # `$HOME/.bash_profile`
 assert_file "$HOME"/.bash_profile
-assert_symboliclink "$HOME"/.bash_profile "$DOTDIR"/bash_profile
+assert_symboliclink "$HOME"/.bash_profile "$DOTDIR"/.bash_profile
 
 # `$HOME/.bshrc`
 assert_file "$HOME"/.bashrc
-assert_symboliclink "$HOME"/.bashrc "$DOTDIR"/bashrc
+assert_symboliclink "$HOME"/.bashrc "$DOTDIR"/.bashrc
 
 # `$HOME/.zshenv`
 assert_file "$HOME"/.zshenv
-assert_symboliclink "$HOME"/.zshenv "$DOTDIR"/zshenv
+assert_symboliclink "$HOME"/.zshenv "$DOTDIR"/.zshenv
 
 # `$HOME/.config`
 assert_directory "$HOME"/.config
@@ -96,7 +96,7 @@ assert_directory "$HOME"/.local/bin
 # `$XDG_CONFIG_HOME`
 assert_env XDG_CONFIG_HOME
 assert_equal "$XDG_CONFIG_HOME" "$HOME"/.config
-for d in "$DOTDIR"/config/*; do
+for d in "$DOTDIR"/.config/*; do
   assert_symboliclink "$XDG_CONFIG_HOME"/"$(basename $d)" "$d"
 done
 
