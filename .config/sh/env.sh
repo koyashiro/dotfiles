@@ -1,3 +1,8 @@
+# XDG Base Directory
+export XDG_CONFIG_HOME="$HOME"/.config
+export XDG_CACHE_HOME="$HOME"/.cache
+export XDG_DATA_HOME="$HOME"/.local/share
+
 # Editor
 if command -v nvim >/dev/null 2>&1; then
   export EDITOR=nvim
@@ -9,16 +14,16 @@ fi
 export PAGER=less
 
 # Less
-if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}"/less ]; then
-  mkdir -m 700 "${XDG_CONFIG_HOME:-$HOME/.config}"/less
+if [ ! -d "$XDG_CONFIG_HOME"/less ]; then
+  mkdir -m 700 "$XDG_CONFIG_HOME"/less
 fi
-if [ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}"/less ]; then
-  mkdir -m 700 "${XDG_CACHE_HOME:-$HOME/.cache}"/less
+if [ ! -d "$XDG_CACHE_HOME"/less ]; then
+  mkdir -m 700 "$XDG_CACHE_HOME"/less
 fi
 export LESS='-fiMRfFx4X'
 export LESSCHARSET='utf-8'
-export LESSKEY="${XDG_CONFIG_HOME:-$HOME/.config}"/less/lesskey
-export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}"/less/history
+export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
+export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 
 # LESS man page colors (makes Man pages more readable).
 LESS_TERMCAP_mb=$(printf "\e[01;31m")
@@ -37,10 +42,7 @@ export LESS_TERMCAP_ue
 export LESS_TERMCAP_us
 
 # Readline
-export INPUTRC="${XDG_CONFIG_HOME:-$HOME.config}"/readline/inputrc
-
-# zsh
-export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}"/zsh
+export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 # Git
 export GIT_EDITOR="$EDITOR"
@@ -51,8 +53,8 @@ else
 fi
 
 # tig
-if [ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}"/tig ]; then
-  mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}"/tig
+if [ ! -d "$XDG_DATA_HOME"/tig ]; then
+  mkdir -m 700 "$XDG_DATA_HOME"/tig
 fi
 
 # fzf
@@ -61,85 +63,50 @@ if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 fi
 
+# Docker
+if command -v docker >/dev/null 2>&1; then
+  export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
+fi
+
 # AWS CLI
 if command -v aws >/dev/null 2>&1; then
   export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
-  export AWS_SHARED_CREDENTIALS_FILE="$XDG_DATA_HOME"/aws/credentials
-fi
-
-# Docker
-if command -v docker >/dev/null 2>&1; then
-  export DOCKER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/docker
-fi
-
-# AWS
-if command -v aws >/dev/null 2>&1; then
-  export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME:-$HOME/.config}"/aws/credentials
-  export AWS_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}"/aws/config
+  export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 fi
 
 # Rust
-if command -v rustup >/dev/null 2>&1; then
-  export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/rustup
-fi
-if command -v cargo >/dev/null 2>&1; then
-  export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/cargo
-  export PATH="$PATH":"$CARGO_HOME"/bin
-fi
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export PATH="$PATH":"$CARGO_HOME"/bin
 
 # Go
-if command -v go >/dev/null 2>&1; then
-  export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}"/go
-  export PATH="$PATH":"$GOPATH"/bin
-fi
+export GOPATH="$XDG_DATA_HOME"/go
+export PATH="$PATH":"$GOPATH"/bin
 
 # JavaScript / TypeScript
-if command -v npm >/dev/null 2>&1; then
-  export NODE_REPL_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}"/node/history
-  export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/npm/npmrc
-  export TS_NODE_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}"/ts-node/history
-  export PATH="$PATH":"${XDG_DATA_HOME:-$HOME/.local/share}"/npm/bin
+export NODE_REPL_HISTORY="$XDG_DATA_HOME"/node/history
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME"/npm/npmrc
+export TS_NODE_HISTORY="$XDG_DATA_HOME"/ts-node/history
+export PATH="$PATH":"$XDG_DATA_HOME"/npm/bin
+export DENO_INSTALL_ROOT="$XDG_DATA_HOME"/deno
+if [ ! -d "$DENO_INSTALL_ROOT" ]; then
+  mkdir -m 700 "$DENO_INSTALL_ROOT"
 fi
-if command -v yarn >/dev/null 2>&1; then
-  export YARN_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/yarn/yarnrc
-fi
-if command -v deno >/dev/null 2>&1; then
-  export DENO_INSTALL_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/deno
-  if [ ! -d "$DENO_INSTALL_ROOT" ]; then
-    mkdir -m 700 "$DENO_INSTALL_ROOT"
-  fi
-  export PATH="$PATH":"$DENO_INSTALL_ROOT"/bin
-fi
+export PATH="$PATH":"$DENO_INSTALL_ROOT"/bin
 
-# Ruby
-if command -v ruby >/dev/null 2>&1; then
-  export GEM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"/gem
-  export GEM_SPEC_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/gem
-  export BUNDLE_USER_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"/bundle/config
-  export BUNDLE_USER_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/bundle
-  export BUNDLE_USER_PLUGIN="${XDG_DATA_HOME:-$HOME/.local/share}"/bundle
-  export SOLARGRAPH_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}"/solargraph/cache
-  export PATH="$PATH":"$GEM_HOME"/bin
-fi
-
-# anyenv
-if command -v anyenv >/dev/null 2>&1; then
-  export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
-  export ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"/anyenv/anyenv-install
-  eval "$(anyenv init -)"
-elif [ -x "${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv/bin/anyenv ]; then
-  export ANYENV_ROOT="${XDG_DATA_HOME:-$HOME/.local/share}"/anyenv
-  export ANYENV_DEFINITION_ROOT="${XDG_CONFIG_HOME:-$HOME/.config}"/anyenv/anyenv-install
-  export PATH="$PATH":"$ANYENV_ROOT"/bin
-  eval "$(anyenv init -)"
-fi
+export VOLTA_HOME="$XDG_DATA_HOME"/volta
+export PATH="$PATH":"$VOLTA_HOME"/bin
 
 # $HOME/.local/bin
-if [ -d "$HOME"/.local/bin ]; then
-  export PATH="$HOME"/.local/bin:"$PATH"
-fi
+export PATH="$HOME"/.local/bin:"$PATH"
 
 # Homebrew
-if [ -d /opt/homebrew/bin ]; then
-  export PATH=/opt/homebrew/bin:"$PATH"
+export PATH=/opt/homebrew/bin:"$PATH"
+
+# wsl
+if [ -n "${WSL_INTEROP:-}" ]; then
+  if [ -f "$XDG_CONFIG_HOME"/wsl/env.sh ]; then
+    # shellcheck source=config/wsl/env.sh
+    source "$XDG_CONFIG_HOME"/wsl/env.sh
+  fi
 fi

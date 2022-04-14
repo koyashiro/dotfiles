@@ -87,6 +87,8 @@ create_symbolic_links() {
 
   create_symbolic_link "$DOTDIR/.zshenv" "$HOME/.zshenv"
 
+  create_symbolic_link "$DOTDIR/.zshrc" "$HOME/.zshrc"
+
   create_symbolic_link "$DOTDIR/.vimrc" "$HOME/.vimrc"
 
   (

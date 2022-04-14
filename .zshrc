@@ -26,10 +26,10 @@ done
 
 # zsh rc
 for f in autoload.zsh bindkey.zsh fzf.zsh setopt.zsh zle.zsh zstyle.zsh zinit.zsh .p10k.zsh; do
-  if [[ ! -f "$ZDOTDIR"/"$f".zwc ]] || [[ "$ZDOTDIR"/"$f" -nt "$ZDOTDIR"/"$f".zwc ]]; then
-    zcompile "$ZDOTDIR"/"$f"
+  if [[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f".zwc ]] || [[ "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f" -nt "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f".zwc ]]; then
+    zcompile "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f"
   fi
 
   # shellcheck disable=SC1090
-  source "$ZDOTDIR"/"$f"
+  source "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f"
 done

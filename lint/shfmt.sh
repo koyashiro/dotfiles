@@ -19,8 +19,7 @@ shfmt -d -ln bash -i 2 .bashrc
 
 # zsh
 shfmt -d -i 2 .zshenv
-shfmt -d -i 2 .config/zsh/.zshenv
-shfmt -d -i 2 .config/zsh/.zshrc
+shfmt -d -i 2 .zshrc
 
 # local/bin
 for f in "$DOTDIR"/.local/bin/*; do
@@ -28,4 +27,4 @@ for f in "$DOTDIR"/.local/bin/*; do
 done
 
 # wsl profile
-shfmt -d -i 2 .config/wsl/profile
+shfmt -d -i 2 .config/wsl/env.sh
