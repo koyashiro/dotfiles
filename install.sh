@@ -61,6 +61,8 @@ create_xdg_base_directories() {
 
   create_directory_if_does_not_exist "$HOME/.local/share"
 
+  create_directory_if_does_not_exist "$HOME/.local/state"
+
   create_directory_if_does_not_exist "$HOME/.local/bin"
 
   echo
@@ -70,6 +72,7 @@ set_xdg_base_directories() {
   XDG_CONFIG_HOME="$HOME/.config"
   # XDG_CACHE_HOME="$HOME/.cache"
   XDG_DATA_HOME="$HOME/.local/share"
+  # XDG_STATE_HOME="$HOME/.local/state"
 }
 
 create_symbolic_link() {

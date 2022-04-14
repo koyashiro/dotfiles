@@ -1,10 +1,10 @@
 # .zshrc
 
 # History file
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/history
-if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
-  mkdir -m 700 "$(dirname "$HISTFILE")"
+if [[ ! -d "${XDG_STATE_HOME:-$HOME/.local/state}"/zsh ]]; then
+  mkdir -m 700 "${XDG_STATE_HOME:-$HOME/.local/state}"/zsh
 fi
+export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}"/zsh/history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 

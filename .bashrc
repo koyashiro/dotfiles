@@ -6,10 +6,10 @@ if [[ -z "$PS1" ]]; then
 fi
 
 # History file
-export HISTFILE="${XDG_DATA_HOME:-$HOME/.local/share}"/bash/history
-if [[ ! -d "$(dirname "$HISTFILE")" ]]; then
-  mkdir -m 700 "$(dirname "$HISTFILE")"
+if [[ ! -d "${XDG_STATE_HOME:-$HOME/.local/state}"/bash ]]; then
+  mkdir -m 700 "${XDG_STATE_HOME:-$HOME/.local/state}"/bash
 fi
+export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}"/bash/history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 
