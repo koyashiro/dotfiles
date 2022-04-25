@@ -17,8 +17,6 @@ less
 man-db
 man-pages
 neovim
-nodejs
-npm
 openssh
 python
 python-pip
@@ -35,6 +33,5 @@ vim
 wget
 whois
 xsel
-yarn
 yq
 zsh
