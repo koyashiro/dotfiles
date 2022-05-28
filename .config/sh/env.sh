@@ -75,6 +75,10 @@ if command -v aws >/dev/null 2>&1; then
   export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 fi
 
+# Redis
+export REDISCLI_HISTFILE="$XDG_DATA_HOME"/redis/rediscli_history
+export REDISCLI_RCFILE="$XDG_CONFIG_HOME"/redis/redisclirc
+
 # Rust
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
