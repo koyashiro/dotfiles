@@ -22,7 +22,6 @@ python
 python-pip
 python-pynvim
 ripgrep
-rustup
 systemd
 tig
 tmux
