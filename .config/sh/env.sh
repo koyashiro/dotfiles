@@ -102,6 +102,15 @@ export PATH="$PATH":"$DENO_INSTALL_ROOT"/bin
 export VOLTA_HOME="$XDG_DATA_HOME"/volta
 export PATH="$PATH":"$VOLTA_HOME"/bin
 
+# Wasmtime
+export WASMTIME_HOME="$XDG_DATA_HOME"/wasmtime
+export PATH="$PATH":"$WASMTIME_HOME"/bin
+
+# Wasmer
+export WASMER_DIR="$XDG_DATA_HOME"/wasmer
+export WASMER_CACHE_DIR="$XDG_CACHE_HOME"/wasmer
+export PATH="$PATH:$WASMER_DIR/bin:$WASMER_DIR/globals/wapm_packages/.bin"
+
 # $HOME/.local/bin
 export PATH="$HOME"/.local/bin:"$PATH"
 
