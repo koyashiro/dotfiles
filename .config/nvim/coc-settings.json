@@ -19,6 +19,7 @@
     "vue",
     "ruby"
   ],
+  "rust-analyzer.checkOnSave.command": "clippy",
   "solargraph.useBundler": true,
   "solargraph.diagnostics": true,
   "solargraph.formatting": true
