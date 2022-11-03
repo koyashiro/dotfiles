@@ -28,8 +28,7 @@ alias tsource='tmux source-file'
 
 # neovim
 if command -v nvim >/dev/null 2>&1; then
-  alias vim=nvim
-  alias vimdiff='nvim -d'
+  alias nvimdiff='nvim -d'
 fi
 
 # emacs
