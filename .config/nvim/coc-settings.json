@@ -18,6 +18,8 @@
     "typescriptreact",
     "vue",
     "ruby"
+    "c",
+    "cpp",
   ],
   "rust-analyzer.checkOnSave.command": "clippy",
   "solargraph.useBundler": true,
