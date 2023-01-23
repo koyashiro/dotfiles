@@ -106,6 +106,10 @@ create_wsl_symbolic_links() {
   create_symbolic_link "$DOTDIR/.local/share/wsl" "$XDG_DATA_HOME/wsl"
 }
 
+create_darwin_symbolic_links() {
+  create_symbolic_link "$DOTDIR/mac/Library/KeyBindings" "$HOME/Library/KeyBindings"
+}
+
 main() {
   set_variables
 
@@ -117,6 +121,10 @@ main() {
 
   if [ "$IS_WSL" = true ]; then
     create_wsl_symbolic_links
+  fi
+
+  if [ "$IS_DARWIN" = true ]; then
+    create_darwin_symbolic_links
   fi
 }
 
