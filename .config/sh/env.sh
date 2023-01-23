@@ -115,7 +115,7 @@ export PATH="$PATH:$WASMER_DIR/bin:$WASMER_DIR/globals/wapm_packages/.bin"
 export PATH="$HOME"/.local/bin:"$PATH"
 
 # Homebrew
-export PATH=/opt/homebrew/bin:"$PATH"
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:"$PATH"
 
 # wsl
 if [ -n "${WSL_INTEROP:-}" ]; then
