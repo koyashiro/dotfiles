@@ -19,7 +19,7 @@
     "vue",
     "ruby"
     "c",
-    "cpp",
+    "cpp"
   ],
   "rust-analyzer.checkOnSave.command": "clippy",
   "solargraph.useBundler": true,
