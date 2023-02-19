@@ -2,7 +2,8 @@
 
 set -eu
 
-readonly DOTDIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
+DOTDIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
+readonly DOTDIR
 
 cd "$DOTDIR"
 
