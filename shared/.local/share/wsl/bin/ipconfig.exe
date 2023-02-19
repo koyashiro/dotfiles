@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-"${SystemRoot:-/mnt/c/Windows}"/system32/ipconfig.exe "$@"

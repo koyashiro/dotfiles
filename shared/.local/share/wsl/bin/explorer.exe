@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-"${SystemRoot:-/mnt/c/Windows}"/explorer.exe "$@"

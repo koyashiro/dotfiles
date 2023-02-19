@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-"$LOCALAPPDATA"/Programs/Microsoft\ VS\ Code/bin/code "$@"
