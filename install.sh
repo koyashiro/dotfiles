@@ -80,6 +80,7 @@ create_xdg_base_directories_if_needed() {
   mkdir -p "${XDG_CACHE_HOME}"
   mkdir -p "${XDG_DATA_HOME}"
   mkdir -p "${XDG_STATE_HOME}"
+  mkdir -p "${HOME}/.local/bin"
 }
 
 create_symbolic_link() {
