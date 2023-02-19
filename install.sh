@@ -16,10 +16,10 @@ EOF
 }
 
 set_envs() {
-  [ -n "${XDG_CONFIG_HOME}" ] || XDG_CONFIG_HOME="${HOME}/.config"
-  [ -n "${XDG_CACHE_HOME}" ] || XDG_CACHE_HOME="${HOME}/.cache"
-  [ -n "${XDG_DATA_HOME}" ] || XDG_DATA_HOME="${HOME}/.local/share"
-  [ -n "${XDG_STATE_HOME}" ] || XDG_STATE_HOME="${HOME}/.local/state"
+  export XDG_CONFIG_HOME="${HOME}/.config"
+  export XDG_CACHE_HOME="${HOME}/.cache"
+  export XDG_DATA_HOME="${HOME}/.local/share"
+  export XDG_STATE_HOME="${HOME}/.local/state"
   DOTDIR="$(cd "$(dirname "$0")" && pwd)"
 }
 
@@ -59,8 +59,7 @@ parse_args() {
         exit
         ;;
       *)
-        echo "ERROR: unexpected option '$1'" >&2
-        echo >&2
+        printf "\x1b[31mERROR:\x1b[39m unexpected option '\x1b[33m%s\x1b[39m'\n\n" "$1" >&2
         usage >&2
         exit 1
         ;;
@@ -76,23 +75,26 @@ create_xdg_base_directory_if_needed() {
 }
 
 create_xdg_base_directories_if_needed() {
-  mkdir -p "${XDG_CONFIG_HOME}"
-  mkdir -p "${XDG_CACHE_HOME}"
-  mkdir -p "${XDG_DATA_HOME}"
-  mkdir -p "${XDG_STATE_HOME}"
-  mkdir -p "${HOME}/.local/bin"
+  create_xdg_base_directory_if_needed "${HOME}/.config"
+  create_xdg_base_directory_if_needed "${HOME}/.cache"
+  create_xdg_base_directory_if_needed "${HOME}/.local"
+  create_xdg_base_directory_if_needed "${HOME}/.local/share"
+  create_xdg_base_directory_if_needed "${HOME}/.local/state"
+  create_xdg_base_directory_if_needed "${HOME}/.local/bin"
 }
 
 create_symbolic_link() {
   if [ -n "${DRY_RUN}" ]; then
-    printf "\x1b[32mSkipped (dry run)\x1b[39m: \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
+    printf "  \x1b[35mSkipped (dry run):\x1b[39m \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
   else
     ln -fns "$1" "$2"
-    printf "\x1b[32mCreated\x1b[39m: \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
+    printf "  \x1b[32mCreated:\x1b[39m \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
   fi
 }
 
-create_symbolic_links() {
+install_shared_dotfiles() {
+  printf "Install \x1b[33mshared\x1b[39m dotfiles:\n"
+
   # sh
   create_symbolic_link "${DOTDIR}/shared/.profile" "${HOME}/.profile"
 
@@ -107,6 +109,7 @@ create_symbolic_links() {
   # vim
   create_symbolic_link "${DOTDIR}/shared/.vimrc" "${HOME}/.vimrc"
 
+  # $HOME/.config/
   (
     for src in "${DOTDIR}"/shared/.config/*; do
       dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
@@ -115,7 +118,10 @@ create_symbolic_links() {
   )
 }
 
-create_macos_symbolic_links() {
+install_macos_dotfiles() {
+  printf "Install \x1b[33mmacOS\x1b[39m dotfiles:\n"
+
+  # $HOME/Library/
   (
     for src in "${DOTDIR}"/macos/Library/*; do
       dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
@@ -124,7 +130,10 @@ create_macos_symbolic_links() {
   )
 }
 
-create_wsl_symbolic_links() {
+install_wsl_dotfiles() {
+  printf "Install \x1b[33mwsl\x1b[39m dotfiles:\n"
+
+  # $HOME/.config
   (
     for src in "${DOTDIR}"/windows/wsl/.config/*; do
       dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
@@ -132,6 +141,7 @@ create_wsl_symbolic_links() {
     done
   )
 
+  # $HOME/.local/bin
   (
     for src in "${DOTDIR}"/windows/wsl/.local/bin/*; do
       dist="${HOME}/.local/bin/$(basename "${src}")"
@@ -141,19 +151,18 @@ create_wsl_symbolic_links() {
 }
 
 main() {
+  create_xdg_base_directories_if_needed
   set_envs
   parse_args "$@"
 
-  create_xdg_base_directories_if_needed
-
-  create_symbolic_links
+  install_shared_dotfiles
 
   if is_macos; then
-    create_macos_symbolic_links
+    install_macos_dotfiles
   fi
 
   if is_wsl; then
-    create_wsl_symbolic_links
+    install_wsl_dotfiles
   fi
 }
 
