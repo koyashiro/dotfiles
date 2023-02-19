@@ -1,131 +1,159 @@
 #!/usr/bin/env sh
 
-set -eu
+set -e
 
-DOTDIR="$(
-  cd "$(dirname "$0")"
-  pwd
-)"
+usage() {
+  cat << EOF
+Install script for koyashiro's dotfiles.
 
-is_darwin() {
-  [ "$(uname)" = Darwin ]
+Usage:
+    install.sh [OPTIONS]
+
+Options:
+    --dry-run          Dry run
+    -h, --help         Print help
+EOF
+}
+
+set_envs() {
+  [ -n "${XDG_CONFIG_HOME}" ] || XDG_CONFIG_HOME="${HOME}/.config"
+  [ -n "${XDG_CACHE_HOME}" ] || XDG_CACHE_HOME="${HOME}/.cache"
+  [ -n "${XDG_DATA_HOME}" ] || XDG_DATA_HOME="${HOME}/.local/share"
+  [ -n "${XDG_STATE_HOME}" ] || XDG_STATE_HOME="${HOME}/.local/state"
+  DOTDIR="$(cd "$(dirname "$0")" && pwd)"
+}
+
+get_os() {
+  case "$(uname)" in
+    Linux)
+      echo 'Linux'
+      ;;
+    Darwin)
+      echo 'macOS'
+      ;;
+    CYGWIN* | MINGW* | MSYS*)
+      echo 'Windows'
+      ;;
+    *)
+      echo 'Unknown'
+      ;;
+  esac
+}
+
+is_macos() {
+  [ "$(get_os)" = 'macOS' ]
 }
 
 is_wsl() {
-  [ -n "${WSL_INTEROP:-}" ]
+  [ -n "${WSL_INTEROP}" ]
 }
 
-set_variables() {
-  # DISTRO
-  if [ -r /etc/os-release ]; then
-    # shellcheck source=/etc/os-release
-    DISTRO="$(. /etc/os-release && echo "$NAME")"
-  else
-    DISTRO='(UNKNOWN)'
-  fi
+parse_args() {
+  while [ -n "$1" ]; do
+    case "$1" in
+      --dry-run)
+        DRY_RUN='1'
+        ;;
+      --help | -h)
+        usage
+        exit
+        ;;
+      *)
+        echo "ERROR: unexpected option '$1'" >&2
+        echo >&2
+        usage >&2
+        exit 1
+        ;;
+    esac
 
-  # IS_DARWIN
-  if is_darwin; then
-    IS_DARWIN=true
-  else
-    IS_DARWIN=false
-  fi
-
-  # IS_WSL
-  if is_wsl; then
-    IS_WSL=true
-  else
-    IS_WSL=false
-  fi
+    shift
+  done
 }
 
-create_directory_if_does_not_exist() {
-  printf "\x1b[32mChecking\x1b[39m directory: \x1b[36m%s\x1b[39m\n" "$1"
-  if [ ! -d "$1" ]; then
-    printf "  Directory does not exist: \x1b[34m%s\x1b[39m\n" "$1"
-
-    printf "  \x1b[32mCreating\x1b[39m directory: \x1b[36m%s\x1b[39m\n" "$1"
-    mkdir -m 700 "$1"
-    printf "    Created: \x1b[34m%s\x1b[39m\n" "$1"
-  else
-    printf "  Directory exists: \x1b[34m%s\x1b[39m\n" "$1"
-  fi
+create_xdg_base_directory_if_needed() {
+  mkdir -p "$1"
+  chmod 700 "$1"
 }
 
-create_xdg_base_directories() {
-  create_directory_if_does_not_exist "$HOME/.config"
-
-  create_directory_if_does_not_exist "$HOME/.cache"
-
-  create_directory_if_does_not_exist "$HOME/.local"
-
-  create_directory_if_does_not_exist "$HOME/.local/share"
-
-  create_directory_if_does_not_exist "$HOME/.local/state"
-
-  create_directory_if_does_not_exist "$HOME/.local/bin"
-
-  echo
-}
-
-set_xdg_base_directories() {
-  XDG_CONFIG_HOME="$HOME/.config"
-  # XDG_CACHE_HOME="$HOME/.cache"
-  XDG_DATA_HOME="$HOME/.local/share"
-  # XDG_STATE_HOME="$HOME/.local/state"
+create_xdg_base_directories_if_needed() {
+  mkdir -p "${XDG_CONFIG_HOME}"
+  mkdir -p "${XDG_CACHE_HOME}"
+  mkdir -p "${XDG_DATA_HOME}"
+  mkdir -p "${XDG_STATE_HOME}"
 }
 
 create_symbolic_link() {
-  printf "\x1b[32mCreating\x1b[39m symbolic link: \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
-  ln -fns "$1" "$2"
-  printf "  Created: \x1b[34m%s\x1b[39m\n" "$2"
+  if [ -n "${DRY_RUN}" ]; then
+    printf "\x1b[32mSkipped (dry run)\x1b[39m: \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
+  else
+    ln -fns "$1" "$2"
+    printf "\x1b[32mCreated\x1b[39m: \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
+  fi
 }
 
 create_symbolic_links() {
-  create_symbolic_link "$DOTDIR/.profile" "$HOME/.profile"
+  # sh
+  create_symbolic_link "${DOTDIR}/shared/.profile" "${HOME}/.profile"
 
-  create_symbolic_link "$DOTDIR/.bash_profile" "$HOME/.bash_profile"
+  # bash
+  create_symbolic_link "${DOTDIR}/shared/.bash_profile" "${HOME}/.bash_profile"
+  create_symbolic_link "${DOTDIR}/shared/.bashrc" "${HOME}/.bashrc"
 
-  create_symbolic_link "$DOTDIR/.bashrc" "$HOME/.bashrc"
+  # zsh
+  create_symbolic_link "${DOTDIR}/shared/.zshenv" "${HOME}/.zshenv"
+  create_symbolic_link "${DOTDIR}/shared/.zshrc" "${HOME}/.zshrc"
 
-  create_symbolic_link "$DOTDIR/.zshenv" "$HOME/.zshenv"
-
-  create_symbolic_link "$DOTDIR/.zshrc" "$HOME/.zshrc"
-
-  create_symbolic_link "$DOTDIR/.vimrc" "$HOME/.vimrc"
+  # vim
+  create_symbolic_link "${DOTDIR}/shared/.vimrc" "${HOME}/.vimrc"
 
   (
-    for src in "$DOTDIR"/.config/*; do
-      dist="$XDG_CONFIG_HOME"/"$(basename "$src")"
-      create_symbolic_link "$src" "$dist"
+    for src in "${DOTDIR}"/shared/.config/*; do
+      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
+      create_symbolic_link "${src}" "${dist}"
+    done
+  )
+}
+
+create_macos_symbolic_links() {
+  (
+    for src in "${DOTDIR}"/macos/Library/*; do
+      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
+      create_symbolic_link "${src}" "${dist}"
     done
   )
 }
 
 create_wsl_symbolic_links() {
-  create_symbolic_link "$DOTDIR/.local/share/wsl" "$XDG_DATA_HOME/wsl"
-}
+  (
+    for src in "${DOTDIR}"/windows/wsl/.config/*; do
+      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
+      create_symbolic_link "${src}" "${dist}"
+    done
+  )
 
-create_darwin_symbolic_links() {
-  create_symbolic_link "$DOTDIR/mac/Library/KeyBindings" "$HOME/Library/KeyBindings"
+  (
+    for src in "${DOTDIR}"/windows/wsl/.local/bin/*; do
+      dist="${HOME}/.local/bin/$(basename "${src}")"
+      create_symbolic_link "${src}" "${dist}"
+    done
+  )
 }
 
 main() {
-  set_variables
+  set_envs
+  parse_args "$@"
 
-  create_xdg_base_directories
-
-  set_xdg_base_directories
+  create_xdg_base_directories_if_needed
 
   create_symbolic_links
 
-  if [ "$IS_WSL" = true ]; then
-    create_wsl_symbolic_links
+  if is_macos; then
+    create_macos_symbolic_links
   fi
 
-  if [ "$IS_DARWIN" = true ]; then
-    create_darwin_symbolic_links
+  if is_wsl; then
+    create_wsl_symbolic_links
   fi
 }
 
-main
+main "$@"

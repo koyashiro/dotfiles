@@ -1,0 +1,55 @@
+#!/usr/bin/env sh
+
+set -eu
+
+YAY_REPO_URL=https://aur.archlinux.org/yay.git
+readonly YAY_REPO_URL
+
+# Distribution checking
+DISTRO="$(sed -rn 's/^NAME="(.*)"$/\1/p' < /etc/os-release)"
+readonly DISTRO
+if [ "$DISTRO" != 'Arch Linux' ] || ! command -v pacman > /dev/null 2>&1; then
+  echo 'error: This distribution is not Arch Linux.' 1>&2
+  exit 1
+fi
+
+# Yay checking
+if command -v yay > /dev/null 2>&1; then
+  # shellcheck disable=SC2016
+  echo 'error: `yay` is already installed.' 1>&2
+  exit 1
+fi
+
+# Git checking
+if ! command -v git > /dev/null 2>&1; then
+  # shellcheck disable=SC2016
+  echo 'error: `git` is not installed.' 1>&2
+  exit 127
+fi
+
+# base-devel checking
+if [ "$(pacman -Sg base-devel)" != "$(pacman -Qg base-devel)" ]; then
+  # shellcheck disable=SC2016
+  echo 'error: `base-devel` is not installed.' 1>&2
+  exit 127
+fi
+
+# Work directory checking
+WORK_DIR="$(mktemp -d)"
+readonly WORK_DIR
+echo '[install-yay] Create `'"$WORK_DIR"'`.' 1>&2
+
+# Clone and install yay
+echo "[install-yay] Cloning yay...."
+git clone $YAY_REPO_URL "$WORK_DIR"
+
+cd "$WORK_DIR"
+echo '[install-yay] Installing yay....'
+makepkg -si
+cd
+
+# Remove work directory
+echo "[install-yay] Removing $WORK_DIR...."
+rm -rf "$WORK_DIR"
+
+echo '[install-yay] Installation complete.'

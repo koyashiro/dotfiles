@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 
-readonly DOTDIR="$HOME"/.dotfiles
+set -eu
+
+readonly DOTDIR="$(cd "$(dirname "$0")" && cd .. && pwd)"
 
 cd "$DOTDIR"
 
@@ -8,23 +10,24 @@ cd "$DOTDIR"
 shellcheck install.sh
 
 # sh
-shellcheck --shell sh --external-source .profile
-shellcheck --shell sh --external-source .config/sh/env.sh
-shellcheck --shell sh --external-source .config/sh/alias.sh
-shellcheck --shell sh --external-source .config/sh/function.sh
+shellcheck --shell sh --external-source shared/.profile
+shellcheck --shell sh --external-source shared/.config/sh/env.sh
+shellcheck --shell sh --external-source shared/.config/sh/alias.sh
+shellcheck --shell sh --external-source shared/.config/sh/function.sh
 
 # bash
-shellcheck --shell bash --external-source .bash_profile
-shellcheck --shell bash --external-source .bashrc
-
-# zsh
-shellcheck --shell bash --external-source .zshenv
-shellcheck --shell bash --external-source .zshrc
+shellcheck --shell bash --external-source shared/.bash_profile
+shellcheck --shell bash --external-source shared/.bashrc
 
 # local/bin
-for f in "$DOTDIR"/.local/bin/*; do
+for f in "$DOTDIR"/shared/.local/bin/*; do
   shellcheck "$f"
 done
 
 # wsl env
-shellcheck --shell sh .config/wsl/env.sh
+shellcheck --shell sh windows/wsl/.config/wsl/env.sh
+
+# wsl local/bin
+for f in "$DOTDIR"/windows/wsl/.local/bin/*; do
+  shellcheck "$f"
+done

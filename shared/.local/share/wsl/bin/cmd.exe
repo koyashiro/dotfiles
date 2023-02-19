@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+"${SystemRoot:-/mnt/c/Windows}"/System32/cmd.exe "$@"

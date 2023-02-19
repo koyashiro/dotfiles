@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-set -eu
-
-pacman -Qemq | grep -v -E '^yay$' >yay.dump

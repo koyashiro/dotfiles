@@ -1,0 +1,20 @@
+{
+  "coc.preferences.formatOnSave": true,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.hintSign": "ﯦ",
+  "diagnostic-languageserver.filetypes": {},
+  "diagnostic-languageserver.formatFiletypes": {
+    "sh": "shfmt"
+  },
+  "diagnostic-languageserver.formatters": {
+    "shfmt": {
+      "command": "shfmt",
+      "args": ["-i", "2", "-bn", "-ci", "-sr"]
+    }
+  },
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "suggest.noselect": false,
+  "suggest.preferCompleteThanJumpPlaceholder": true
+}
