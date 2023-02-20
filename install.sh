@@ -121,10 +121,18 @@ install_shared_dotfiles() {
 install_macos_dotfiles() {
   printf "Install \x1b[33mmacOS\x1b[39m dotfiles:\n"
 
+  # $HOME/.config/
+  (
+    for src in "${DOTDIR}"/macos/.config/*; do
+      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
+      create_symbolic_link "${src}" "${dist}"
+    done
+  )
+
   # $HOME/Library/
   (
     for src in "${DOTDIR}"/macos/Library/*; do
-      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
+      dist="${HOME}/Library/$(basename "${src}")"
       create_symbolic_link "${src}" "${dist}"
     done
   )
