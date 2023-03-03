@@ -6,7 +6,9 @@
   "diagnostic.hintSign": "ﯦ",
   "diagnostic-languageserver.filetypes": {},
   "diagnostic-languageserver.formatFiletypes": {
-    "sh": "shfmt"
+    "sh": "shfmt",
+    "bash": "shfmt",
+    "zsh": "shfmt"
   },
   "diagnostic-languageserver.formatters": {
     "shfmt": {
