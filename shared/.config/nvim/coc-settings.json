@@ -14,7 +14,7 @@
       "args": ["-i", "2", "-bn", "-ci", "-sr"]
     }
   },
-  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.check.command": "clippy",
   "suggest.noselect": false,
   "suggest.preferCompleteThanJumpPlaceholder": true
 }
