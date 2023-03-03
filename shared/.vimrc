@@ -335,3 +335,11 @@ if index(map(split(globpath(&runtimepath, 'colors/*.vim'), '\n'), "fnamemodify(v
   endif
 endif
 " }}}
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  }
+}
+EOF
