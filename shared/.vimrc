@@ -287,7 +287,6 @@ if executable('node') || executable('nodejs')
     \ 'coc-omnisharp',
     \ 'coc-go',
     \ 'coc-rust-analyzer',
-    \ 'coc-solargraph',
     \ 'coc-markdownlint',
     \ ]
 endif
