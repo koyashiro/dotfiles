@@ -1,3 +1,5 @@
+# shellcheck shell=sh
+
 if [ -z "${WSL_INTEROP:-}" ]; then
   return
 fi
