@@ -92,3 +92,6 @@ alias dce='docker compose exec'
 alias dcp='docker compose pull'
 alias dcl='docker compose logs'
 alias dclf='docker compose logs --follow'
+
+# Kubernetes
+alias k='kubectl'
