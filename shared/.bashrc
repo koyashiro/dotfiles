@@ -12,6 +12,7 @@ fi
 export HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}"/bash/history
 export HISTSIZE=1000000
 export SAVEHIST=1000000
+export HISTCONTROL=ignoreboth
 
 # alias
 if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/alias.sh ]]; then
