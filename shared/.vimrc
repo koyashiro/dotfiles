@@ -276,6 +276,7 @@ if executable('node') || executable('nodejs')
     \ 'coc-clangd',
     \ 'coc-tsserver',
     \ 'coc-html',
+    \ 'coc-emmet',
     \ 'coc-css',
     \ 'coc-stylelint',
     \ 'coc-prettier',
