@@ -1,3 +1,3 @@
 *.zwc
-.config/karabiner/assets/
-.config/karabiner/automatic_backups/
+macos/.config/karabiner/assets/
+macos/.config/karabiner/automatic_backups/
