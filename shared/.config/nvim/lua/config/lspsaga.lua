@@ -16,7 +16,7 @@ return function()
   vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
 
   -- Go to type definition
-  vim.keymap.set("n", "gt", "<cmd>Lspsaga goto_type_definition<CR>")
+  vim.keymap.set("n", "gy", "<cmd>Lspsaga goto_type_definition<CR>")
 
   -- Show line diagnostics
   vim.keymap.set("n", "<Leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
