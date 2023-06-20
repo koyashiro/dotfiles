@@ -1,1 +1,3 @@
-vim.cmd 'source $HOME/.vimrc'
+vim.cmd.source("$HOME/.vimrc")
+
+require("plugins")
