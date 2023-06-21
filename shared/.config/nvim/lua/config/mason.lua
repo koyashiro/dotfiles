@@ -6,11 +6,7 @@ return function()
     ensure_installed = {
       "bashls",
       "clangd",
-      "cssls",
-      "eslint",
-      "golangci_lint_ls",
       "gopls",
-      "html",
       "jsonls",
       "lua_ls",
       "rust_analyzer",
