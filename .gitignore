@@ -1,5 +1,4 @@
 *.zwc
 .luarc.json
-packer_compiled.lua
 macos/.config/karabiner/assets/
 macos/.config/karabiner/automatic_backups/
