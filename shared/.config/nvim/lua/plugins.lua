@@ -458,6 +458,7 @@ return {
     config = function()
       require("fidget").setup()
     end,
+    tag = "legacy",
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
