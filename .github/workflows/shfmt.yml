@@ -11,12 +11,13 @@ jobs:
     name: Run shfmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: shfmt
+      - name: Setup shfmt
+        uses: mfinelli/setup-shfmt@v2
+
+      - name: Run shfmt
         run: |
-          docker run \
-            --rm \
-            --volume "$PWD":/root/.dotfiles:ro \
-            --entrypoint /root/.dotfiles/lint/shfmt.sh \
-            mvdan/shfmt:latest-alpine
+          # shellcheck disable=SC2046
+          shfmt -i 2 -ci -d $(shfmt -f . | grep -v '\.zsh$')
