@@ -12,7 +12,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-if command -v exa > /dev/null 2>&1; then
+if command -v exa >/dev/null 2>&1; then
   alias ll='exa -alhFg --time-style iso --icons --git'
 else
   alias ll='ls -alhAF'
@@ -29,7 +29,7 @@ alias t='tmux -u'
 alias tsource='tmux source-file'
 
 # neovim
-if command -v nvim > /dev/null 2>&1; then
+if command -v nvim >/dev/null 2>&1; then
   alias nvimdiff='nvim -d'
 fi
 
@@ -37,7 +37,7 @@ fi
 alias emacs=vim
 
 # tree
-if command -v exa > /dev/null 2>&1; then
+if command -v exa >/dev/null 2>&1; then
   alias tree='exa --tree -a --git-ignore --icons --ignore-glob=".git"'
 else
   alias tree='tree -a -I "\.git"'

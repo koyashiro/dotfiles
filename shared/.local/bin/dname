@@ -2,4 +2,4 @@
 
 set -eu
 
-sed -rn 's/^NAME="(.*)"$/\1/p' < /etc/os-release
+sed -rn 's/^NAME="(.*)"$/\1/p' </etc/os-release

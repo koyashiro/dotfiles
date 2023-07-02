@@ -1,4 +1,4 @@
-if ! builtin command -v fzf >& /dev/null; then
+if ! builtin command -v fzf >&/dev/null; then
   return
 fi
 

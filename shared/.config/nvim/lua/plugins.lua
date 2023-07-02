@@ -497,7 +497,9 @@ return {
           null_ls.builtins.formatting.gofmt,
           null_ls.builtins.formatting.prettierd,
           null_ls.builtins.formatting.rustfmt,
-          null_ls.builtins.formatting.shfmt,
+          null_ls.builtins.formatting.shfmt.with({
+            extra_args = { "-i", "2", "-ci" },
+          }),
           null_ls.builtins.formatting.stylua,
         },
         on_attach = function(client, bufnr)

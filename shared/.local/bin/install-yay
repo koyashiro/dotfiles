@@ -6,22 +6,22 @@ YAY_REPO_URL=https://aur.archlinux.org/yay.git
 readonly YAY_REPO_URL
 
 # Distribution checking
-DISTRO="$(sed -rn 's/^NAME="(.*)"$/\1/p' < /etc/os-release)"
+DISTRO="$(sed -rn 's/^NAME="(.*)"$/\1/p' </etc/os-release)"
 readonly DISTRO
-if [ "$DISTRO" != 'Arch Linux' ] || ! command -v pacman > /dev/null 2>&1; then
+if [ "$DISTRO" != 'Arch Linux' ] || ! command -v pacman >/dev/null 2>&1; then
   echo 'error: This distribution is not Arch Linux.' 1>&2
   exit 1
 fi
 
 # Yay checking
-if command -v yay > /dev/null 2>&1; then
+if command -v yay >/dev/null 2>&1; then
   # shellcheck disable=SC2016
   echo 'error: `yay` is already installed.' 1>&2
   exit 1
 fi
 
 # Git checking
-if ! command -v git > /dev/null 2>&1; then
+if ! command -v git >/dev/null 2>&1; then
   # shellcheck disable=SC2016
   echo 'error: `git` is not installed.' 1>&2
   exit 127

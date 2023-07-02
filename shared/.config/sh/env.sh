@@ -7,7 +7,7 @@ export XDG_DATA_HOME="$HOME"/.local/share
 export XDG_STATE_HOME="$HOME"/.local/state
 
 # Editor
-if command -v nvim > /dev/null 2>&1; then
+if command -v nvim >/dev/null 2>&1; then
   export EDITOR=nvim
 else
   export EDITOR=vim
@@ -49,7 +49,7 @@ export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
 # Git
 export GIT_EDITOR="$EDITOR"
-if command -v delta > /dev/null 2>&1; then
+if command -v delta >/dev/null 2>&1; then
   export GIT_PAGER=delta
 else
   export GIT_PAGER="$PAGER"
@@ -61,18 +61,18 @@ if [ ! -d "$XDG_DATA_HOME"/tig ]; then
 fi
 
 # fzf
-if command -v fzf > /dev/null 2>&1; then
+if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
   export FZF_DEFAULT_COMMAND='rg --files --hidden --glob "!.git"'
 fi
 
 # Docker
-if command -v docker > /dev/null 2>&1; then
+if command -v docker >/dev/null 2>&1; then
   export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 fi
 
 # AWS CLI
-if command -v aws > /dev/null 2>&1; then
+if command -v aws >/dev/null 2>&1; then
   export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
   export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 fi

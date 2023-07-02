@@ -6,4 +6,4 @@ if [ -e .gitattributes ]; then
   exit 1
 fi
 
-echo '* text=auto' > .gitattributes
+echo '* text=auto' >.gitattributes

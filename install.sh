@@ -3,7 +3,7 @@
 set -e
 
 usage() {
-  cat << EOF
+  cat <<EOF
 Install script for koyashiro's dotfiles.
 
 Usage:
