@@ -3,6 +3,7 @@
 [![shellcheck](https://github.com/koyashiro/dotfiles/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/shellcheck.yml)
 [![shfmt](https://github.com/koyashiro/dotfiles/actions/workflows/shfmt.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/shfmt.yml)
 [![actionlint](https://github.com/koyashiro/dotfiles/actions/workflows/actionlint.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/actionlint.yml)
+[![luacheck](https://github.com/koyashiro/dotfiles/actions/workflows/luacheck.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/luacheck.yml)
 
 [![Arch Linux](https://github.com/koyashiro/dotfiles/actions/workflows/archlinux.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/archlinux.yml)
 [![Debian](https://github.com/koyashiro/dotfiles/actions/workflows/debian.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/debian.yml)
