@@ -302,6 +302,17 @@ return {
     end,
   },
   {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
+  {
     "williamboman/mason.nvim",
     dependencies = {
       "williamboman/mason-lspconfig.nvim",
@@ -527,6 +538,8 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "onsails/lspkind.nvim",
+      "zbirenbaum/copilot.lua",
+      "zbirenbaum/copilot-cmp",
     },
     config = function()
       local cmp = require("cmp")
@@ -548,6 +561,7 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "vsnip" },
+          { name = "copilot" },
         }, {
           { name = "buffer" },
         }),
@@ -556,6 +570,7 @@ return {
             mode = "symbol",
             maxwidth = 50,
             ellipsis_char = "...",
+            symbol_map = { Copilot = "" },
           }),
         },
       })
@@ -583,6 +598,8 @@ return {
           { name = "cmdline" },
         }),
       })
+
+      require("copilot_cmp").setup()
     end,
   },
 }
