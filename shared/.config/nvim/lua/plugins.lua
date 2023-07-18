@@ -409,8 +409,8 @@ return {
       require("lspsaga").setup()
 
       -- LSP finder
-      vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
-      vim.keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>")
+      vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>")
+      vim.keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>")
 
       -- Code action
       vim.keymap.set({ "n", "v" }, "<Leader>ac", "<cmd>Lspsaga code_action<CR>")
@@ -460,7 +460,7 @@ return {
       vim.keymap.set("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
       -- Floating terminal
-      vim.keymap.set({ "n", "t" }, "<A-d>", "<cmd>Lspsaga term_toggle<CR>")
+      vim.keymap.set({ "n", "t" }, "<Leader>t", "<cmd>Lspsaga term_toggle<CR>")
     end,
   },
   {
