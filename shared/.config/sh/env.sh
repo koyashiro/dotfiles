@@ -119,6 +119,9 @@ export PATH="$HOME"/.local/bin:"$PATH"
 # Homebrew
 export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/libexec/gnubin:"$PATH"
 
+# aqua
+export PATH="$XDG_DATA_HOME"/aquaproj-aqua/bin:"$PATH"
+
 # wsl
 if [ -n "${WSL_INTEROP:-}" ]; then
   if [ -f "$XDG_CONFIG_HOME"/wsl/env.sh ]; then
