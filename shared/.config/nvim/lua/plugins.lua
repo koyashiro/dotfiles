@@ -42,6 +42,7 @@ return {
           "rust",
           "scss",
           "sql",
+          "terraform",
           "toml",
           "tsx",
           "typescript",
