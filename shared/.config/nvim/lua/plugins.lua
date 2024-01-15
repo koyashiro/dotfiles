@@ -369,6 +369,33 @@ return {
             }
           end
 
+          if server_name == "yamlls" then
+            opts.settings = {
+              yaml = {
+                customTags = {
+                  -- https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference.html
+                  "!Base64",
+                  "!Cidr",
+                  "!And",
+                  "!Equals",
+                  "!If",
+                  "!Not",
+                  "!Or",
+                  "!FindInMap",
+                  "!GetAtt",
+                  "!GetAZs",
+                  "!ImportValue",
+                  "!Join",
+                  "!Select",
+                  "!Split",
+                  "!Sub",
+                  "!Transform",
+                  "!Ref",
+                },
+              },
+            }
+          end
+
           require("lspconfig")[server_name].setup(opts)
         end,
       })
