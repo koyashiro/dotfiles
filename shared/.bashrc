@@ -25,3 +25,5 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/function.sh ]]; then
   # shellcheck source=shared/.config/sh/function.sh
   source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/function.sh
 fi
+
+eval "$(starship init bash)"
