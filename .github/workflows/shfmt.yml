@@ -24,7 +24,7 @@ jobs:
       - name: Setup aqua
         uses: aquaproj/aqua-installer@v2.2.0
         with:
-          aqua_version: v2.21.3
+          aqua_version: v2.22.0
           aqua_opts: ""
 
       - name: Run shfmt
