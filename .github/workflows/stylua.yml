@@ -8,15 +8,24 @@ on:
 
 jobs:
   luacheck:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
+
+      - name: Cache aqua dir
+        uses: actions/cache@v4.0.0
+        with:
+          path: ~/.local/share/aquaproj-aqua
+          key: aqua-installer-${{ hashFiles('aqua.yaml') }}
+          restore-keys: |
+            aqua-installer-
+
+      - name: Setup aqua
+        uses: aquaproj/aqua-installer@v2.2.0
+        with:
+          aqua_version: v2.21.3
+          aqua_opts: ""
 
       - name: Run StyLua
-        uses: JohnnyMorganz/stylua-action@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          version: latest
-          args: --check .
+        run: stylua --check .

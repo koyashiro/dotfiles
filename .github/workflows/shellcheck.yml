@@ -8,15 +8,24 @@ on:
 
 jobs:
   shellcheck:
-    name: Run shellcheck
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
 
-      - name: shellcheck
-        run: |
-          docker run \
-            --rm \
-            --volume "$PWD":/root/.dotfiles:ro \
-            --entrypoint /root/.dotfiles/lint/shellcheck.sh \
-            koalaman/shellcheck-alpine:latest
+      - name: Cache aqua dir
+        uses: actions/cache@v4.0.0
+        with:
+          path: ~/.local/share/aquaproj-aqua
+          key: aqua-installer-${{ hashFiles('aqua.yaml') }}
+          restore-keys: |
+            aqua-installer-
+
+      - name: Setup aqua
+        uses: aquaproj/aqua-installer@v2.2.0
+        with:
+          aqua_version: v2.21.3
+          aqua_opts: ""
+
+      - name: Run shellcheck
+        run: ./lint/shellcheck.sh

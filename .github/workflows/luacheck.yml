@@ -9,10 +9,9 @@ on:
 jobs:
   luacheck:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
 
       - name: Run luacheck
-        uses: nebularg/actions-luacheck@v1
+        uses: nebularg/actions-luacheck@v1.1.2

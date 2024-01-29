@@ -4,24 +4,28 @@ on:
   push:
     branches:
       - main
-    paths:
-      - ".github/workflows/**"
   pull_request:
-    paths:
-      - ".github/workflows/**"
 
 jobs:
   actionlint:
-    name: Lint workflows
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
 
-      - name: Download actionlint
-        id: get_actionlint
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-        shell: bash
+      - name: Cache aqua dir
+        uses: actions/cache@v4.0.0
+        with:
+          path: ~/.local/share/aquaproj-aqua
+          key: aqua-installer-${{ hashFiles('aqua.yaml') }}
+          restore-keys: |
+            aqua-installer-
 
-      - name: Check workflow files
-        run: ${{ steps.get_actionlint.outputs.executable }} -color
-        shell: bash
+      - name: Setup aqua
+        uses: aquaproj/aqua-installer@v2.2.0
+        with:
+          aqua_version: v2.21.3
+          aqua_opts: ""
+
+      - name: Run actionlint
+        run: actionlint -color
