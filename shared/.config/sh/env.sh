@@ -120,6 +120,7 @@ export PATH="$HOME"/.local/bin:"$PATH"
 export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/libexec/gnubin:"$PATH"
 
 # aqua
+export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME"/aquaproj-aqua/aqua.yaml
 export PATH="$XDG_DATA_HOME"/aquaproj-aqua/bin:"$PATH"
 
 # wsl
