@@ -22,7 +22,6 @@ packages:
   - name: koalaman/shellcheck@v0.9.0
   - name: mikefarah/yq@v4.40.5
   - name: mvdan/sh@v3.7.0
-  - name: neovim/neovim@v0.9.5
   - name: rhysd/actionlint@v1.6.26
   - name: sharkdp/bat@v0.24.0
   - name: sharkdp/fd@v9.0.0
