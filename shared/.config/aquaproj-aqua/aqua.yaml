@@ -29,4 +29,4 @@ packages:
   - name: terraform-linters/tflint@v0.50.2
   - name: uber-go/mock@v0.4.0
   - name: volta-cli/volta@v1.1.1
-  - name: wagoodman/dive@v0.11.0
+  - name: wagoodman/dive@v0.12.0
