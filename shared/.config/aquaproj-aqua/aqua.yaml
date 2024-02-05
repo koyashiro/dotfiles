@@ -26,7 +26,7 @@ packages:
   - name: sharkdp/bat@v0.24.0
   - name: sharkdp/fd@v9.0.0
   - name: starship/starship@v1.17.1
-  - name: terraform-linters/tflint@v0.50.2
+  - name: terraform-linters/tflint@v0.50.3
   - name: uber-go/mock@v0.4.0
   - name: volta-cli/volta@v1.1.1
   - name: wagoodman/dive@v0.12.0
