@@ -1,6 +1,6 @@
 registries:
   - type: standard
-    ref: v4.128.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.128.1 # renovate: depName=aquaproj/aqua-registry
 packages:
   - name: aws/aws-cli@2.15.17
   - name: BurntSushi/ripgrep@14.1.0
