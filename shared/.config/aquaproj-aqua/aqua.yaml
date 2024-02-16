@@ -20,7 +20,7 @@ packages:
   - name: jqlang/jq@jq-1.7.1
   - name: junegunn/fzf@0.46.1
   - name: koalaman/shellcheck@v0.9.0
-  - name: mikefarah/yq@v4.40.7
+  - name: mikefarah/yq@v4.41.1
   - name: mvdan/sh@v3.8.0
   - name: rhysd/actionlint@v1.6.26
   - name: sharkdp/bat@v0.24.0
