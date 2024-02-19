@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
       - name: Cache aqua dir
-        uses: actions/cache@v4.0.0
+        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # v4.0.0
         with:
           path: ~/.local/share/aquaproj-aqua
           key: aqua-installer-${{ hashFiles('aqua.yaml') }}
@@ -22,7 +22,7 @@ jobs:
             aqua-installer-
 
       - name: Setup aqua
-        uses: aquaproj/aqua-installer@v2.3.0
+        uses: aquaproj/aqua-installer@7c7338067bdb97d5bea2acc82b5870afca470d18 # v2.3.0
         with:
           aqua_version: v2.23.1
           aqua_opts: ""
