@@ -12,8 +12,8 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # ls
-if command -v exa >/dev/null 2>&1; then
-  alias ll='exa -alhFg --time-style iso --icons --git'
+if command -v eza >/dev/null 2>&1; then
+  alias ll='eza -alhg -F always --time-style iso --icons --git'
 else
   alias ll='ls -alhAF'
 fi
@@ -37,8 +37,8 @@ fi
 alias emacs=vim
 
 # tree
-if command -v exa >/dev/null 2>&1; then
-  alias tree='exa --tree -a --git-ignore --icons --ignore-glob=".git"'
+if command -v eza >/dev/null 2>&1; then
+  alias tree='eza --tree -a --git-ignore --icons --ignore-glob=".git"'
 else
   alias tree='tree -a -I "\.git"'
 fi
