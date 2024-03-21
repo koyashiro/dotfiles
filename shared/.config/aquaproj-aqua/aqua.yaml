@@ -26,7 +26,7 @@ packages:
   - name: rhysd/actionlint@v1.6.27
   - name: sharkdp/bat@v0.24.0
   - name: sharkdp/fd@v9.0.0
-  - name: starship/starship@v1.17.1
+  - name: starship/starship@v1.18.0
   - name: suzuki-shunsuke/pinact@v0.1.2
   - name: terraform-linters/tflint@v0.50.3
   - name: uber-go/mock@v0.4.0
