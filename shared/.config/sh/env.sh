@@ -113,9 +113,6 @@ export WASMER_DIR="$XDG_DATA_HOME"/wasmer
 export WASMER_CACHE_DIR="$XDG_CACHE_HOME"/wasmer
 export PATH="$PATH:$WASMER_DIR/bin:$WASMER_DIR/globals/wapm_packages/.bin"
 
-# $HOME/.local/bin
-export PATH="$HOME"/.local/bin:"$PATH"
-
 # Homebrew
 export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/libexec/gnubin:"$PATH"
 
@@ -130,3 +127,6 @@ if [ -n "${WSL_INTEROP:-}" ]; then
     . "$XDG_CONFIG_HOME"/wsl/env.sh
   fi
 fi
+
+# $HOME/.local/bin
+export PATH="$HOME"/.local/bin:"$PATH"
