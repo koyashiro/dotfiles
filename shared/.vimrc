@@ -108,6 +108,9 @@ set foldmethod=manual
 " netrwhist
 let g:netrw_dirhistmax = 0
 
+" no swapfile
+set noswapfile
+
 " mouse
 set mouse=a
 
