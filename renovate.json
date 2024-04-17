@@ -5,5 +5,13 @@
     ":semanticCommits",
     "github>aquaproj/aqua-renovate-config#2.2.1"
   ],
-  "reviewers": ["koyashiro"]
+  "reviewers": ["koyashiro"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "automergeType": "squash"
+    }
+  ]
 }
