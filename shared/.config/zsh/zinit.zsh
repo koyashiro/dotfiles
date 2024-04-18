@@ -13,11 +13,12 @@ ZINIT=(
 
 source "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit/bin/zinit.zsh
 autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
+[[ -n "${_comps}" ]] && _comps[zinit]=_zinit
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light ascii-soup/zsh-url-highlighter
 zinit light mollifier/cd-gitroot
-zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit ice depth=1
+zinit light romkatv/powerlevel10k

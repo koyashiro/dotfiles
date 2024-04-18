@@ -20,5 +20,4 @@ jobs:
 
       - name: Run shfmt
         run: |
-          # shellcheck disable=SC2046
-          shfmt -i 2 -ci -d $(shfmt -f . | grep -v '\.zsh$')
+          shfmt --list --diff .
