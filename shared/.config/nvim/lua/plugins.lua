@@ -334,6 +334,7 @@ return {
           "rust_analyzer",
           "taplo",
           "tailwindcss",
+          "terraformls",
           "tsserver",
           "vimls",
           "volar",
