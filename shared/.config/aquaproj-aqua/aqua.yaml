@@ -20,7 +20,7 @@ packages:
   - name: hashicorp/terraform-ls@v0.33.1
   - name: JohnnyMorganz/StyLua@v0.20.0
   - name: jqlang/jq@jq-1.7.1
-  - name: junegunn/fzf@0.52.0
+  - name: junegunn/fzf@0.52.1
   - name: koalaman/shellcheck@v0.10.0
   - name: mikefarah/yq@v4.44.1
   - name: mvdan/sh@v3.8.0
