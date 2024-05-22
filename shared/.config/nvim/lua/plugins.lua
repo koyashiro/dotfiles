@@ -118,9 +118,8 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     event = "VeryLazy",
     config = function()
-      require("indent_blankline").setup({
-        show_current_context = true,
-        show_current_context_start = true,
+      require("ibl").setup({
+        scope = { enabled = true },
       })
     end,
   },
@@ -501,8 +500,13 @@ return {
     tag = "legacy",
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = "VeryLazy",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+      "gbprod/none-ls-luacheck.nvim",
+      "gbprod/none-ls-shellcheck.nvim",
+    },
     config = function()
       local null_ls = require("null-ls")
 
@@ -516,30 +520,28 @@ return {
       end, {})
 
       null_ls.setup({
-        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
+        -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
         sources = {
           -- Code Actions
-          null_ls.builtins.code_actions.eslint,
-          null_ls.builtins.code_actions.shellcheck,
+          require("none-ls.code_actions.eslint"),
+          require("none-ls-shellcheck.code_actions"),
 
           -- Diagnostics
           null_ls.builtins.diagnostics.actionlint,
-          null_ls.builtins.diagnostics.eslint,
+          require("none-ls.diagnostics.eslint"),
           null_ls.builtins.diagnostics.golangci_lint,
           null_ls.builtins.diagnostics.hadolint,
-          null_ls.builtins.diagnostics.luacheck,
+          require("none-ls-luacheck.diagnostics.luacheck"),
           null_ls.builtins.diagnostics.markdownlint,
-          null_ls.builtins.diagnostics.shellcheck,
+          require("none-ls-shellcheck.diagnostics"),
           null_ls.builtins.diagnostics.stylelint,
 
           -- Formatting
           null_ls.builtins.formatting.clang_format,
           null_ls.builtins.formatting.gofmt,
           null_ls.builtins.formatting.prettierd,
-          null_ls.builtins.formatting.rustfmt,
-          null_ls.builtins.formatting.shfmt.with({
-            extra_args = { "-i", "2", "-ci" },
-          }),
+          require("none-ls.formatting.rustfmt"),
+          null_ls.builtins.formatting.shfmt,
           null_ls.builtins.formatting.stylua,
         },
         on_attach = function(client, bufnr)
