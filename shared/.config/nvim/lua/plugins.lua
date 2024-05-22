@@ -509,6 +509,7 @@ return {
     },
     config = function()
       local null_ls = require("null-ls")
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
       vim.api.nvim_create_user_command("Format", function()
         vim.lsp.buf.format({
@@ -546,12 +547,18 @@ return {
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
-            local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
             vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
             vim.api.nvim_create_autocmd("BufWritePre", {
               group = augroup,
               buffer = bufnr,
-              command = "Format",
+              callback = function()
+                vim.lsp.buf.format({
+                  async = false,
+                  filter = function(c)
+                    return c.name == "null-ls"
+                  end,
+                })
+              end,
             })
           end
         end,
