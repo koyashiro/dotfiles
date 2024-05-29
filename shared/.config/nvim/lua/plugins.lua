@@ -535,7 +535,9 @@ return {
           require("none-ls-luacheck.diagnostics.luacheck"),
           null_ls.builtins.diagnostics.markdownlint,
           require("none-ls-shellcheck.diagnostics"),
-          null_ls.builtins.diagnostics.stylelint,
+          null_ls.builtins.diagnostics.stylelint.with({
+            filetypes = { "scss", "less", "scss", "sass", "vue" },
+          }),
 
           -- Formatting
           null_ls.builtins.formatting.clang_format,
@@ -544,6 +546,7 @@ return {
           require("none-ls.formatting.rustfmt"),
           null_ls.builtins.formatting.shfmt,
           null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.terraform_fmt,
         },
         on_attach = function(client, bufnr)
           if client.supports_method("textDocument/formatting") then
