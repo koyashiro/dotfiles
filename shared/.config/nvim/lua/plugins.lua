@@ -579,6 +579,7 @@ return {
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "onsails/lspkind.nvim",
+      "koyashiro/cmp-uuid",
       "zbirenbaum/copilot.lua",
       "zbirenbaum/copilot-cmp",
     },
@@ -602,6 +603,7 @@ return {
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "vsnip" },
+          { name = "uuid" },
           { name = "copilot" },
         }, {
           { name = "buffer" },
