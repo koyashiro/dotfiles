@@ -56,7 +56,7 @@
 	diffFilter = delta --color-only
 [filter "ignore-npmrc"]
 	smudge = cat
-	clean = sed '/^\\/\\/npm\\.pkg\\.github\\.com\\/:_authToken/d'
+	clean = sed '/^\\/\\/.*\\/:_authToken/d'
 [init]
 	defaultBranch = main
 [blame]
