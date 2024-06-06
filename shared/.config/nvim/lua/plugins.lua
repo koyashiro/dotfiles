@@ -542,7 +542,7 @@ return {
           -- Formatting
           null_ls.builtins.formatting.clang_format,
           null_ls.builtins.formatting.gofmt,
-          null_ls.builtins.formatting.prettierd,
+          null_ls.builtins.formatting.prettier,
           require("none-ls.formatting.rustfmt"),
           null_ls.builtins.formatting.shfmt,
           null_ls.builtins.formatting.stylua,
