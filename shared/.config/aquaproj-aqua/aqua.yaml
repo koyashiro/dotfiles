@@ -1,6 +1,6 @@
 registries:
   - type: standard
-    ref: v4.193.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.194.0 # renovate: depName=aquaproj/aqua-registry
 packages:
   - name: aws/aws-cli@2.16.9
   - name: aws/session-manager-plugin@1.2.553.0
