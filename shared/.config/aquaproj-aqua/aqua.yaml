@@ -14,7 +14,7 @@ packages:
   - name: golangci/golangci-lint@v1.59.1
   - name: golang/go@go1.22.4
   - name: golang-migrate/migrate@v4.17.1
-  - name: golang.org/x/tools/gopls@v0.15.3
+  - name: golang.org/x/tools/gopls@v0.16.0
   - name: hadolint/hadolint@v2.12.0
   - name: hashicorp/terraform@v1.8.5
   - name: hashicorp/terraform-ls@v0.33.2
