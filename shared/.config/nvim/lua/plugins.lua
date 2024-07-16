@@ -536,7 +536,7 @@ return {
           null_ls.builtins.diagnostics.markdownlint,
           require("none-ls-shellcheck.diagnostics"),
           null_ls.builtins.diagnostics.stylelint.with({
-            filetypes = { "scss", "less", "scss", "sass", "vue" },
+            filetypes = { "scss", "less", "css", "sass", "vue" },
           }),
 
           -- Formatting
