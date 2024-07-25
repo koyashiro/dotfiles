@@ -16,7 +16,7 @@ packages:
   - name: golang-migrate/migrate@v4.17.1
   - name: golang.org/x/tools/gopls@v0.16.1
   - name: hadolint/hadolint@v2.12.0
-  - name: hashicorp/terraform@v1.9.2
+  - name: hashicorp/terraform@v1.9.3
   - name: hashicorp/terraform-ls@v0.34.1
   - name: JohnnyMorganz/StyLua@v0.20.0
   - name: jqlang/jq@jq-1.7.1
