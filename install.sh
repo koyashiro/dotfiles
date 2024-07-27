@@ -116,6 +116,14 @@ install_shared_dotfiles() {
       create_symbolic_link "${src}" "${dist}"
     done
   )
+
+  # $HOME/.local/bin
+  (
+    for src in "${DOTDIR}"/shared/.local/bin/*; do
+      dist="${HOME}/.local/bin/$(basename "${src}")"
+      create_symbolic_link "${src}" "${dist}"
+    done
+  )
 }
 
 install_macos_dotfiles() {

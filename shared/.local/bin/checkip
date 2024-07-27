@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+set -eu
+
+CHECKIP_URL='https://checkip.amazonaws.com/'
+readonly CHECKIP_URL
+
+curl "$CHECKIP_URL"
