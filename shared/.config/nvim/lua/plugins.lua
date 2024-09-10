@@ -511,6 +511,19 @@ return {
       local null_ls = require("null-ls")
       local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+      local eslint_condition = function(utils)
+        return utils.root_has_file({
+          "eslint.config.js",
+          "eslint.config.mjs",
+          "eslint.config.cjs",
+          ".eslintrc.js",
+          ".eslintrc.cjs",
+          ".eslintrc.yaml",
+          ".eslintrc.yml",
+          ".eslintrc.json",
+        })
+      end
+
       vim.api.nvim_create_user_command("Format", function()
         vim.lsp.buf.format({
           async = false,
@@ -524,12 +537,16 @@ return {
         -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
         sources = {
           -- Code Actions
-          require("none-ls.code_actions.eslint"),
+          require("none-ls.code_actions.eslint").with({
+            condition = eslint_condition,
+          }),
           require("none-ls-shellcheck.code_actions"),
 
           -- Diagnostics
           null_ls.builtins.diagnostics.actionlint,
-          require("none-ls.diagnostics.eslint"),
+          require("none-ls.diagnostics.eslint").with({
+            condition = eslint_condition,
+          }),
           null_ls.builtins.diagnostics.golangci_lint,
           null_ls.builtins.diagnostics.hadolint,
           require("none-ls-luacheck.diagnostics.luacheck"),
@@ -537,6 +554,20 @@ return {
           require("none-ls-shellcheck.diagnostics"),
           null_ls.builtins.diagnostics.stylelint.with({
             filetypes = { "scss", "less", "css", "sass", "vue" },
+            condition = function(utils)
+              return utils.root_has_file({
+                "stylelint.config.js",
+                ".stylelintrc.js",
+                "stylelint.config.mjs",
+                ".stylelintrc.mjs",
+                "stylelint.config.cjs",
+                ".stylelintrc.cjs",
+                ".stylelintrc.json",
+                ".stylelintrc.yml",
+                ".stylelintrc.yaml",
+                ".stylelintrc",
+              })
+            end,
           }),
 
           -- Formatting
