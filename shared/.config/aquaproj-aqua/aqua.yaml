@@ -22,7 +22,7 @@ packages:
   - name: mikefarah/yq@v4.44.3
   - name: mvdan/sh@v3.9.0
   - name: nektos/act@v0.2.67
-  - name: nodejs/node@v22.8.0
+  - name: nodejs/node@v22.9.0
   - name: rhysd/actionlint@v1.7.1
   - name: sharkdp/bat@v0.24.0
   - name: sharkdp/fd@v10.2.0
