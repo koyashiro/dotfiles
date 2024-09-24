@@ -23,7 +23,7 @@ packages:
   - name: mvdan/sh@v3.9.0
   - name: nektos/act@v0.2.67
   - name: nodejs/node@v22.9.0
-  - name: rhysd/actionlint@v1.7.1
+  - name: rhysd/actionlint@v1.7.2
   - name: sharkdp/bat@v0.24.0
   - name: sharkdp/fd@v10.2.0
   - name: starship/starship@v1.20.1
