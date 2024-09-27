@@ -60,6 +60,11 @@ if [ ! -d "$XDG_DATA_HOME"/tig ]; then
   mkdir -m 700 "$XDG_DATA_HOME"/tig
 fi
 
+# direnv
+if command -v direnv >/dev/null 2>&1; then
+  export DIRENV_LOG_FORMAT=''
+fi
+
 # fzf
 if command -v fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS='--height 50% --reverse --border'
