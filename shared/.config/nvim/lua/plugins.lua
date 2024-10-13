@@ -575,7 +575,9 @@ return {
           null_ls.builtins.formatting.gofmt,
           null_ls.builtins.formatting.prettier,
           require("none-ls.formatting.rustfmt"),
-          null_ls.builtins.formatting.shfmt,
+          null_ls.builtins.formatting.shfmt.with({
+            extra_args = { "--indent", "2", "--binary-next-line", "--case-indent" },
+          }),
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.terraform_fmt,
         },

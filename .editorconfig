@@ -19,8 +19,8 @@ indent_size = 2
 [[shell]]
 indent_style = space
 indent_size = 2
-binary_next_line = true
-switch_case_indent = true
+binary_next_line = true # --binary-next-line
+switch_case_indent = true # --case-indent
 
 [*.ps1]
 indent_style = space
