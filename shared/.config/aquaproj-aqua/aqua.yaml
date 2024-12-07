@@ -15,7 +15,7 @@ packages:
   - name: golang/go@go1.23.4
   - name: hadolint/hadolint@v2.12.0
   - name: hashicorp/terraform@v1.10.1
-  - name: JohnnyMorganz/StyLua@v2.0.1
+  - name: JohnnyMorganz/StyLua@v2.0.2
   - name: jqlang/jq@jq-1.7.1
   - name: junegunn/fzf@v0.56.3
   - name: koalaman/shellcheck@v0.10.0
