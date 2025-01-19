@@ -22,7 +22,7 @@ packages:
   - name: mikefarah/yq@v4.45.1
   - name: mvdan/sh@v3.10.0
   - name: nektos/act@v0.2.71
-  - name: rhysd/actionlint@v1.7.6
+  - name: rhysd/actionlint@v1.7.7
   - name: sharkdp/bat@v0.25.0
   - name: sharkdp/fd@v10.2.0
   - name: starship/starship@v1.22.1
