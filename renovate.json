@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     ":semanticCommits",
-    "github>aquaproj/aqua-renovate-config#2.7.0"
+    "github>aquaproj/aqua-renovate-config#2.7.4"
   ],
   "reviewers": ["koyashiro"],
   "packageRules": [
