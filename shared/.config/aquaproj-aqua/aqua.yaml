@@ -20,7 +20,7 @@ packages:
   - name: junegunn/fzf@v0.60.3
   - name: koalaman/shellcheck@v0.10.0
   - name: mikefarah/yq@v4.45.1
-  - name: mvdan/sh@v3.10.0
+  - name: mvdan/sh@v3.11.0
   - name: nektos/act@v0.2.75
   - name: rhysd/actionlint@v1.7.7
   - name: sharkdp/bat@v0.25.0
