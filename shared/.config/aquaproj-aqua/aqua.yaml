@@ -29,4 +29,4 @@ packages:
   - name: suzuki-shunsuke/pinact@v1.6.0
   - name: terraform-linters/tflint@v0.56.0
   - name: volta-cli/volta@v2.0.2
-  - name: wagoodman/dive@v0.13.0
+  - name: wagoodman/dive@v0.13.1
