@@ -25,7 +25,7 @@ packages:
   - name: rhysd/actionlint@v1.7.7
   - name: sharkdp/bat@v0.25.0
   - name: sharkdp/fd@v10.2.0
-  - name: starship/starship@v1.22.1
+  - name: starship/starship@v1.23.0
   - name: suzuki-shunsuke/pinact@v1.6.0
   - name: terraform-linters/tflint@v0.56.0
   - name: volta-cli/volta@v2.0.2
