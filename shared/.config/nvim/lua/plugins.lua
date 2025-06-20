@@ -337,6 +337,7 @@ return {
       require("mason").setup()
 
       require("mason-lspconfig").setup({
+        automatic_installation = true,
         -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
         ensure_installed = {
           "bashls",
@@ -348,7 +349,7 @@ return {
           "taplo",
           "tailwindcss",
           "terraformls",
-          "tsserver",
+          "ts_ls",
           "vimls",
           "volar",
           "yamlls",
