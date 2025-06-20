@@ -125,6 +125,10 @@ export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/lib
 export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME"/aquaproj-aqua/aqua.yaml
 export PATH="$XDG_DATA_HOME"/aquaproj-aqua/bin:"$PATH"
 
+# Kubernetes
+export KUBECONFIG="$XDG_CONFIG_HOME/kube"
+export KUBECACHEDIR="$XDG_CACHE_HOME/kube"
+
 # wsl
 if [ -n "${WSL_INTEROP:-}" ]; then
   if [ -f "$XDG_CONFIG_HOME"/wsl/env.sh ]; then
