@@ -11,59 +11,55 @@ return {
     version = "0.10.0",
     event = "VeryLazy",
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        highlight = {
-          enable = true,
-        },
-        -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
-        ensure_installed = {
-          "bash",
-          "c",
-          "cpp",
-          "css",
-          "diff",
-          "dockerfile",
-          "git_config",
-          "git_rebase",
-          "gitattributes",
-          "gitcommit",
-          "go",
-          "gomod",
-          "gosum",
-          "html",
-          "javascript",
-          "jsdoc",
-          "json",
-          "json5",
-          "lua",
-          "luadoc",
-          "make",
-          "markdown",
-          "markdown_inline",
-          "rust",
-          "scss",
-          "sql",
-          "terraform",
-          "toml",
-          "tsx",
-          "typescript",
-          "vim",
-          "vimdoc",
-          "vue",
-          "yaml",
-        },
-        auto_install = true,
-      })
-    end,
+    opts = {
+      highlight = {
+        enable = true,
+      },
+      auto_install = true,
+      -- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+      ensure_installed = {
+        "bash",
+        "c",
+        "cpp",
+        "css",
+        "diff",
+        "dockerfile",
+        "git_config",
+        "git_rebase",
+        "gitattributes",
+        "gitcommit",
+        "go",
+        "gomod",
+        "gosum",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "json5",
+        "lua",
+        "luadoc",
+        "make",
+        "markdown",
+        "markdown_inline",
+        "rust",
+        "scss",
+        "sql",
+        "terraform",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "vue",
+        "yaml",
+      },
+    },
   },
   {
     "lewis6991/gitsigns.nvim",
     version = "1.0.2",
     event = "VeryLazy",
-    config = function()
-      require("gitsigns").setup()
-    end,
+    opts = {},
   },
   {
     "dinhhuy258/git.nvim",
@@ -124,11 +120,14 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     version = "3.9.0",
     event = "VeryLazy",
-    config = function()
-      require("ibl").setup({
-        scope = { enabled = true },
-      })
-    end,
+    main = "ibl",
+    ---@module "ibl"
+    ---@type ibl.config
+    opts = {
+      scope = {
+        enabled = true,
+      },
+    },
   },
   {
     "nvim-lualine/lualine.nvim",
@@ -239,9 +238,7 @@ return {
     "windwp/nvim-autopairs",
     commit = "2647cce4cb64fb35c212146663384e05ae126bdf",
     event = "InsertEnter",
-    config = function()
-      require("nvim-autopairs").setup()
-    end,
+    opts = {},
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -302,29 +299,28 @@ return {
     "kylechui/nvim-surround",
     version = "3.1.2",
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup()
-    end,
+    opts = {},
   },
   {
     "terrortylor/nvim-comment",
     commit = "e9ac16ab056695cad6461173693069ec070d2b23",
     event = "VeryLazy",
-    config = function()
-      require("nvim_comment").setup()
-    end,
+    main = "nvim_comment",
+    opts = {},
   },
   {
     "zbirenbaum/copilot.lua",
     commit = "c1bb86abbed1a52a11ab3944ef00c8410520543d",
     cmd = "Copilot",
     event = "InsertEnter",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
+    opts = {
+      suggestion = {
+        enabled = false,
+      },
+      panel = {
+        enabled = false,
+      },
+    },
   },
   {
     "williamboman/mason.nvim",
@@ -512,9 +508,7 @@ return {
     "j-hui/fidget.nvim",
     version = "1.6.1",
     event = "VeryLazy",
-    config = function()
-      require("fidget").setup()
-    end,
+    opts = {},
   },
   {
     "nvimtools/none-ls.nvim",
