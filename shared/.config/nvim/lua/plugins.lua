@@ -1,12 +1,14 @@
 return {
   {
     "folke/tokyonight.nvim",
+    version = "4.11.0",
     config = function()
       vim.cmd.colorscheme("tokyonight")
     end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
+    version = "0.10.0",
     event = "VeryLazy",
     build = ":TSUpdate",
     config = function()
@@ -57,6 +59,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
+    version = "1.0.2",
     event = "VeryLazy",
     config = function()
       require("gitsigns").setup()
@@ -64,6 +67,7 @@ return {
   },
   {
     "dinhhuy258/git.nvim",
+    commit = "7354ed2efe31b979778cb62ffa2fa23df70eaf26",
     event = "InsertEnter",
     config = function()
       require("git").setup()
@@ -76,6 +80,7 @@ return {
   },
   {
     "kevinhwang91/nvim-hlslens",
+    version = "1.1.0",
     event = "VeryLazy",
     config = function()
       require("hlslens").setup()
@@ -102,6 +107,7 @@ return {
   },
   {
     "petertriho/nvim-scrollbar",
+    commit = "5b103ef0fd2e8b9b4be3878ed38d224522192c6c",
     dependencies = {
       "kevinhwang91/nvim-hlslens",
       "lewis6991/gitsigns.nvim",
@@ -116,6 +122,7 @@ return {
   },
   {
     "lukas-reineke/indent-blankline.nvim",
+    version = "3.9.0",
     event = "VeryLazy",
     config = function()
       require("ibl").setup({
@@ -125,6 +132,7 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
+    commit = "a94fc68960665e54408fe37dcf573193c4ce82c9",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
@@ -207,6 +215,7 @@ return {
   },
   {
     "nvim-tree/nvim-tree.lua",
+    version = "1.13.0",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
@@ -228,6 +237,7 @@ return {
   },
   {
     "windwp/nvim-autopairs",
+    commit = "2647cce4cb64fb35c212146663384e05ae126bdf",
     event = "InsertEnter",
     config = function()
       require("nvim-autopairs").setup()
@@ -235,6 +245,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    version = "0.1.8",
     dependencies = {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -289,6 +300,7 @@ return {
   },
   {
     "kylechui/nvim-surround",
+    version = "3.1.2",
     event = "VeryLazy",
     config = function()
       require("nvim-surround").setup()
@@ -296,6 +308,7 @@ return {
   },
   {
     "terrortylor/nvim-comment",
+    commit = "e9ac16ab056695cad6461173693069ec070d2b23",
     event = "VeryLazy",
     config = function()
       require("nvim_comment").setup()
@@ -303,6 +316,7 @@ return {
   },
   {
     "zbirenbaum/copilot.lua",
+    commit = "c1bb86abbed1a52a11ab3944ef00c8410520543d",
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
@@ -404,6 +418,7 @@ return {
   },
   {
     "folke/trouble.nvim",
+    version = "3.7.1",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("trouble").setup()
@@ -428,6 +443,7 @@ return {
   },
   {
     "glepnir/lspsaga.nvim",
+    commit = "920b1253e1a26732e53fac78412f6da7f674671d",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
@@ -493,14 +509,15 @@ return {
   },
   {
     "j-hui/fidget.nvim",
+    version = "1.6.1",
     event = "VeryLazy",
     config = function()
       require("fidget").setup()
     end,
-    tag = "legacy",
   },
   {
     "nvimtools/none-ls.nvim",
+    commit = "db2a48b79cfcdab8baa5d3f37f21c78b6705c62e",
     event = "VeryLazy",
     dependencies = {
       "nvimtools/none-ls-extras.nvim",
@@ -603,6 +620,7 @@ return {
   },
   {
     "hrsh7th/nvim-cmp",
+    version = "0.0.2",
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
