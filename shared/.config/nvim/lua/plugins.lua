@@ -1,5 +1,9 @@
 return {
   {
+    "folke/lazy.nvim",
+    version = "11.17.1",
+  },
+  {
     "folke/tokyonight.nvim",
     version = "4.11.0",
     config = function()
@@ -235,6 +239,10 @@ return {
     end,
   },
   {
+    "nvim-tree/nvim-web-devicons",
+    commit = "19d6211c78169e78bab372b585b6fb17ad974e82",
+  },
+  {
     "windwp/nvim-autopairs",
     commit = "2647cce4cb64fb35c212146663384e05ae126bdf",
     event = "InsertEnter",
@@ -296,6 +304,15 @@ return {
     end,
   },
   {
+    "nvim-lua/plenary.nvim",
+    version = "0.1.4",
+  },
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    commit = "1f08ed60cafc8f6168b72b80be2b2ea149813e55",
+    build = "make",
+  },
+  {
     "kylechui/nvim-surround",
     version = "3.1.2",
     event = "VeryLazy",
@@ -323,15 +340,22 @@ return {
     },
   },
   {
+    "neovim/nvim-lspconfig",
+    commit = "9c762dcd457d2ab99edb3f3433cea9865ded47ad",
+  },
+  {
     "williamboman/mason.nvim",
+    commit = "e2f7f9044ec30067bc11800a9e266664b88cda22",
+    -- build = ":MasonUpdate",
+    opts = {},
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    commit = "ba9c2f0b93deb48d0a99ae0e8d8dd36f7cc286d6",
     dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-      "neovim/nvim-lspconfig",
+      "williamboman/mason.nvim",
     },
-    build = ":MasonUpdate",
     config = function()
-      require("mason").setup()
-
       require("mason-lspconfig").setup({
         automatic_installation = true,
         -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
@@ -416,7 +440,9 @@ return {
   {
     "folke/trouble.nvim",
     version = "3.7.1",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function()
       require("trouble").setup()
 
@@ -614,6 +640,18 @@ return {
     end,
   },
   {
+    "nvimtools/none-ls-extras.nvim",
+    commit = "924fe88a9983c7d90dbb31fc4e3129a583ea0a90",
+  },
+  {
+    "gbprod/none-ls-luacheck.nvim",
+    version = "0.0.1",
+  },
+  {
+    "gbprod/none-ls-shellcheck.nvim",
+    commit = "0f84461241e76e376a95fb7391deac82dc3efdbf",
+  },
+  {
     "hrsh7th/nvim-cmp",
     version = "0.0.2",
     event = "InsertEnter",
@@ -690,5 +728,41 @@ return {
 
       require("copilot_cmp").setup()
     end,
+  },
+  {
+    "hrsh7th/cmp-nvim-lsp",
+    commit = "a8912b88ce488f411177fc8aed358b04dc246d7b",
+  },
+  {
+    "hrsh7th/cmp-buffer",
+    commit = "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
+  },
+  {
+    "hrsh7th/cmp-path",
+    commit = "c6635aae33a50d6010bf1aa756ac2398a2d54c32",
+  },
+  {
+    "hrsh7th/cmp-cmdline",
+    commit = "d126061b624e0af6c3a556428712dd4d4194ec6d",
+  },
+  {
+    "hrsh7th/cmp-vsnip",
+    commit = "989a8a73c44e926199bfd05fa7a516d51f2d2752",
+  },
+  {
+    "hrsh7th/vim-vsnip",
+    commit = "0a4b8419e44f47c57eec4c90df17567ad4b1b36e",
+  },
+  {
+    "onsails/lspkind.nvim",
+    commit = "d79a1c3299ad0ef94e255d045bed9fa26025dab6",
+  },
+  {
+    "koyashiro/cmp-uuid",
+    version = "0.2.0",
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    commit = "15fc12af3d0109fa76b60b5cffa1373697e261d1",
   },
 }
