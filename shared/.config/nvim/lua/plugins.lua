@@ -69,22 +69,19 @@ return {
     "dinhhuy258/git.nvim",
     commit = "7354ed2efe31b979778cb62ffa2fa23df70eaf26",
     event = "InsertEnter",
-    config = function()
-      require("git").setup()
-
+    init = function()
       vim.api.nvim_create_user_command("GitBrowse", function(args)
         local visual_mode = args.range == 0
         require("git.browse").open(visual_mode)
       end, { range = true })
     end,
+    opts = {},
   },
   {
     "kevinhwang91/nvim-hlslens",
     version = "1.1.0",
     event = "VeryLazy",
-    config = function()
-      require("hlslens").setup()
-
+    init = function()
       vim.keymap.set(
         "n",
         "n",
@@ -104,6 +101,7 @@ return {
 
       vim.keymap.set("n", "<Leader>l", "<Cmd>noh<CR>", { noremap = true, silent = true })
     end,
+    opts = {},
   },
   {
     "petertriho/nvim-scrollbar",
@@ -140,81 +138,79 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     event = "VeryLazy",
-    config = function()
-      require("lualine").setup({
-        options = {
-          icons_enabled = true,
-          theme = "auto",
-          component_separators = { left = "", right = "" },
-          section_separators = { left = "", right = "" },
-          disabled_filetypes = {
-            statusline = {},
-            winbar = {},
-          },
-          ignore_focus = {},
-          always_divide_middle = true,
-          globalstatus = true,
-          refresh = {
-            statusline = 1000,
-            tabline = 1000,
-            winbar = 1000,
-          },
+    opts = {
+      options = {
+        icons_enabled = true,
+        theme = "auto",
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+        disabled_filetypes = {
+          statusline = {},
+          winbar = {},
         },
-        sections = {
-          lualine_a = { "mode" },
-          lualine_b = {
-            "branch",
-            "diff",
-          },
-          lualine_c = { { "filename", path = 1 } },
-          lualine_x = {
-            {
-              "diagnostics",
-              sources = { "nvim_diagnostic", "nvim_lsp" },
-              sections = { "error", "warn", "info", "hint" },
-              symbols = { error = " ", warn = " ", info = " ", hint = "" },
-            },
-            "encoding",
-            "fileformat",
-            "filetype",
-          },
-          lualine_y = { "progress" },
-          lualine_z = { "location" },
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = true,
+        refresh = {
+          statusline = 1000,
+          tabline = 1000,
+          winbar = 1000,
         },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { "filename" },
-          lualine_x = { "location" },
-          lualine_y = {},
-          lualine_z = {},
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = {
+          "branch",
+          "diff",
         },
-        tabline = {
-          lualine_a = {
-            {
-              "tabs",
-              mode = 2,
-              fmt = function(name, context)
-                -- Show + if buffer is modified in tab
-                local buflist = vim.fn.tabpagebuflist(context.tabnr)
-                local winnr = vim.fn.tabpagewinnr(context.tabnr)
-                local bufnr = buflist[winnr]
-                local mod = vim.fn.getbufvar(bufnr, "&mod")
+        lualine_c = { { "filename", path = 1 } },
+        lualine_x = {
+          {
+            "diagnostics",
+            sources = { "nvim_diagnostic", "nvim_lsp" },
+            sections = { "error", "warn", "info", "hint" },
+            symbols = { error = " ", warn = " ", info = " ", hint = "" },
+          },
+          "encoding",
+          "fileformat",
+          "filetype",
+        },
+        lualine_y = { "progress" },
+        lualine_z = { "location" },
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { "filename" },
+        lualine_x = { "location" },
+        lualine_y = {},
+        lualine_z = {},
+      },
+      tabline = {
+        lualine_a = {
+          {
+            "tabs",
+            mode = 2,
+            fmt = function(name, context)
+              -- Show + if buffer is modified in tab
+              local buflist = vim.fn.tabpagebuflist(context.tabnr)
+              local winnr = vim.fn.tabpagewinnr(context.tabnr)
+              local bufnr = buflist[winnr]
+              local mod = vim.fn.getbufvar(bufnr, "&mod")
 
-                return name .. (mod == 1 and " +" or "")
-              end,
-            },
+              return name .. (mod == 1 and " +" or "")
+            end,
           },
-          lualine_b = {},
-          lualine_c = {},
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {},
         },
-        winbar = {},
-        inactive_winbar = {},
-      })
-    end,
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
+      winbar = {},
+      inactive_winbar = {},
+    },
   },
   {
     "nvim-tree/nvim-tree.lua",
@@ -223,13 +219,10 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     event = "VeryLazy",
-    config = function()
+    init = function()
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
-
       vim.opt.termguicolors = true
-
-      require("nvim-tree").setup()
 
       vim.api.nvim_create_user_command("Ex", function()
         vim.cmd.NvimTreeToggle()
@@ -237,6 +230,7 @@ return {
 
       vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
     end,
+    opts = {},
   },
   {
     "nvim-tree/nvim-web-devicons",
@@ -443,9 +437,7 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    config = function()
-      require("trouble").setup()
-
+    init = function()
       vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
       vim.keymap.set(
         "n",
@@ -463,6 +455,7 @@ return {
       vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", { silent = true, noremap = true })
       vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", { silent = true, noremap = true })
     end,
+    opts = {},
   },
   {
     "glepnir/lspsaga.nvim",
@@ -472,9 +465,7 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     event = "LspAttach",
-    config = function()
-      require("lspsaga").setup()
-
+    init = function()
       -- LSP finder
       vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>")
       vim.keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>")
@@ -529,6 +520,7 @@ return {
       -- Floating terminal
       vim.keymap.set({ "n", "t" }, "<Leader>t", "<cmd>Lspsaga term_toggle<CR>")
     end,
+    opts = {},
   },
   {
     "j-hui/fidget.nvim",
