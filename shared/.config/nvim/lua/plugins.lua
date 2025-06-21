@@ -81,27 +81,58 @@ return {
     "kevinhwang91/nvim-hlslens",
     version = "1.1.0",
     event = "VeryLazy",
-    init = function()
-      vim.keymap.set(
-        "n",
+    opts = {},
+    keys = {
+      {
         "n",
         [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-        { noremap = true, silent = true }
-      )
-      vim.keymap.set(
-        "n",
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+      {
         "N",
         [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-        { noremap = true, silent = true }
-      )
-      vim.keymap.set("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
-      vim.keymap.set("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
-      vim.keymap.set("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
-      vim.keymap.set("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], { noremap = true, silent = true })
-
-      vim.keymap.set("n", "<Leader>l", "<Cmd>noh<CR>", { noremap = true, silent = true })
-    end,
-    opts = {},
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+      {
+        "*",
+        [[*<Cmd>lua require('hlslens').start()<CR>]],
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+      {
+        "#",
+        [[#<Cmd>lua require('hlslens').start()<CR>]],
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+      {
+        "g*",
+        [[g*<Cmd>lua require('hlslens').start()<CR>]],
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+      {
+        "g#",
+        [[g#<Cmd>lua require('hlslens').start()<CR>]],
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+      {
+        "<Leader>l",
+        "<Cmd>noh<CR>",
+        mode = "n",
+        noremap = true,
+        silent = true,
+      },
+    },
   },
   {
     "petertriho/nvim-scrollbar",
@@ -223,14 +254,11 @@ return {
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
       vim.opt.termguicolors = true
-
-      vim.api.nvim_create_user_command("Ex", function()
-        vim.cmd.NvimTreeToggle()
-      end, {})
-
-      vim.keymap.set("n", "<leader>e", vim.cmd.NvimTreeToggle)
     end,
     opts = {},
+    keys = {
+      { "<leader>e", vim.cmd.NvimTreeToggle, mode = "n" },
+    },
   },
   {
     "nvim-tree/nvim-web-devicons",
@@ -247,55 +275,46 @@ return {
     version = "0.1.8",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-tree/nvim-web-devicons",
+      "nvim-telescope/telescope-fzf-native.nvim",
     },
     event = "VeryLazy",
-    config = function()
+    opts = {
+      defaults = {
+        file_ignore_patterns = {
+          ".git/",
+        },
+        mappings = {
+          i = {
+            ["<C-h>"] = "which_key",
+            ["<Esc>"] = require("telescope.actions").close,
+          },
+        },
+      },
+      pickers = {
+        find_files = { hidden = true },
+        live_grep = { additional_args = { "--hidden" } },
+      },
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = "smart_case",
+        },
+      },
+    },
+    config = function(_, opts)
       local telescope = require("telescope")
-      local actions = require("telescope.actions")
-
-      telescope.setup({
-        defaults = {
-          file_ignore_patterns = {
-            ".git/",
-          },
-          mappings = {
-            i = {
-              ["<C-h>"] = "which_key",
-              ["<Esc>"] = actions.close,
-            },
-          },
-        },
-        pickers = {
-          find_files = { hidden = true },
-          live_grep = { additional_args = { "--hidden" } },
-        },
-        extensions = {
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
-          },
-        },
-      })
+      telescope.setup(opts)
       telescope.load_extension("fzf")
-
-      local builtin = require("telescope.builtin")
-      vim.keymap.set("n", "<leader>ff", function()
-        builtin.find_files()
-      end)
-      vim.keymap.set("n", "<leader>fg", function()
-        builtin.live_grep()
-      end)
-      vim.keymap.set("n", "<leader>fb", function()
-        builtin.buffers()
-      end)
-      vim.keymap.set("n", "<leader>fh", function()
-        builtin.help_tags()
-      end)
     end,
+    keys = {
+      { "<leader>ff", require("telescope.builtin").find_files, mode = "n" },
+      { "<leader>fg", require("telescope.builtin").live_grep, mode = "n" },
+      { "<leader>fb", require("telescope.builtin").buffers, mode = "n" },
+      { "<leader>fh", require("telescope.builtin").help_tags, mode = "n" },
+    },
   },
   {
     "nvim-lua/plenary.nvim",
@@ -357,7 +376,7 @@ return {
           "bashls",
           "clangd",
           "gopls",
-          "jsonls",
+          "ksonls",
           "lua_ls",
           "rust_analyzer",
           "taplo",
@@ -437,25 +456,39 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    init = function()
-      vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>", { silent = true, noremap = true })
-      vim.keymap.set(
-        "n",
-        "<leader>xw",
-        "<cmd>TroubleToggle workspace_diagnostics<cr>",
-        { silent = true, noremap = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>xd",
-        "<cmd>TroubleToggle document_diagnostics<cr>",
-        { silent = true, noremap = true }
-      )
-      vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>", { silent = true, noremap = true })
-      vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", { silent = true, noremap = true })
-      vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>", { silent = true, noremap = true })
-    end,
     opts = {},
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
   },
   {
     "glepnir/lspsaga.nvim",
@@ -465,62 +498,49 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     event = "LspAttach",
-    init = function()
-      -- LSP finder
-      vim.keymap.set("n", "gh", "<cmd>Lspsaga finder<CR>")
-      vim.keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>")
-
-      -- Code action
-      vim.keymap.set({ "n", "v" }, "<Leader>ac", "<cmd>Lspsaga code_action<CR>")
-      vim.keymap.set({ "n", "v" }, "<Leader>ca", "<cmd>Lspsaga code_action<CR>")
-
-      -- Rename
-      vim.keymap.set("n", "<Leader>rn", "<cmd>Lspsaga rename<CR>")
-
-      -- Go to definition
-      vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
-
-      -- Go to type definition
-      vim.keymap.set("n", "gy", "<cmd>Lspsaga goto_type_definition<CR>")
-
-      -- Show line diagnostics
-      vim.keymap.set("n", "<Leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
-
-      -- Show buffer diagnostics
-      vim.keymap.set("n", "<Leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")
-
-      -- Show workspace diagnostics
-      vim.keymap.set("n", "<Leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>")
-
-      -- Show cursor diagnostics
-      vim.keymap.set("n", "<Leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-
-      -- Diagnostic jump
-      vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>")
-      vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>")
-
-      -- Diagnostic jump with filters such as only jumping to an error
-      vim.keymap.set("n", "[E", function()
-        require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
-      end)
-      vim.keymap.set("n", "]E", function()
-        require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
-      end)
-
-      -- Toggle outline
-      vim.keymap.set("n", "<Leader>o", "<cmd>Lspsaga outline<CR>")
-
-      -- Hover Doc
-      vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-
-      -- Call hierarchy
-      vim.keymap.set("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
-      vim.keymap.set("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
-
-      -- Floating terminal
-      vim.keymap.set({ "n", "t" }, "<Leader>t", "<cmd>Lspsaga term_toggle<CR>")
-    end,
     opts = {},
+    keys = {
+      -- Code Action
+      { "<Leader>ac", "<cmd>Lspsaga code_action<CR>", mode = { "n", "v" } },
+      -- Callhierarchy
+      { "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>", mode = "n" },
+      { "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>", mode = "n" },
+      -- Definition
+      { "gd", "<cmd>Lspsaga goto_definition<CR>", mode = "n" },
+      { "gy", "<cmd>Lspsaga goto_type_definition<CR>", mode = "n" },
+      -- Diagnostic
+      { "<Leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>", mode = "n" },
+      { "<Leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>", mode = "n" },
+      { "<Leader>sw", "<cmd>Lspsaga show_workspace_diagnostics<CR>", mode = "n" },
+      { "<Leader>sc", "<cmd>Lspsaga show_cursor_diagnostics<CR>", mode = "n" },
+      { "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", mode = "n" },
+      { "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", mode = "n" },
+      {
+        "[E",
+        function()
+          require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+        end,
+        mode = "n",
+      },
+      {
+        "]E",
+        function()
+          require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+        end,
+        mode = "n",
+      },
+      -- Finder
+      { "gh", "<cmd>Lspsaga finder<CR>", mode = "n" },
+      { "gf", "<cmd>Lspsaga finder<CR>", mode = "n" },
+      -- Float terminal
+      { "<Leader>t", "<cmd>Lspsaga term_toggle<CR>", mode = { "n", "t" } },
+      -- Hover
+      { "K", "<cmd>Lspsaga hover_doc<CR>", mode = "n" },
+      -- Outline
+      { "<Leader>o", "<cmd>Lspsaga outline<CR>", mode = "n" },
+      -- Rename
+      { "<Leader>rn", "<cmd>Lspsaga rename<CR>", mode = "n" },
+    },
   },
   {
     "j-hui/fidget.nvim",
