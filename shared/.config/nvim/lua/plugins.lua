@@ -68,7 +68,7 @@ return {
   {
     "dinhhuy258/git.nvim",
     commit = "7354ed2efe31b979778cb62ffa2fa23df70eaf26",
-    event = "InsertEnter",
+    event = "VeryLazy",
     init = function()
       vim.api.nvim_create_user_command("GitBrowse", function(args)
         local visual_mode = args.range == 0
