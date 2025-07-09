@@ -355,6 +355,58 @@ return {
   {
     "neovim/nvim-lspconfig",
     commit = "9c762dcd457d2ab99edb3f3433cea9865ded47ad",
+    config = function()
+      local formatters = {
+        css = "null-ls",
+        go = "null-ls",
+        html = "null-ls",
+        javascript = "null-ls",
+        javascriptreact = "null-ls",
+        json = "null-ls",
+        jsonc = "null-ls",
+        lua = "null-ls",
+        less = "null-ls",
+        markdown = "null-ls",
+        rust = "rust_analyzer",
+        sass = "null-ls",
+        scss = "null-ls",
+        sh = "null-ls",
+        terraform = "terraformls",
+        typescript = "null-ls",
+        typescriptreact = "null-ls",
+        vue = "null-ls",
+        yaml = "null-ls",
+        zsh = "null-ls",
+      }
+
+      local function format()
+        vim.lsp.buf.format({
+          async = false,
+          filter = function(c)
+            return c.name == formatters[vim.bo.filetype]
+          end,
+        })
+      end
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("LspAttach", { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_clients({ name = formatters[vim.bo.filetype] })[1]
+          if client == nil then
+            return
+          end
+          if client.supports_method("textDocument/formatting", args.buf) then
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              group = vim.api.nvim_create_augroup("LspFormatting", { clear = true }),
+              buffer = args.buf,
+              callback = format,
+            })
+          end
+        end,
+      })
+
+      vim.api.nvim_create_user_command("Format", format, {})
+    end,
   },
   {
     "williamboman/mason.nvim",
@@ -374,13 +426,9 @@ return {
         -- https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers
         ensure_installed = {
           "bashls",
-          "clangd",
           "gopls",
-          "ksonls",
           "lua_ls",
           "rust_analyzer",
-          "taplo",
-          "tailwindcss",
           "terraformls",
           "ts_ls",
           "vimls",
@@ -559,7 +607,6 @@ return {
     },
     config = function()
       local null_ls = require("null-ls")
-      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
       local eslint_condition = function(utils)
         return utils.root_has_file({
@@ -573,15 +620,6 @@ return {
           ".eslintrc.json",
         })
       end
-
-      vim.api.nvim_create_user_command("Format", function()
-        vim.lsp.buf.format({
-          async = false,
-          filter = function(c)
-            return c.name == "null-ls"
-          end,
-        })
-      end, {})
 
       null_ls.setup({
         -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
@@ -624,30 +662,11 @@ return {
           null_ls.builtins.formatting.clang_format,
           null_ls.builtins.formatting.gofmt,
           null_ls.builtins.formatting.prettier,
-          require("none-ls.formatting.rustfmt"),
           null_ls.builtins.formatting.shfmt.with({
             extra_args = { "--indent", "2", "--binary-next-line", "--case-indent" },
           }),
           null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.terraform_fmt,
         },
-        on_attach = function(client, bufnr)
-          if client.supports_method("textDocument/formatting") then
-            vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-              group = augroup,
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.buf.format({
-                  async = false,
-                  filter = function(c)
-                    return c.name == "null-ls"
-                  end,
-                })
-              end,
-            })
-          end
-        end,
       })
     end,
   },
