@@ -5,7 +5,7 @@ packages:
   - name: aws/aws-cli@2.27.63
   - name: aws/session-manager-plugin@1.2.553.0
   - name: BurntSushi/ripgrep@14.1.1
-  - name: cli/cli@v2.76.1
+  - name: cli/cli@v2.76.2
   - name: dandavison/delta@0.18.2
   - name: denoland/deno@v2.4.2
   - name: direnv/direnv@v2.37.1
