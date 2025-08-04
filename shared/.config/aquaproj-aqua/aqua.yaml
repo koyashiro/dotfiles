@@ -18,7 +18,7 @@ packages:
   - name: JohnnyMorganz/StyLua@v2.1.0
   - name: jqlang/jq@jq-1.8.1
   - name: junegunn/fzf@v0.65.1
-  - name: koalaman/shellcheck@v0.10.0
+  - name: koalaman/shellcheck@v0.11.0
   - name: mikefarah/yq@v4.47.1
   - name: mvdan/sh@v3.12.0
   - name: nektos/act@v0.2.80
