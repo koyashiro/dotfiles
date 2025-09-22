@@ -13,7 +13,7 @@ packages:
   - name: eza-community/eza@v0.23.3
   - name: golangci/golangci-lint@v2.5.0
   - name: golang/go@go1.25.1
-  - name: hadolint/hadolint@v2.13.1
+  - name: hadolint/hadolint@v2.14.0
   - name: hashicorp/terraform@v1.13.3
   - name: JohnnyMorganz/StyLua@v2.2.0
   - name: jqlang/jq@jq-1.8.1
