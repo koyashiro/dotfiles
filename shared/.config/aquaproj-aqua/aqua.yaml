@@ -4,7 +4,7 @@ registries:
 packages:
   - name: aws/aws-cli@2.32.15
   - name: aws/session-manager-plugin@1.2.553.0
-  - name: BurntSushi/ripgrep@14.1.1
+  - name: BurntSushi/ripgrep@15.1.0
   - name: cli/cli@v2.83.2
   - name: dandavison/delta@0.18.2
   - name: denoland/deno@v2.5.6
