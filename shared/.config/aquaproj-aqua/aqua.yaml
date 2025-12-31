@@ -26,7 +26,7 @@ packages:
   - name: sharkdp/bat@v0.26.1
   - name: sharkdp/fd@v10.3.0
   - name: starship/starship@v1.24.2
-  - name: suzuki-shunsuke/pinact@v3.7.4
+  - name: suzuki-shunsuke/pinact@v3.8.0
   - name: terraform-linters/tflint@v0.60.0
   - name: volta-cli/volta@v2.0.2
   - name: wagoodman/dive@v0.13.1
