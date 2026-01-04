@@ -76,6 +76,10 @@ if command -v docker >/dev/null 2>&1; then
   export DOCKER_CONFIG="$XDG_CONFIG_HOME"/docker
 fi
 
+# kubernetes
+export KUBECONFIG="$XDG_CONFIG_HOME"/kube
+export KUBECACHEDIR="$XDG_CACHE_HOME"/kube
+
 # AWS CLI
 if command -v aws >/dev/null 2>&1; then
   export AWS_CONFIG_FILE="$XDG_CONFIG_HOME"/aws/config
@@ -106,6 +110,7 @@ if [ ! -d "$DENO_INSTALL_ROOT" ]; then
 fi
 export PATH="$PATH":"$DENO_INSTALL_ROOT"/bin
 
+# Volta
 export VOLTA_HOME="$XDG_DATA_HOME"/volta
 export PATH="$PATH":"$VOLTA_HOME"/bin
 
