@@ -4,7 +4,6 @@
 [core]
 	autoCRLF = false
 	quotepath = false
-	pager = delta
 	whitespace = cr-at-eol
 	eol = lf
 	ignorecase = false
