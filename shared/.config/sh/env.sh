@@ -134,6 +134,11 @@ export PATH="$XDG_DATA_HOME"/aquaproj-aqua/bin:"$PATH"
 export KUBECONFIG="$XDG_CONFIG_HOME/kube"
 export KUBECACHEDIR="$XDG_CACHE_HOME/kube"
 
+# Ansible
+export ANSIBLE_HOME="${XDG_CONFIG_HOME}/ansible"
+export ANSIBLE_CONFIG="${XDG_CONFIG_HOME}/ansible.cfg"
+export ANSIBLE_GALAXY_CACHE_DIR="${XDG_CACHE_HOME}/ansible/galaxy_cache"
+
 # wsl
 if [ -n "${WSL_INTEROP:-}" ]; then
   if [ -f "$XDG_CONFIG_HOME"/wsl/env.sh ]; then
