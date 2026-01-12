@@ -78,6 +78,9 @@ alias glg='git log --grep'
 alias gsh='git show'
 alias gcp='git cherry-pick'
 
+# sqlite3
+alias sqlite3='sqlite3 -init "$XDG_CONFIG_HOME"/sqlite3/sqliterc'
+
 # Docker
 alias d=docker
 

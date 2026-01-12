@@ -60,6 +60,11 @@ if [ ! -d "$XDG_DATA_HOME"/tig ]; then
   mkdir -m 700 "$XDG_DATA_HOME"/tig
 fi
 
+# sqlite3
+if command -v sqlite3 >/dev/null 2>&1; then
+  export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
+fi
+
 # direnv
 if command -v direnv >/dev/null 2>&1; then
   export DIRENV_LOG_FORMAT=''
