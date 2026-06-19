@@ -62,7 +62,7 @@ fi
 
 # sqlite3
 if command -v sqlite3 >/dev/null 2>&1; then
-  export SQLITE_HISTORY=$XDG_DATA_HOME/sqlite_history
+  export SQLITE_HISTORY="$XDG_DATA_HOME"/sqlite_history
 fi
 
 # direnv
