@@ -2,4 +2,8 @@
 .env.*
 !.env.example
 .envrc
-.claude/
+
+# Claude Code
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+.claude/worktrees/

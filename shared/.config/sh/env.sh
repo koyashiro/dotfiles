@@ -135,6 +135,9 @@ export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/lib
 export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME"/aquaproj-aqua/aqua.yaml
 export PATH="$XDG_DATA_HOME"/aquaproj-aqua/bin:"$PATH"
 
+# Claude Code
+export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"
+
 # Kubernetes
 export KUBECONFIG="$XDG_CONFIG_HOME/kube"
 export KUBECACHEDIR="$XDG_CACHE_HOME/kube"

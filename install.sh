@@ -112,7 +112,12 @@ install_shared_dotfiles() {
   # $HOME/.config/
   (
     for src in "${DOTDIR}"/shared/.config/*; do
-      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
+      name="$(basename "${src}")"
+      # TODO: claude needs its contents symlinked individually (not the whole
+      #       directory), so skip it here and handle it in install_claude_config.
+      #       Remove this branch once "symlink directory contents" is generalized.
+      [ "${name}" = "claude" ] && continue
+      dist="${XDG_CONFIG_HOME}/${name}"
       create_symbolic_link "${src}" "${dist}"
     done
   )
@@ -124,6 +129,23 @@ install_shared_dotfiles() {
       create_symbolic_link "${src}" "${dist}"
     done
   )
+
+  install_claude_config
+}
+
+install_claude_config() {
+  printf "Install \x1b[33mclaude\x1b[39m config:\n"
+
+  # TODO: CLAUDE_CONFIG_DIR holds both config and data in one directory, so for
+  #       claude we symlink the individual config entries instead of the whole
+  #       directory (which would drag data/secrets into the repo). Generalize to
+  #       a "symlink directory contents" rule if more mixed dirs show up.
+  claude_dir="${XDG_CONFIG_HOME}/claude"
+  mkdir -p "${claude_dir}"
+  for src in "${DOTDIR}"/shared/.config/claude/*; do
+    dist="${claude_dir}/$(basename "${src}")"
+    create_symbolic_link "${src}" "${dist}"
+  done
 }
 
 install_macos_dotfiles() {
