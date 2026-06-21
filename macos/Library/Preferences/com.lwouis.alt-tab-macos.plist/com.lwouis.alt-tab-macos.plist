@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>appearanceStyle</key>
+	<string>0</string>
+	<key>appsToShow2</key>
+	<string>0</string>
+	<key>arrowKeysEnabled</key>
+	<string>true</string>
+	<key>holdShortcut</key>
+	<dict>
+		<key>secureData</key>
+		<data>
+		YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9i
+		amVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGlCwwZGhtV
+		JG51bGzWDQ4PEBESExQVFBcUXW1vZGlmaWVyRmxhZ3NfEBtjaGFyYWN0ZXJz
+		SWdub3JpbmdNb2RpZmllcnNWJGNsYXNzWmNoYXJhY3RlcnNXa2V5Q29kZVd2
+		ZXJzaW9ugAOAAIAEgACAAoAAEf//EgAQAADSHB0eH1okY2xhc3NuYW1lWCRj
+		bGFzc2VzWlNSU2hvcnRjdXSiHiBYTlNPYmplY3QIERokKTI3SUxRU1lfbHqY
+		n6qyury+wMLExsnO097n8vUAAAAAAAABAQAAAAAAAAAhAAAAAAAAAAAAAAAA
+		AAAA/g==
+		</data>
+		<key>string</key>
+		<string>⌘</string>
+	</dict>
+	<key>menubarIcon</key>
+	<string>0</string>
+	<key>menubarIconShown</key>
+	<string>false</string>
+	<key>previewFocusedWindow</key>
+	<string>false</string>
+	<key>previousWindowShortcut</key>
+	<dict>
+		<key>secureData</key>
+		<data>
+		YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9i
+		amVjdHMSAAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGmCwwZGhsc
+		VSRudWxs1g0ODxAREhMUFRQXGF1tb2RpZmllckZsYWdzXxAbY2hhcmFjdGVy
+		c0lnbm9yaW5nTW9kaWZpZXJzViRjbGFzc1pjaGFyYWN0ZXJzV2tleUNvZGVX
+		dmVyc2lvboADgASABYAEgAKAABAwEgACAABRGdIdHh8gWiRjbGFzc25hbWVY
+		JGNsYXNzZXNaU1JTaG9ydGN1dKIfIVhOU09iamVjdAAIABEAGgAkACkAMgA3
+		AEkATABRAFMAWgBgAG0AewCZAKAAqwCzALsAvQC/AMEAwwDFAMcAyQDOANAA
+		1QDgAOkA9AD3AAAAAAAAAgEAAAAAAAAAIgAAAAAAAAAAAAAAAAAAAQA=
+		</data>
+		<key>string</key>
+		<string>⇧⇥</string>
+	</dict>
+	<key>settingsWindowShownOnFirstLaunch</key>
+	<string>true</string>
+	<key>shortcutCount</key>
+	<string>3</string>
+	<key>shortcutStyle</key>
+	<string>0</string>
+	<key>theme</key>
+	<string>0</string>
+	<key>updatePolicy</key>
+	<string>1</string>
+</dict>
+</plist>
