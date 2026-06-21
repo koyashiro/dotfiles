@@ -60,11 +60,6 @@ if [ ! -d "$XDG_DATA_HOME"/tig ]; then
   mkdir -m 700 "$XDG_DATA_HOME"/tig
 fi
 
-# sqlite3
-if command -v sqlite3 >/dev/null 2>&1; then
-  export SQLITE_HISTORY="$XDG_DATA_HOME"/sqlite_history
-fi
-
 # direnv
 if command -v direnv >/dev/null 2>&1; then
   export DIRENV_LOG_FORMAT=''
@@ -91,9 +86,19 @@ if command -v aws >/dev/null 2>&1; then
   export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME"/aws/credentials
 fi
 
+# MySQL
+export MYSQL_HISTFILE="$XDG_STATE_HOME"/mysql/history
+
+# PostgreSQL
+export PSQLRC="$XDG_CONFIG_HOME"/pg/psqlrc
+export PSQL_HISTORY="$XDG_STATE_HOME"/pg/history
+
+# SQLite
+export SQLITE_HISTORY="$XDG_STATE_HOME"/sqlite/history
+
 # Redis
-export REDISCLI_HISTFILE="$XDG_DATA_HOME"/redis/rediscli_history
 export REDISCLI_RCFILE="$XDG_CONFIG_HOME"/redis/redisclirc
+export REDISCLI_HISTFILE="$XDG_STATE_HOME"/redis/history
 
 # Rust
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
