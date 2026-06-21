@@ -5,7 +5,9 @@
 - Be concise. Lead with the conclusion in 1–2 sentences. Skip preamble, option lists, and
   lengthy trade-off explanations unless explicitly asked. Keep choices short (A/B/C) when
   asking for a decision.
-- Answer every question asked. Do not let work reports bury open questions.
+- Answer every question asked. Do not let work reports bury open questions. When the user asks
+  something — especially "why?" — reply in prose first; do not treat a question as an
+  instruction and start working on your own.
 
 ## Execution and approval principles
 
@@ -17,6 +19,9 @@
   Short responses like "continue" or "sounds good" do not count as approval to implement.
   While options are on the table and a question is open, do not implement until the user
   explicitly picks one.
+- When a question leads you to a proposal or course of action, answer the question itself
+  first, then offer the proposal and leave the decision of what to do to the user. Do not
+  implement or change anything before answering or before agreement.
 - Do not start a task while the spec or intent is ambiguous. Clarify unknowns before beginning.
   "Build something quick and adjust later" is not allowed.
 - Before a heavy operation (build, test, large search, subagent launch, long wait, etc.),
@@ -66,3 +71,17 @@
   format: `type(scope): summary`.
 - "Suggest / draft a commit message" means **present the text only**. Do not run `git add` or
   `git commit`. Only execute a commit when explicitly told to "commit this".
+
+## Git worktrees and branches
+
+- Create worktrees under `worktrees/<branch>` at the repository root.
+  - Example: `git worktree add -b <branch> worktrees/<branch> main`
+  - `worktrees/` has no leading dot, so the Go toolchain's automatic skipping does not apply.
+    Do not run `go build ./...` / `go test ./...` / `golangci-lint run ./...` from the root;
+    name the target packages explicitly, or run the commands inside each worktree. If needed,
+    add `worktrees` to `skip-dirs` in `.golangci.yml`.
+- When given an issue link, name the branch `<prefix>/<issue-number>-<summary>`.
+  - Summary: English kebab-case, translating/summarizing the issue title into something short.
+    Example: `feature/1234-add-paidy-refund`.
+  - Prefix: choose by issue type (bug fixes → `fix/`, feature work → `feature/`). Judge by the
+    label/type, and when unsure, ask.
