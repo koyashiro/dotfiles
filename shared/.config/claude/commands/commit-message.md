@@ -9,18 +9,23 @@ Status:
 
 !`git status --short`
 
-Diff (staged if any, otherwise the whole working tree):
+Diff (staged):
 
-!`if [ -n "$(git diff --cached --name-only)" ]; then git --no-pager diff --cached; else git --no-pager diff; fi`
+!`git diff --cached`
+
+Diff (unstaged):
+
+!`git diff`
 
 Recent commits (style reference for type/scope/wording):
 
-!`git --no-pager log --oneline -15`
+!`git log --oneline -15`
 
 ## Task
 
 Propose a commit message for the diff above.
 
+- Target the staged diff if it is non-empty; otherwise use the unstaged diff.
 - Use Conventional Commits format `type(scope): summary` in English.
 - Match the existing type/scope conventions and wording seen in the recent commits.
 - Add a body only when it adds real value (the "why" or non-obvious context).
