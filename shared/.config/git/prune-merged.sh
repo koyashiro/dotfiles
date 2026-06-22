@@ -4,10 +4,6 @@
 
 set -eu
 
-# Refresh remote state so squash commits landed on the remote are visible and
-# stale remote-tracking refs are dropped.
-git fetch --prune --quiet
-
 # Determine the default branch to compare against. Prefer the remote's pointer
 # so detection works even when the local default branch is behind.
 default=$(git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null | sed 's@^origin/@@') || default=
