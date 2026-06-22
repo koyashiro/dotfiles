@@ -62,3 +62,5 @@
 [blame]
 	ignoreRevsFile = .git-blame-ignore-revs
 	markIgnoredLines = true
+[include]
+	path = ./config.local
