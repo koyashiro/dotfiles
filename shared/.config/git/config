@@ -16,7 +16,7 @@
 [color]
 	ui = auto
 [alias]
-	prune-gone = !"${XDG_CONFIG_HOME:-$HOME/.config}/git/prune-gone.sh"
+	prune-merged = !"${XDG_CONFIG_HOME:-$HOME/.config}/git/prune-merged.sh"
 	st = status
 	sts = status --short
 	co = checkout
