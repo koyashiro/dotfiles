@@ -46,38 +46,6 @@ fi
 # ripgrep
 alias rg='rg --hidden --glob "!.git"'
 
-# Git
-alias g=git
-alias gst='git status'
-alias gsts='git status --short'
-alias gco='git checkout'
-alias gsw='git switch'
-alias gswc='git switch -c'
-alias grs='git restore'
-alias grs.='git restore .'
-alias grss='git restore --staged'
-alias grss.='git restore --staged .'
-alias gbr='git branch'
-alias gbrd='git branch -d'
-alias gdf='git diff'
-alias gdfs='git diff --staged'
-alias gad='git add'
-alias gad.='git add .'
-alias gcm='git commit'
-alias gcma='git commit --amend'
-alias gft='git fetch'
-alias grb='git rebase'
-alias grbi='git rebase -i'
-alias gmg='git merge'
-alias gpl='git pull'
-alias gps='git push'
-alias gl='git log'
-alias glp='git log -p'
-alias glf='git log --pretty=fuller'
-alias glg='git log --grep'
-alias gsh='git show'
-alias gcp='git cherry-pick'
-
 # sqlite3
 alias sqlite3='sqlite3 -init "$XDG_CONFIG_HOME"/sqlite3/sqliterc'
 

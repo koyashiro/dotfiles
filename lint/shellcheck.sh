@@ -10,11 +10,18 @@ cd "$DOTDIR"
 # install.sh
 shellcheck install.sh
 
+# lint
+shellcheck lint/shellcheck.sh
+
+# git
+shellcheck shared/.config/git/prune-merged.sh
+
 # sh
 shellcheck --shell sh --external-source shared/.profile
 shellcheck --shell sh --external-source shared/.config/sh/env.sh
 shellcheck --shell sh --external-source shared/.config/sh/alias.sh
 shellcheck --shell sh --external-source shared/.config/sh/function.sh
+shellcheck --shell sh --external-source shared/.config/sh/git.sh
 
 # bash
 shellcheck --shell bash --external-source shared/.bash_profile
