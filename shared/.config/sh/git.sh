@@ -81,12 +81,34 @@ gbrD() {
 }
 
 # git worktree switch: register a branch as a worktree and cd into it.
-# No arg -> pick a branch with fzf.
-# Cannot use a subshell here because it must `cd` the caller's shell, so the
-# working variable is `_`-prefixed and unset by hand (see convention above).
+# No arg -> pick a branch with fzf.  `-` -> jump back to the worktree we came
+# from on the last switch in *this* repository (per-repo, like `git switch -`).
+# Previous-worktree memory is keyed by the repo's common dir, hashed into the
+# variable name `_GWSW_OLDWT_<key>`, so each repository toggles independently.
+# The value survives `cd`-ing around inside a worktree because it is updated
+# only on a switch, not on every `cd` (unlike `OLDPWD`).  `_`-prefixed names are
+# internal and must not be touched from outside these functions; the persistent
+# `_GWSW_OLDWT_*` vars are kept, while transient working vars (`_wt`, `_dest`,
+# `_key`) are unset by hand.
+# Cannot use a subshell here because it must `cd` the caller's shell.
 gwsw() {
+  if [ "$1" = - ]; then
+    _key=$(_gwsw_repo_key) || { echo 'gwsw: not in a git repository' >&2; return 1; }
+    _dest=''
+    eval "_dest=\${_GWSW_OLDWT_$_key:-}"
+    if [ -z "$_dest" ] || [ ! -d "$_dest" ]; then
+      echo 'gwsw: no previous worktree' >&2
+      unset _dest _key
+      return 1
+    fi
+    eval "_GWSW_OLDWT_$_key=\$PWD"
+    cd "$_dest" || true
+    unset _dest _key
+    return
+  fi
   _wt=$(_git_worktree_resolve "$@")
   if [ -n "$_wt" ]; then
+    _gwsw_remember
     cd "$_wt" || true
   fi
   unset _wt
@@ -96,6 +118,7 @@ gwsw() {
 gwswc() {
   _wt=$(_git_worktree_resolve -c "$@")
   if [ -n "$_wt" ]; then
+    _gwsw_remember
     cd "$_wt" || true
   fi
   unset _wt
@@ -189,6 +212,22 @@ _git_worktree_resolve() {
 
     echo "$wtpath"
   )
+}
+
+# Record the current directory as this repo's previous worktree, just before a
+# switch cd. Runs in the caller's shell (not a subshell) so the eval assigns a
+# persistent `_GWSW_OLDWT_*` var; the transient `_key` is unset by hand.
+_gwsw_remember() {
+  _key=$(_gwsw_repo_key) && eval "_GWSW_OLDWT_$_key=\$PWD"
+  unset _key
+}
+
+# Print a shell-name-safe key unique to the current repository. All worktrees of
+# a repo share one common dir, so its hash identifies the repo. Runs inside `$()`
+# (a subshell), so the working variable does not leak.
+_gwsw_repo_key() {
+  common=$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || return 1
+  printf '%s' "$common" | cksum | cut -d' ' -f1
 }
 
 # Pick worktree paths (multi) with fzf, excluding the main working tree.
