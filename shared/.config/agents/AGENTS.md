@@ -19,6 +19,11 @@
   Short responses like "continue" or "sounds good" do not count as approval to implement.
   While options are on the table and a question is open, do not implement until the user
   explicitly picks one.
+- Picking an approach or stating a preference (e.g. "let's go with B", "I want the name to
+  evoke X") is a **design decision, not approval to implement**. After it, confirm any
+  remaining specifics, then wait for a separate explicit imperative to act ("implement it",
+  "do it", "commit this") before editing files. When unsure whether a message authorizes
+  implementation, assume it does not and ask.
 - When a question leads you to a proposal or course of action, answer the question itself
   first, then offer the proposal and leave the decision of what to do to the user. Do not
   implement or change anything before answering or before agreement.
