@@ -125,7 +125,7 @@ gwswc() {
 }
 
 # git worktree remove: remove worktrees. No arg -> pick (multi) with fzf.
-gwsr() {
+gwr() {
   (
     if [ $# -gt 0 ]; then
       git worktree remove "$@"
@@ -138,7 +138,7 @@ gwsr() {
 }
 
 # git worktree remove -f: force-remove worktrees. No arg -> pick (multi) with fzf.
-gwsrf() {
+gwrf() {
   (
     if [ $# -gt 0 ]; then
       git worktree remove -f "$@"

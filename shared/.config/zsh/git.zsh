@@ -6,10 +6,10 @@ _git_local_branches() {
 }
 compdef _git_local_branches gsw gwsw gbrd gbrD
 
-# gwsr / gwsrf: complete worktree paths
+# gwr / gwrf: complete worktree paths
 _git_worktrees() {
   local -a worktrees
   worktrees=("${(@f)$(git worktree list --porcelain 2>/dev/null | awk '/^worktree / { if (seen) print $2; seen = 1 }')}")
   compadd -a worktrees
 }
-compdef _git_worktrees gwsr gwsrf
+compdef _git_worktrees gwr gwrf
