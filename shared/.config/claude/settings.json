@@ -101,9 +101,9 @@
   "enabledPlugins": {
     "rust-analyzer-lsp@claude-plugins-official": true
   },
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "tui": "fullscreen"
+  "agentPushNotifEnabled": true
 }
