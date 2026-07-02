@@ -1,13 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", ":semanticCommits"],
-  "reviewers": ["koyashiro"],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch"],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true,
-      "automergeType": "squash"
-    }
-  ]
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":automergeStableNonMajor",
+    "group:allNonMajor",
+    "schedule:weekly"
+  ],
+  "reviewers": ["koyashiro"]
 }
