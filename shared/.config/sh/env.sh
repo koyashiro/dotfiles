@@ -47,14 +47,6 @@ export LESS_TERMCAP_us
 # Readline
 export INPUTRC="$XDG_CONFIG_HOME"/readline/inputrc
 
-# Git
-export GIT_EDITOR="$EDITOR"
-if command -v delta >/dev/null 2>&1; then
-  export GIT_PAGER=delta
-else
-  export GIT_PAGER="$PAGER"
-fi
-
 # tig
 if [ ! -d "$XDG_DATA_HOME"/tig ]; then
   mkdir -m 700 "$XDG_DATA_HOME"/tig

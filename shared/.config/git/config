@@ -2,6 +2,7 @@
 	name = koyashiro
 	email = 6698252+koyashiro@users.noreply.github.com
 [core]
+	pager = sh -c 'command -v delta >/dev/null 2>&1 && exec delta || exec less -FRX'
 	autoCRLF = false
 	quotepath = false
 	whitespace = cr-at-eol
@@ -53,7 +54,7 @@
 	features = line-numbers decorations side-by-side
 	syntax-theme = OneHalfDark
 [interactive]
-	diffFilter = delta --color-only
+	diffFilter = sh -c 'command -v delta >/dev/null 2>&1 && exec delta --color-only || exec cat'
 [filter "ignore-npmrc"]
 	smudge = cat
 	clean = sed '/^\\/\\/.*\\/:_authToken/d'
