@@ -1,0 +1,3 @@
+[tools]
+markdownlint-cli2 = "latest"
+prettier = "latest"
