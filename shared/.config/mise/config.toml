@@ -1,2 +1,10 @@
 [tools]
+bat = "latest"
+delta = "latest"
+eza = "latest"
+fd = "latest"
+fzf = "latest"
+jq = "latest"
+ripgrep = "latest"
 usage = "latest"
+yq = "latest"

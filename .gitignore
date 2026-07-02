@@ -1,5 +1,6 @@
 *.zwc
 **/.config/git/config.local
 .luarc.json
+shared/.config/sh/mise.sh
 macos/.config/karabiner/assets/
 macos/.config/karabiner/automatic_backups/
