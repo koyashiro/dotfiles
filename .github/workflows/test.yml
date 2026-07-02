@@ -1,0 +1,42 @@
+name: test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test-linux:
+    strategy:
+      matrix:
+        include:
+          - image: alpine:latest
+            name: Alpine Linux
+          - image: archlinux:latest
+            name: Arch Linux
+          - image: debian:latest
+            name: Debian
+          - image: ubuntu:latest
+            name: Ubuntu
+    name: Test on ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Run install test
+        run: |
+          docker run \
+            --rm \
+            --volume "$PWD":/root/.dotfiles:ro \
+            --entrypoint /root/.dotfiles/test/install_test.sh \
+            ${{ matrix.image }}
+
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Run install test
+        run: ./install.sh
