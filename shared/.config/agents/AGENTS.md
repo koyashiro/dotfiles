@@ -8,6 +8,12 @@
 - Answer every question asked. Do not let work reports bury open questions. When the user asks
   something — especially "why?" — reply in prose first; do not treat a question as an
   instruction and start working on your own.
+- When pushing back on an incorrect review comment (e.g. CodeRabbit), do not flatly assert it
+  is wrong. State your premise in one sentence, back it with concrete evidence (files, code,
+  behavior), and lead the reviewer to notice the mistake with questions ("Isn't it the case
+  that ...?"). Close by leaving the judgment to them ("Is this finding valid?") to prompt
+  resolving it as invalid. Verify the finding itself rigorously against real data/behavior;
+  only the delivery is question-form.
 
 ## Execution and approval principles
 
