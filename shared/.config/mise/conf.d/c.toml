@@ -1,0 +1,3 @@
+[tools]
+clang = "latest"
+clang-format = "latest"

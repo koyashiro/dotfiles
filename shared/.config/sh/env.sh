@@ -120,9 +120,8 @@ if [ ! -d "$DENO_INSTALL_ROOT" ]; then
 fi
 export PATH="$PATH":"$DENO_INSTALL_ROOT"/bin
 
-# Volta
-export VOLTA_HOME="$XDG_DATA_HOME"/volta
-export PATH="$PATH":"$VOLTA_HOME"/bin
+# mise
+export PATH="$XDG_DATA_HOME/mise/shims:$PATH"
 
 # Wasmtime
 export WASMTIME_HOME="$XDG_DATA_HOME"/wasmtime
@@ -135,10 +134,6 @@ export PATH="$PATH:$WASMER_DIR/bin:$WASMER_DIR/globals/wapm_packages/.bin"
 
 # Homebrew
 export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/libexec/gnubin:"$PATH"
-
-# aqua
-export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME"/aquaproj-aqua/aqua.yaml
-export PATH="$XDG_DATA_HOME"/aquaproj-aqua/bin:"$PATH"
 
 # Claude Code
 export CLAUDE_CONFIG_DIR="$XDG_CONFIG_HOME/claude"

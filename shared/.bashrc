@@ -26,4 +26,8 @@ if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/function.sh ]]; then
   source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/function.sh
 fi
 
-eval "$(starship init bash)"
+# bash rc
+for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/bash/*.bash; do
+  # shellcheck disable=SC1090
+  [[ -f "$f" ]] && source "$f"
+done

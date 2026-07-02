@@ -6,10 +6,6 @@ if command -v docker &>/dev/null; then
   source <(docker completion zsh)
 fi
 
-if command -v aqua &>/dev/null; then
-  source <(aqua completion zsh)
-fi
-
-if command -v volta &>/dev/null; then
-  source <(volta completions zsh)
+if command -v mise &>/dev/null; then
+  source <(mise completion zsh)
 fi

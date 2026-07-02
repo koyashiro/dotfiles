@@ -1,10 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":semanticCommits",
-    "github>aquaproj/aqua-renovate-config#2.9.0"
-  ],
+  "extends": ["config:recommended", ":semanticCommits"],
   "reviewers": ["koyashiro"],
   "packageRules": [
     {

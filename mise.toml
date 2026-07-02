@@ -1,0 +1,5 @@
+[tools]
+actionlint = "1.7.12"
+shellcheck = "0.11.0"
+shfmt = "3.13.1"
+stylua = "2.5.2"

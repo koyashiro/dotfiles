@@ -1,0 +1,3 @@
+[tools]
+"aqua:aws/session-manager-plugin" = "latest"
+aws-cli = { version = "latest", symlink_bins = "true" }
