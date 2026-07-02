@@ -93,7 +93,10 @@ gbrD() {
 # Cannot use a subshell here because it must `cd` the caller's shell.
 gwsw() {
   if [ "$1" = - ]; then
-    _key=$(_gwsw_repo_key) || { echo 'gwsw: not in a git repository' >&2; return 1; }
+    _key=$(_gwsw_repo_key) || {
+      echo 'gwsw: not in a git repository' >&2
+      return 1
+    }
     _dest=''
     eval "_dest=\${_GWSW_OLDWT_$_key:-}"
     if [ -z "$_dest" ] || [ ! -d "$_dest" ]; then

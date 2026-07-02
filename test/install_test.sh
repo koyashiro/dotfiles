@@ -97,7 +97,14 @@ assert_directory "$HOME"/.local/bin
 assert_env XDG_CONFIG_HOME
 assert_equal "$XDG_CONFIG_HOME" "$HOME"/.config
 for d in "$DOTDIR"/shared/.config/*; do
-  assert_symboliclink "$XDG_CONFIG_HOME"/"$(basename $d)" "$d"
+  name="$(basename "$d")"
+  [ "$name" = "claude" ] && continue
+  assert_symboliclink "$XDG_CONFIG_HOME"/"$name" "$d"
+done
+
+# claude: individual files are symlinked, not the whole directory
+for f in "$DOTDIR"/shared/.config/claude/*; do
+  assert_symboliclink "$XDG_CONFIG_HOME/claude/$(basename "$f")" "$f"
 done
 
 # `$XDG_CACHE_HOME`
