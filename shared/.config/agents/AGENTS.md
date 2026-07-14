@@ -17,6 +17,11 @@
 
 ## Execution and approval principles
 
+- Every objection or point the user raises and every question they ask MUST get an explicit,
+  direct answer. Do not proceed to the next topic, the next question, or any further work until
+  the user has approved that answer. Never silently reinterpret their point as being about
+  something else, fold it into an unrelated question, skip it, or move on while it remains
+  unanswered.
 - Treat any message without a clear instruction (imperative form) as a question or discussion.
   Respond and discuss first; make code or config changes only after an explicit instruction or
   agreement.
