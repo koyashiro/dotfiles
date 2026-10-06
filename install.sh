@@ -132,6 +132,7 @@ app_paths() {
 
 ESC="$(printf '\033')"
 CR="$(printf '\r')"
+TAB="$(printf '\t')"
 NL='
 '
 
@@ -141,7 +142,11 @@ ADD_ALL=''
 ADD=''
 FAILED=''
 UNINSTALLED=''
-UNKNOWN_STATE=''
+# Lines of "<app><TAB><path>" read from the state file
+RECORD=''
+REMOVED_APPS=''
+OK_APPS=''
+KEPT_RECORD=''
 DRY_RUN_DIRS=''
 
 N_INSTALLED=0
@@ -292,7 +297,7 @@ is_repo_link() {
 
 normalize_apps() {
   normalized=''
-  for app in ${APPS}; do
+  for app in ${APPS} ${REMOVED_APPS}; do
     if contains "$*" "${app}"; then
       normalized="${normalized:+${normalized} }${app}"
     fi
@@ -384,14 +389,23 @@ load_installed() {
   installed=''
   if [ -f "${STATE_FILE}" ]; then
     state_file_display="$(pretty "${STATE_FILE}")"
-    while IFS= read -r app || [ -n "${app}" ]; do
-      if [ -z "${app}" ]; then
-        continue
-      elif contains "${APPS}" "${app}"; then
+    lineno=0
+    while IFS= read -r line || [ -n "${line}" ]; do
+      lineno=$((lineno + 1))
+      case "${line}" in
+        ?*"${TAB}"?*) ;;
+        *)
+          error "${state_file_display}:${lineno}: expected '<app><TAB><path>'"
+          exit 1
+          ;;
+      esac
+      app="${line%%"${TAB}"*}"
+      RECORD="${RECORD}${line}${NL}"
+      if ! contains "${installed}" "${app}"; then
         installed="${installed} ${app}"
-      elif ! contains "${UNKNOWN_STATE}" "${app}"; then
-        UNKNOWN_STATE="${UNKNOWN_STATE} ${app}"
-        warn "unknown app in ${state_file_display}: ${app} (its links are left as is)"
+      fi
+      if ! contains "${APPS}" "${app}" && ! contains "${REMOVED_APPS}" "${app}"; then
+        REMOVED_APPS="${REMOVED_APPS} ${app}"
       fi
     done <"${STATE_FILE}"
     installed="$(normalize_apps "${installed}")"
@@ -409,9 +423,30 @@ load_installed() {
     done
     if [ -n "${linked}" ]; then
       detected="${detected} ${app}"
+      for path in $(app_paths "${app}"); do
+        RECORD="${RECORD}${app}${TAB}${path}${NL}"
+      done
     fi
   done
   installed="$(normalize_apps "${detected}")"
+}
+
+recorded_paths() {
+  printf '%s' "${RECORD}" | while IFS="${TAB}" read -r rec_app rec_path; do
+    if [ "${rec_app}" = "$1" ]; then
+      echo "${rec_path}"
+    fi
+  done
+}
+
+# Recorded paths that the app no longer defines
+stale_paths() {
+  current="$(app_paths "$1" | tr '\n' ' ')"
+  for path in $(recorded_paths "$1"); do
+    if ! contains "${current}" "${path}"; then
+      echo "${path}"
+    fi
+  done
 }
 
 save_installed() {
@@ -420,7 +455,20 @@ save_installed() {
   fi
   make_dirs "${STATE_DIR}"
   for app in $1; do
-    echo "${app}"
+    if contains "${OK_APPS}" "${app}"; then
+      for path in $(app_paths "${app}"); do
+        printf '%s\t%s\n' "${app}" "${path}"
+      done
+      printf '%s' "${KEPT_RECORD}" | while IFS="${TAB}" read -r rec_app rec_path; do
+        if [ "${rec_app}" = "${app}" ]; then
+          printf '%s\t%s\n' "${app}" "${rec_path}"
+        fi
+      done
+    else
+      for path in $(recorded_paths "${app}"); do
+        printf '%s\t%s\n' "${app}" "${path}"
+      done
+    fi
   done >"${STATE_FILE}.tmp"
   mv "${STATE_FILE}.tmp" "${STATE_FILE}"
 }
@@ -480,6 +528,17 @@ is_up_to_date() {
       return 1
     fi
   done
+  for path in $(stale_paths "$1"); do
+    if is_our_link "${HOME}/${path}" "${DOTDIR}/shared/${path}"; then
+      return 1
+    fi
+  done
+}
+
+# Also accept a dangling link whose text points at the source, for apps or
+# paths that were removed from the repository.
+is_our_link() {
+  is_repo_link "$1" "$2" || { [ -L "$1" ] && [ "$(readlink "$1")" = "$2" ]; }
 }
 
 show_linked() {
@@ -496,6 +555,7 @@ install_app() {
       show_linked "${HOME}/${path}" "${DOTDIR}/shared/${path}"
     done
     N_UP_TO_DATE=$((N_UP_TO_DATE + 1))
+    OK_APPS="${OK_APPS} $1"
     return
   fi
 
@@ -539,7 +599,13 @@ install_app() {
   for path in ${backed_up_paths}; do
     N_BACKED_UP=$((N_BACKED_UP + 1))
   done
+  for path in $(stale_paths "$1"); do
+    if ! unlink_path "$1" "${path}"; then
+      KEPT_RECORD="${KEPT_RECORD}$1${TAB}${path}${NL}"
+    fi
+  done
   N_INSTALLED=$((N_INSTALLED + 1))
+  OK_APPS="${OK_APPS} $1"
 }
 
 rollback_app() {
@@ -563,39 +629,43 @@ rollback_app() {
   FAILED="${FAILED} $1"
 }
 
-app_failed() {
-  error "$1: $2"
-  status '1;31' Failed "$1"
-  FAILED="${FAILED} $1"
+# unlink_path <app> <path>: remove the link to the repository and restore the
+# backup; returns non-zero after reporting a failure
+unlink_path() {
+  src="${DOTDIR}/shared/$2"
+  dst="${HOME}/$2"
+
+  if ! is_our_link "${dst}" "${src}"; then
+    if exists_or_link "${dst}"; then
+      warn "$1: not a link to the repository, left as is: $(pretty "${dst}")"
+    fi
+    return 0
+  fi
+
+  if ! run rm "${dst}"; then
+    error "$1: could not remove $(pretty "${dst}")"
+    return 1
+  fi
+  status '1;31' Removing "$(pretty "${dst}")"
+  N_REMOVED=$((N_REMOVED + 1))
+  if exists_or_link "${dst}.bak"; then
+    if ! run mv "${dst}.bak" "${dst}"; then
+      error "$1: could not restore $(pretty "${dst}.bak")"
+      return 1
+    fi
+    status '1;33' Restoring "$(pretty "${dst}.bak") -> $(pretty "${dst}")"
+    N_RESTORED=$((N_RESTORED + 1))
+  fi
 }
 
 uninstall_app() {
   status 1 Uninstalling "$1"
 
-  for path in $(app_paths "$1"); do
-    src="${DOTDIR}/shared/${path}"
-    dst="${HOME}/${path}"
-
-    if ! is_repo_link "${dst}" "${src}"; then
-      if exists_or_link "${dst}"; then
-        warn "$1: not a link to the repository, left as is: $(pretty "${dst}")"
-      fi
-      continue
-    fi
-
-    if ! run rm "${dst}"; then
-      app_failed "$1" "could not remove $(pretty "${dst}")"
+  for path in $(recorded_paths "$1"); do
+    if ! unlink_path "$1" "${path}"; then
+      status '1;31' Failed "$1"
+      FAILED="${FAILED} $1"
       return
-    fi
-    status '1;31' Removing "$(pretty "${dst}")"
-    N_REMOVED=$((N_REMOVED + 1))
-    if exists_or_link "${dst}.bak"; then
-      if ! run mv "${dst}.bak" "${dst}"; then
-        app_failed "$1" "could not restore $(pretty "${dst}.bak")"
-        return
-      fi
-      status '1;33' Restoring "$(pretty "${dst}.bak") -> $(pretty "${dst}")"
-      N_RESTORED=$((N_RESTORED + 1))
     fi
   done
   UNINSTALLED="${UNINSTALLED} $1"
@@ -680,17 +750,21 @@ tui_draw() {
     printf '\r\033[2K\n'
   fi
   i=0
-  for app in ${APPS}; do
+  for app in ${APPS} ${REMOVED_APPS}; do
     if [ "${i}" -ge "${top}" ] && [ "${i}" -lt $((top + visible)) ]; then
       if contains "${selected}" "${app}"; then
         mark='x'
       else
         mark=' '
       fi
+      label="${app}"
+      if contains "${REMOVED_APPS}" "${app}"; then
+        label="${app} (removed)"
+      fi
       if [ "${i}" -eq "${cursor}" ]; then
-        printf '\r\033[2K%s> [%s] %s%s\n' "$(sgr_tty 7)" "${mark}" "${app}" "$(sgr_tty 0)"
+        printf '\r\033[2K%s> [%s] %s%s\n' "$(sgr_tty 7)" "${mark}" "${label}" "$(sgr_tty 0)"
       else
-        printf '\r\033[2K  [%s] %s\n' "${mark}" "${app}"
+        printf '\r\033[2K  [%s] %s\n' "${mark}" "${label}"
       fi
     fi
     i=$((i + 1))
@@ -706,7 +780,7 @@ tui_draw() {
 
 tui_toggle() {
   i=0
-  for app in ${APPS}; do
+  for app in ${APPS} ${REMOVED_APPS}; do
     if [ "${i}" -eq "${cursor}" ]; then
       if contains "${selected}" "${app}"; then
         rest=''
@@ -730,7 +804,7 @@ tui_select() {
   cursor=0
   top=0
   count=0
-  for app in ${APPS}; do
+  for app in ${APPS} ${REMOVED_APPS}; do
     count=$((count + 1))
   done
   tui_resize
@@ -797,6 +871,12 @@ main() {
   load_installed
   remove=''
 
+  if [ -n "${ADD_ALL}" ] || [ -n "${ADD}" ]; then
+    for app in ${REMOVED_APPS}; do
+      warn "${app} was removed from install.sh but is still installed; uncheck it in the selector to uninstall"
+    done
+  fi
+
   if [ -n "${ADD_ALL}" ]; then
     add="${APPS}"
   elif [ -n "${ADD}" ]; then
@@ -835,7 +915,7 @@ main() {
     fi
     result="${result} ${app}"
   done
-  save_installed "$(normalize_apps "${result}")${UNKNOWN_STATE}"
+  save_installed "$(normalize_apps "${result}")"
 
   print_summary
   if [ -n "${FAILED}" ]; then

@@ -66,7 +66,7 @@ expect_mode() {
 }
 
 expect_installed() {
-  actual="$(tr '\n' ' ' <"$T/.local/share/dotfiles/installed" 2>/dev/null || true)"
+  actual="$(cut -f 1 "$T/.local/share/dotfiles/installed" 2>/dev/null | uniq | tr '\n' ' ' || true)"
   if [ "$actual" != "$1 " ]; then
     fail "installed: expected '$1', got '$actual'"
   fi
@@ -216,13 +216,49 @@ install --add npm
 expect_rc 0
 expect_installed 'npm tmux vim'
 
-begin 'unknown apps in the state file are kept with a warning'
+begin 'the state file records every linked path'
+install --add git
+expect_rc 0
+expected="$(printf 'git\t%s\n' .config/git/config .config/git/ignore .config/git/prune-merged.sh)"
+if [ "$(cat "$T/.local/share/dotfiles/installed")" != "$expected" ]; then
+  fail 'the state file does not list the linked paths'
+fi
+
+begin 'apps removed from install.sh are kept with a warning'
 mkdir -p "$T/.local/share/dotfiles"
-printf 'removed-app\nvim\n' >"$T/.local/share/dotfiles/installed"
+printf 'removed-app\t.removed\nvim\t.vimrc\n' >"$T/.local/share/dotfiles/installed"
 install --add tmux
 expect_rc 0
 expect_installed 'tmux vim removed-app'
-expect_output 'unknown app'
+if ! grep -q "^removed-app$(printf '\t').removed\$" "$T/.local/share/dotfiles/installed"; then
+  fail 'the recorded paths of a removed app were not kept'
+fi
+expect_output 'was removed from install.sh'
+
+begin 'paths removed from an app are unlinked and their backups restored'
+ln -s "$DOTDIR/shared/.vimrc" "$T/.vimrc"
+ln -s "$DOTDIR/shared/.oldvimrc" "$T/.oldvimrc"
+echo mine >"$T/.oldvimrc.bak"
+mkdir -p "$T/.local/share/dotfiles"
+printf 'vim\t.vimrc\nvim\t.oldvimrc\n' >"$T/.local/share/dotfiles/installed"
+install --add vim
+expect_rc 0
+expect_content .oldvimrc mine
+expect_no_entry .oldvimrc.bak
+if [ "$(cat "$T/.local/share/dotfiles/installed")" != "$(printf 'vim\t.vimrc')" ]; then
+  fail 'the removed path is still recorded'
+fi
+
+begin 'a malformed state file is rejected without changes'
+mkdir -p "$T/.local/share/dotfiles"
+echo vim >"$T/.local/share/dotfiles/installed"
+before="$(snapshot)"
+install --add tmux
+expect_rc 1
+expect_output 'installed:1:'
+if [ "$(snapshot)" != "$before" ]; then
+  fail 'a malformed state file changed the home directory'
+fi
 
 begin 'invalid arguments are rejected without changes'
 for args in '--add unknown-app' '--add' '--unexpected'; do
