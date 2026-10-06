@@ -62,6 +62,10 @@
   and a full rewrite will overwrite those edits. Full rewrites are only for new files.
 - After changing code, run the project's standard formatter if one exists.
 - After changing code, run the test suite if one exists and confirm nothing is broken.
+- After writing or changing code, review your own comments before reporting. Remove
+  comments that restate the code, describe session-local context (what was discussed or
+  changed in this conversation), or explain the obvious. Keep only comments that explain a
+  non-obvious why, constraint, or external fact, matching the surrounding code's density.
 
 ## Handling constraints
 
