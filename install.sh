@@ -136,6 +136,9 @@ install_shared_dotfiles() {
   link_xdg_config git/ignore
   link_xdg_config git/prune-merged.sh
 
+  # herdr
+  link_xdg_config herdr/config.toml
+
   # mise
   link_xdg_config mise/config.aws.toml
   link_xdg_config mise/config.c.toml

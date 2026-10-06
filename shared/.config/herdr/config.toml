@@ -1,0 +1,9 @@
+onboarding = false
+
+[keys]
+prefix = ["ctrl+space", "ctrl+s"]
+split_vertical = ["prefix+v", "prefix+%", "prefix+|"]
+split_horizontal = ["prefix+minus", 'prefix+"']
+
+[ui]
+prompt_new_tab_name = false
