@@ -10,10 +10,10 @@
 [![Debian](https://github.com/koyashiro/dotfiles/actions/workflows/debian.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/debian.yml)
 [![Ubuntu](https://github.com/koyashiro/dotfiles/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/ubuntu.yml)
 [![Alpine Linux](https://github.com/koyashiro/dotfiles/actions/workflows/alpine.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/alpine.yml)
-[![macOS](https://github.com/koyashiro/dotfiles/actions/workflows/macos.yml/badge.svg)](https://github.com/koyashiro/dotfiles/actions/workflows/macos.yml)
 
 ## Installation
 
 ```sh
-curl -fsSL https://dotfiles.koyashiro.sh | sh
+git clone git@github.com:koyashiro/dotfiles.git ~/.dotfiles
+~/.dotfiles/install.sh
 ```

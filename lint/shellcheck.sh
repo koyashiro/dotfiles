@@ -9,6 +9,7 @@ cd "$DOTDIR"
 
 # install.sh
 shellcheck install.sh
+shellcheck test/install_test.sh
 
 # lint
 shellcheck lint/shellcheck.sh

@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-set -e
+set -euf
+unset CDPATH
 
 usage() {
   cat <<EOF
@@ -9,57 +10,358 @@ Install script for koyashiro's dotfiles.
 Usage:
     install.sh [OPTIONS]
 
+Without --add or --all, an interactive selector opens (requires a terminal).
+Apps unchecked there are uninstalled: their links are removed and any
+<path>.bak backups are restored.
+
 Options:
-    --dry-run          Dry run
-    -h, --help         Print help
+    --add <app>[,<app>...]  Install the given apps (repeatable); others are left as is
+    --all                   Install all apps
+    --dry-run               Show what would be done without changing anything
+    -v, --verbose           Also show links that are already in place
+    -h, --help              Print help
+
+Apps:
+$(echo "${APPS}" | sed 's/ /, /g' | fold -s -w 72 | sed 's/ *$//; s/^/    /')
 EOF
 }
 
-set_envs() {
-  export XDG_CONFIG_HOME="${HOME}/.config"
-  export XDG_CACHE_HOME="${HOME}/.cache"
-  export XDG_DATA_HOME="${HOME}/.local/share"
-  export XDG_STATE_HOME="${HOME}/.local/state"
-  DOTDIR="$(cd "$(dirname "$0")" && pwd)"
-}
+# Apps that can be installed. Each app is a set of paths relative to both
+# "${DOTDIR}/shared" (link source) and "${HOME}" (link destination).
+APPS='agents alacritty bash cargo-atcoder claude fontconfig git herdr mise npm nvim peco readline sh sqlite3 tig tmux vim zsh'
 
-get_os() {
-  case "$(uname)" in
-    Linux)
-      echo 'Linux'
+app_paths() {
+  case "$1" in
+    agents)
+      echo .config/agents/AGENTS.md
       ;;
-    Darwin)
-      echo 'macOS'
+    alacritty)
+      echo .config/alacritty/alacritty.toml
       ;;
-    CYGWIN* | MINGW* | MSYS*)
-      echo 'Windows'
+    bash)
+      echo .bash_profile
+      echo .bashrc
+      echo .config/bash/mise.bash
+      ;;
+    cargo-atcoder)
+      echo .config/cargo-atcoder.toml
+      ;;
+    claude)
+      echo .config/claude/CLAUDE.md
+      echo .config/claude/commands
+      echo .config/claude/settings.json
+      ;;
+    fontconfig)
+      echo .config/fontconfig/fonts.conf
+      ;;
+    git)
+      echo .config/git/config
+      echo .config/git/ignore
+      echo .config/git/prune-merged.sh
+      ;;
+    herdr)
+      echo .config/herdr/config.toml
+      ;;
+    mise)
+      echo .config/mise/config.aws.toml
+      echo .config/mise/config.c.toml
+      echo .config/mise/config.docker.toml
+      echo .config/mise/config.github.toml
+      echo .config/mise/config.go.toml
+      echo .config/mise/config.js.toml
+      echo .config/mise/config.lua.toml
+      echo .config/mise/config.markdown.toml
+      echo .config/mise/config.shell.toml
+      echo .config/mise/config.toml
+      ;;
+    npm)
+      echo .config/npm/npmrc
+      ;;
+    nvim)
+      echo .config/nvim/ginit.vim
+      echo .config/nvim/init.lua
+      echo .config/nvim/lazy-lock.json
+      echo .config/nvim/lua
+      ;;
+    peco)
+      echo .config/peco/config.json
+      ;;
+    readline)
+      echo .config/readline/inputrc
+      ;;
+    sh)
+      echo .profile
+      echo .config/sh/alias.sh
+      echo .config/sh/env.sh
+      echo .config/sh/function.sh
+      echo .config/sh/git.sh
+      ;;
+    sqlite3)
+      echo .config/sqlite3/sqliterc
+      ;;
+    tig)
+      echo .config/tig/config
+      ;;
+    tmux)
+      echo .config/tmux/tmux.conf
+      ;;
+    vim)
+      echo .vimrc
+      ;;
+    zsh)
+      echo .zshenv
+      echo .zshrc
+      echo .config/zsh/.p10k.zsh
+      echo .config/zsh/autoload.zsh
+      echo .config/zsh/bindkey.zsh
+      echo .config/zsh/completion.zsh
+      echo .config/zsh/direnv.zsh
+      echo .config/zsh/fzf.zsh
+      echo .config/zsh/git.zsh
+      echo .config/zsh/mise.zsh
+      echo .config/zsh/setopt.zsh
+      echo .config/zsh/zinit.zsh
+      echo .config/zsh/zle.zsh
+      echo .config/zsh/zstyle.zsh
       ;;
     *)
-      echo 'Unknown'
+      return 1
       ;;
   esac
 }
 
-is_macos() {
-  [ "$(get_os)" = 'macOS' ]
+ESC="$(printf '\033')"
+CR="$(printf '\r')"
+NL='
+'
+
+DRY_RUN=''
+VERBOSE=''
+ADD_ALL=''
+ADD=''
+FAILED=''
+UNINSTALLED=''
+UNKNOWN_STATE=''
+DRY_RUN_DIRS=''
+
+N_INSTALLED=0
+N_UP_TO_DATE=0
+N_UNINSTALLED=0
+N_LINKED=0
+N_BACKED_UP=0
+N_UNCHANGED=0
+N_REMOVED=0
+N_RESTORED=0
+
+# Colors only on a terminal and when NO_COLOR is unset or empty (no-color.org).
+COLOR_OUT=''
+COLOR_ERR=''
+
+setup_colors() {
+  if [ -n "${NO_COLOR:-}" ]; then
+    return
+  fi
+  if [ -t 1 ]; then
+    COLOR_OUT='1'
+  fi
+  if [ -t 2 ]; then
+    COLOR_ERR='1'
+  fi
 }
 
-is_wsl() {
-  [ -n "${WSL_INTEROP}" ]
+sgr_out() {
+  if [ -n "${COLOR_OUT}" ]; then
+    printf '\033[%sm' "$1"
+  fi
+}
+
+sgr_err() {
+  if [ -n "${COLOR_ERR}" ]; then
+    printf '\033[%sm' "$1"
+  fi
+}
+
+error() {
+  printf "%serror:%s %s\n" "$(sgr_err '1;31')" "$(sgr_err 0)" "$*" >&2
+}
+
+warn() {
+  printf "%swarning:%s %s\n" "$(sgr_err '1;33')" "$(sgr_err 0)" "$*" >&2
+}
+
+note() {
+  printf "%snote:%s %s\n" "$(sgr_err '1;36')" "$(sgr_err 0)" "$*" >&2
+}
+
+status() {
+  printf "%s%12s%s %s\n" "$(sgr_out "$1")" "$2" "$(sgr_out 0)" "$3"
+}
+
+pretty() {
+  case "$1" in
+    "${DOTDIR}"/*) echo "${1#"${DOTDIR}"/}" ;;
+    "${HOME}") echo '~' ;;
+    "${HOME}"/*) printf '%s/%s\n' '~' "${1#"${HOME}"/}" ;;
+    *) echo "$1" ;;
+  esac
+}
+
+plural() {
+  if [ "$1" -eq 1 ]; then
+    echo "$1 $2"
+  else
+    echo "$1 $2s"
+  fi
+}
+
+summary_item() {
+  if [ "$1" -gt 0 ]; then
+    summary="${summary:+${summary}, }$2"
+  fi
+}
+
+print_summary() {
+  n_failed=0
+  for app in ${FAILED}; do
+    n_failed=$((n_failed + 1))
+  done
+
+  summary=''
+  summary_item "${N_INSTALLED}" "$(plural "${N_INSTALLED}" app) installed"
+  if [ "${N_INSTALLED}" -eq 0 ]; then
+    summary_item "${N_UP_TO_DATE}" "$(plural "${N_UP_TO_DATE}" app) up to date"
+  else
+    summary_item "${N_UP_TO_DATE}" "${N_UP_TO_DATE} up to date"
+  fi
+  summary_item "${N_UNINSTALLED}" "${N_UNINSTALLED} uninstalled"
+  summary_item "${n_failed}" "${n_failed} failed"
+  apps="${summary:-nothing to do}"
+
+  summary=''
+  summary_item "${N_LINKED}" "${N_LINKED} linked"
+  summary_item "${N_BACKED_UP}" "${N_BACKED_UP} backed up"
+  if [ -n "${VERBOSE}" ]; then
+    summary_item "${N_UNCHANGED}" "${N_UNCHANGED} unchanged"
+  fi
+  summary_item "${N_REMOVED}" "${N_REMOVED} removed"
+  summary_item "${N_RESTORED}" "${N_RESTORED} restored"
+
+  if [ -n "${DRY_RUN}" ]; then
+    apps="(dry run) ${apps}"
+  fi
+  if [ -n "${summary}" ]; then
+    status '1;32' Finished "${apps} (${summary})"
+  else
+    status '1;32' Finished "${apps}"
+  fi
+}
+
+run() {
+  if [ -z "${DRY_RUN}" ]; then
+    "$@"
+  fi
+}
+
+contains() {
+  case " $1 " in
+    *" $2 "*) return 0 ;;
+  esac
+  return 1
+}
+
+exists_or_link() {
+  [ -e "$1" ] || [ -L "$1" ]
+}
+
+physical_path() {
+  physical_dir="$(cd -P "$(dirname "$1")" 2>/dev/null && pwd -P)" || return 1
+  echo "${physical_dir}/$(basename "$1")"
+}
+
+# The repository may have been linked through a symlinked path (e.g. an old
+# ~/.dotfiles), so compare physical paths rather than link text.
+is_repo_link() {
+  [ -L "$1" ] || return 1
+  link_target="$(readlink "$1")"
+  case "${link_target}" in
+    /*) ;;
+    *) link_target="$(dirname "$1")/${link_target}" ;;
+  esac
+  [ "$(physical_path "${link_target}")" = "$2" ]
+}
+
+normalize_apps() {
+  normalized=''
+  for app in ${APPS}; do
+    if contains "$*" "${app}"; then
+      normalized="${normalized:+${normalized} }${app}"
+    fi
+  done
+  echo "${normalized}"
+}
+
+set_envs() {
+  DOTDIR="$(cd -P "$(dirname "$0")" && pwd -P)"
+  STATE_DIR="${HOME}/.local/share/dotfiles"
+  STATE_FILE="${STATE_DIR}/installed"
+}
+
+# Mode 0700, as the XDG Base Directory Specification recommends.
+make_dirs() {
+  if [ -d "$1" ] || contains "${DRY_RUN_DIRS}" "$1"; then
+    return
+  fi
+  make_dirs "$(dirname "$1")" || return 1
+  run mkdir -m 700 "$1" || return 1
+  if [ -n "${DRY_RUN}" ]; then
+    DRY_RUN_DIRS="${DRY_RUN_DIRS} $1"
+  fi
+  created_dirs="${1#"${HOME}"/} ${created_dirs:-}"
+  status '1;32' Creating "$(pretty "$1")/"
+}
+
+create_xdg_base_directories_if_needed() {
+  make_dirs "${HOME}/.config"
+  make_dirs "${HOME}/.cache"
+  make_dirs "${HOME}/.local/share"
+  make_dirs "${HOME}/.local/state"
+  make_dirs "${HOME}/.local/bin"
 }
 
 parse_args() {
-  while [ -n "$1" ]; do
+  while [ $# -gt 0 ]; do
     case "$1" in
+      --add)
+        if [ $# -lt 2 ]; then
+          error "'--add' requires an app name"
+          exit 1
+        fi
+        case "$2" in
+          *[!,\ ]*) ;;
+          *)
+            error "'--add' requires an app name"
+            exit 1
+            ;;
+        esac
+        ADD="${ADD} $(echo "$2" | tr ',' ' ')"
+        shift
+        ;;
+      --all)
+        ADD_ALL='1'
+        ;;
       --dry-run)
         DRY_RUN='1'
+        ;;
+      -v | --verbose)
+        VERBOSE='1'
         ;;
       --help | -h)
         usage
         exit
         ;;
       *)
-        printf "\x1b[31mERROR:\x1b[39m unexpected option '\x1b[33m%s\x1b[39m'\n\n" "$1" >&2
+        error "unexpected option '$1'"
+        echo >&2
         usage >&2
         exit 1
         ;;
@@ -67,208 +369,478 @@ parse_args() {
 
     shift
   done
+
+  for app in ${ADD}; do
+    if ! contains "${APPS}" "${app}"; then
+      error "unknown app '${app}'"
+      exit 1
+    fi
+  done
 }
 
-create_xdg_base_directory_if_needed() {
-  mkdir -p "$1"
-  chmod 700 "$1"
+# Without a state file (first run), treat apps whose links all point into the
+# repository as installed.
+load_installed() {
+  installed=''
+  if [ -f "${STATE_FILE}" ]; then
+    state_file_display="$(pretty "${STATE_FILE}")"
+    while IFS= read -r app || [ -n "${app}" ]; do
+      if [ -z "${app}" ]; then
+        continue
+      elif contains "${APPS}" "${app}"; then
+        installed="${installed} ${app}"
+      elif ! contains "${UNKNOWN_STATE}" "${app}"; then
+        UNKNOWN_STATE="${UNKNOWN_STATE} ${app}"
+        warn "unknown app in ${state_file_display}: ${app} (its links are left as is)"
+      fi
+    done <"${STATE_FILE}"
+    installed="$(normalize_apps "${installed}")"
+    return
+  fi
+  detected=''
+  for app in ${APPS}; do
+    linked=''
+    for path in $(app_paths "${app}"); do
+      if ! is_repo_link "${HOME}/${path}" "${DOTDIR}/shared/${path}"; then
+        linked=''
+        break
+      fi
+      linked='1'
+    done
+    if [ -n "${linked}" ]; then
+      detected="${detected} ${app}"
+    fi
+  done
+  installed="$(normalize_apps "${detected}")"
 }
 
-create_xdg_base_directories_if_needed() {
-  create_xdg_base_directory_if_needed "${HOME}/.config"
-  create_xdg_base_directory_if_needed "${HOME}/.cache"
-  create_xdg_base_directory_if_needed "${HOME}/.local"
-  create_xdg_base_directory_if_needed "${HOME}/.local/share"
-  create_xdg_base_directory_if_needed "${HOME}/.local/state"
-  create_xdg_base_directory_if_needed "${HOME}/.local/bin"
-}
-
-create_symbolic_link() {
+save_installed() {
   if [ -n "${DRY_RUN}" ]; then
-    printf "  \x1b[35mSkipped (dry run):\x1b[39m \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
-  else
-    ln -fns "$1" "$2"
-    printf "  \x1b[32mCreated:\x1b[39m \x1b[36m%s\x1b[39m -> \x1b[36m%s\x1b[39m\n" "$1" "$2"
+    return
+  fi
+  make_dirs "${STATE_DIR}"
+  for app in $1; do
+    echo "${app}"
+  done >"${STATE_FILE}.tmp"
+  mv "${STATE_FILE}.tmp" "${STATE_FILE}"
+}
+
+check_app() {
+  check_ok='1'
+  bad_parents=''
+  for path in $(app_paths "$1"); do
+    src="${DOTDIR}/shared/${path}"
+    dst="${HOME}/${path}"
+
+    if ! exists_or_link "${src}"; then
+      error "$1: source not found: $(pretty "${src}")"
+      check_ok=''
+      continue
+    fi
+
+    # A parent directory that resolves into the repository (e.g. an old
+    # whole-directory link) would make us back up the repository's own file.
+    parent="$(dirname "${dst}")"
+    while ! exists_or_link "${parent}"; do
+      parent="$(dirname "${parent}")"
+    done
+    if ! [ -d "${parent}" ] || ! parent_real="$(cd -P "${parent}" 2>/dev/null && pwd -P)"; then
+      if ! contains "${bad_parents}" "${parent}"; then
+        error "$1: not an accessible directory: $(pretty "${parent}")"
+        bad_parents="${bad_parents} ${parent}"
+      fi
+      check_ok=''
+      continue
+    fi
+    case "${parent_real}/" in
+      "${DOTDIR}"/*)
+        if ! contains "${bad_parents}" "${parent}"; then
+          error "$1: parent directory resolves into the repository: $(pretty "${parent}") -> $(pretty "${parent_real}")"
+          bad_parents="${bad_parents} ${parent}"
+        fi
+        check_ok=''
+        continue
+        ;;
+    esac
+
+    if is_repo_link "${dst}" "${src}"; then
+      continue
+    fi
+    if exists_or_link "${dst}" && exists_or_link "${dst}.bak"; then
+      error "$1: backup already exists: $(pretty "${dst}.bak")"
+      check_ok=''
+    fi
+  done
+  [ -n "${check_ok}" ]
+}
+
+is_up_to_date() {
+  for path in $(app_paths "$1"); do
+    if ! is_repo_link "${HOME}/${path}" "${DOTDIR}/shared/${path}"; then
+      return 1
+    fi
+  done
+}
+
+show_linked() {
+  if [ -n "${VERBOSE}" ]; then
+    status 2 Linked "$(pretty "$1") -> $(pretty "$2")"
+  fi
+  N_UNCHANGED=$((N_UNCHANGED + 1))
+}
+
+install_app() {
+  if is_up_to_date "$1"; then
+    status 2 'Up to date' "$1"
+    for path in $(app_paths "$1"); do
+      show_linked "${HOME}/${path}" "${DOTDIR}/shared/${path}"
+    done
+    N_UP_TO_DATE=$((N_UP_TO_DATE + 1))
+    return
+  fi
+
+  status 1 Installing "$1"
+
+  if ! check_app "$1"; then
+    status '1;33' Skipped "$1"
+    FAILED="${FAILED} $1"
+    return
+  fi
+
+  linked_paths=''
+  created_dirs=''
+  backed_up_paths=''
+  for path in $(app_paths "$1"); do
+    src="${DOTDIR}/shared/${path}"
+    dst="${HOME}/${path}"
+
+    if is_repo_link "${dst}" "${src}"; then
+      show_linked "${dst}" "${src}"
+      continue
+    fi
+    if exists_or_link "${dst}"; then
+      if ! run mv "${dst}" "${dst}.bak"; then
+        rollback_app "$1" "could not back up $(pretty "${dst}")"
+        return
+      fi
+      status '1;33' 'Backing up' "$(pretty "${dst}") -> $(pretty "${dst}.bak")"
+      backed_up_paths="${backed_up_paths} ${path}"
+    fi
+    if ! make_dirs "$(dirname "${dst}")" || ! run ln -s "${src}" "${dst}"; then
+      rollback_app "$1" "could not link $(pretty "${dst}")"
+      return
+    fi
+    status '1;32' Linking "$(pretty "${dst}") -> $(pretty "${src}")"
+    linked_paths="${linked_paths} ${path}"
+  done
+  for path in ${linked_paths}; do
+    N_LINKED=$((N_LINKED + 1))
+  done
+  for path in ${backed_up_paths}; do
+    N_BACKED_UP=$((N_BACKED_UP + 1))
+  done
+  N_INSTALLED=$((N_INSTALLED + 1))
+}
+
+rollback_app() {
+  error "$1: $2"
+  for path in ${linked_paths}; do
+    if run rm "${HOME}/${path}"; then
+      status '1;31' Removing "$(pretty "${HOME}/${path}")"
+    fi
+  done
+  for path in ${backed_up_paths}; do
+    if run mv "${HOME}/${path}.bak" "${HOME}/${path}"; then
+      status '1;33' Restoring "$(pretty "${HOME}/${path}.bak") -> $(pretty "${HOME}/${path}")"
+    fi
+  done
+  for dir in ${created_dirs}; do
+    if run rmdir "${HOME}/${dir}" 2>/dev/null; then
+      status '1;31' Removing "$(pretty "${HOME}/${dir}")/"
+    fi
+  done
+  status '1;31' Failed "$1"
+  FAILED="${FAILED} $1"
+}
+
+app_failed() {
+  error "$1: $2"
+  status '1;31' Failed "$1"
+  FAILED="${FAILED} $1"
+}
+
+uninstall_app() {
+  status 1 Uninstalling "$1"
+
+  for path in $(app_paths "$1"); do
+    src="${DOTDIR}/shared/${path}"
+    dst="${HOME}/${path}"
+
+    if ! is_repo_link "${dst}" "${src}"; then
+      if exists_or_link "${dst}"; then
+        warn "$1: not a link to the repository, left as is: $(pretty "${dst}")"
+      fi
+      continue
+    fi
+
+    if ! run rm "${dst}"; then
+      app_failed "$1" "could not remove $(pretty "${dst}")"
+      return
+    fi
+    status '1;31' Removing "$(pretty "${dst}")"
+    N_REMOVED=$((N_REMOVED + 1))
+    if exists_or_link "${dst}.bak"; then
+      if ! run mv "${dst}.bak" "${dst}"; then
+        app_failed "$1" "could not restore $(pretty "${dst}.bak")"
+        return
+      fi
+      status '1;33' Restoring "$(pretty "${dst}.bak") -> $(pretty "${dst}")"
+      N_RESTORED=$((N_RESTORED + 1))
+    fi
+  done
+  UNINSTALLED="${UNINSTALLED} $1"
+  N_UNINSTALLED=$((N_UNINSTALLED + 1))
+}
+
+has_tty() {
+  (exec </dev/tty) 2>/dev/null
+}
+
+tui_restore() {
+  if [ -n "${tui_reader:-}" ]; then
+    kill "${tui_reader}" 2>/dev/null || true
+    tui_reader=''
+  fi
+  if [ -n "${tui_key_file:-}" ]; then
+    rm -f "${tui_key_file}"
+    tui_key_file=''
+  fi
+  if [ -n "${tui_stty:-}" ]; then
+    stty "${tui_stty}" </dev/tty
+    tui_stty=''
+  fi
+  printf '\033[?25h' >/dev/tty
+}
+
+# Signal traps do not run while the shell waits for a command substitution, so
+# the key is read by a background job that `wait` can be interrupted from.
+tui_read_key() {
+  dd bs=1 count=1 2>/dev/null </dev/tty >"${tui_key_file}" &
+  tui_reader=$!
+  wait "${tui_reader}" || true
+  tui_reader=''
+  key="$(
+    cat "${tui_key_file}"
+    printf x
+  )"
+  key="${key%x}"
+  if [ "${key}" = "${ESC}" ]; then
+    # Arrow keys arrive at once; a lone Esc gets nothing within 0.1s.
+    stty min 0 time 1 </dev/tty
+    key="${ESC}$(dd bs=1 count=2 2>/dev/null </dev/tty)"
+    stty min 1 time 0 </dev/tty
   fi
 }
 
-install_shared_dotfiles() {
-  printf "Install \x1b[33mshared\x1b[39m dotfiles:\n"
-
-  # sh
-  create_symbolic_link "${DOTDIR}/shared/.profile" "${HOME}/.profile"
-
-  # bash
-  create_symbolic_link "${DOTDIR}/shared/.bash_profile" "${HOME}/.bash_profile"
-  create_symbolic_link "${DOTDIR}/shared/.bashrc" "${HOME}/.bashrc"
-
-  # zsh
-  create_symbolic_link "${DOTDIR}/shared/.zshenv" "${HOME}/.zshenv"
-  create_symbolic_link "${DOTDIR}/shared/.zshrc" "${HOME}/.zshrc"
-
-  # vim
-  create_symbolic_link "${DOTDIR}/shared/.vimrc" "${HOME}/.vimrc"
-
-  # $HOME/.config/
-
-  # agents
-  link_xdg_config agents/AGENTS.md
-
-  # alacritty
-  link_xdg_config alacritty/alacritty.toml
-
-  # bash
-  link_xdg_config bash/mise.bash
-
-  # cargo-atcoder
-  link_xdg_config cargo-atcoder.toml
-
-  # claude
-  link_xdg_config claude/CLAUDE.md
-  link_xdg_config claude/commands
-  link_xdg_config claude/settings.json
-
-  # fontconfig
-  link_xdg_config fontconfig/fonts.conf
-
-  # git
-  link_xdg_config git/config
-  link_xdg_config git/ignore
-  link_xdg_config git/prune-merged.sh
-
-  # herdr
-  link_xdg_config herdr/config.toml
-
-  # mise
-  link_xdg_config mise/config.aws.toml
-  link_xdg_config mise/config.c.toml
-  link_xdg_config mise/config.docker.toml
-  link_xdg_config mise/config.github.toml
-  link_xdg_config mise/config.go.toml
-  link_xdg_config mise/config.js.toml
-  link_xdg_config mise/config.lua.toml
-  link_xdg_config mise/config.markdown.toml
-  link_xdg_config mise/config.shell.toml
-  link_xdg_config mise/config.toml
-
-  # npm
-  link_xdg_config npm/npmrc
-
-  # nvim
-  link_xdg_config nvim/ginit.vim
-  link_xdg_config nvim/init.lua
-  link_xdg_config nvim/lazy-lock.json
-  link_xdg_config nvim/lua
-
-  # peco
-  link_xdg_config peco/config.json
-
-  # readline
-  link_xdg_config readline/inputrc
-
-  # sh
-  link_xdg_config sh/alias.sh
-  link_xdg_config sh/env.sh
-  link_xdg_config sh/function.sh
-  link_xdg_config sh/git.sh
-
-  # sqlite3
-  link_xdg_config sqlite3/sqliterc
-
-  # tig
-  link_xdg_config tig/config
-
-  # tmux
-  link_xdg_config tmux/tmux.conf
-
-  # zsh
-  link_xdg_config zsh/.p10k.zsh
-  link_xdg_config zsh/autoload.zsh
-  link_xdg_config zsh/bindkey.zsh
-  link_xdg_config zsh/completion.zsh
-  link_xdg_config zsh/direnv.zsh
-  link_xdg_config zsh/fzf.zsh
-  link_xdg_config zsh/git.zsh
-  link_xdg_config zsh/mise.zsh
-  link_xdg_config zsh/setopt.zsh
-  link_xdg_config zsh/zinit.zsh
-  link_xdg_config zsh/zle.zsh
-  link_xdg_config zsh/zstyle.zsh
-
-  # $HOME/.local/bin
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/checkip" "${HOME}/.local/bin/checkip"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/dname" "${HOME}/.local/bin/dname"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/dump-pacman" "${HOME}/.local/bin/dump-pacman"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/dump-yay" "${HOME}/.local/bin/dump-yay"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/install-yay" "${HOME}/.local/bin/install-yay"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/is_wsl" "${HOME}/.local/bin/is_wsl"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/loading" "${HOME}/.local/bin/loading"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/make-editorconfig" "${HOME}/.local/bin/make-editorconfig"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/make-gitattributes" "${HOME}/.local/bin/make-gitattributes"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/restore-pacman" "${HOME}/.local/bin/restore-pacman"
-  create_symbolic_link "${DOTDIR}/shared/.local/bin/restore-yay" "${HOME}/.local/bin/restore-yay"
+sgr_tty() {
+  if [ -z "${NO_COLOR:-}" ]; then
+    printf '\033[%sm' "$1"
+  fi
 }
 
-# Symlink an entry of shared/.config into $XDG_CONFIG_HOME, keeping its parent
-# directory real so that runtime data written by apps stays out of the repo.
-link_xdg_config() {
-  mkdir -p "$(dirname "${XDG_CONFIG_HOME}/$1")"
-  create_symbolic_link "${DOTDIR}/shared/.config/$1" "${XDG_CONFIG_HOME}/$1"
+# Fit the list into the terminal: header, "more" markers and help take 4 lines,
+# and one more is kept so that the final newline does not scroll the screen.
+tui_resize() {
+  rows="$(stty size </dev/tty | cut -d ' ' -f 1)"
+  # Some terminals report 0 rows when the size is unknown.
+  if [ "${rows:-0}" -le 0 ]; then
+    rows=24
+  fi
+  visible=$((rows - 5))
+  if [ "${visible}" -gt "${count}" ]; then
+    visible="${count}"
+  fi
+  if [ "${visible}" -lt 1 ]; then
+    visible=1
+  fi
 }
 
-install_macos_dotfiles() {
-  printf "Install \x1b[33mmacOS\x1b[39m dotfiles:\n"
-
-  # $HOME/.config/
-  (
-    for src in "${DOTDIR}"/macos/.config/*; do
-      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
-      create_symbolic_link "${src}" "${dist}"
-    done
-  )
-
-  # $HOME/Library/
-  (
-    for src in "${DOTDIR}"/macos/Library/*; do
-      dist="${HOME}/Library/$(basename "${src}")"
-      create_symbolic_link "${src}" "${dist}"
-    done
-  )
+tui_scroll() {
+  if [ "${cursor}" -lt "${top}" ]; then
+    top="${cursor}"
+  elif [ "${cursor}" -ge $((top + visible)) ]; then
+    top=$((cursor - visible + 1))
+  fi
 }
 
-install_wsl_dotfiles() {
-  printf "Install \x1b[33mwsl\x1b[39m dotfiles:\n"
+tui_draw() {
+  if [ "${top}" -gt 0 ]; then
+    printf '\r\033[2K  %s↑ more%s\n' "$(sgr_tty 2)" "$(sgr_tty 0)"
+  else
+    printf '\r\033[2K\n'
+  fi
+  i=0
+  for app in ${APPS}; do
+    if [ "${i}" -ge "${top}" ] && [ "${i}" -lt $((top + visible)) ]; then
+      if contains "${selected}" "${app}"; then
+        mark='x'
+      else
+        mark=' '
+      fi
+      if [ "${i}" -eq "${cursor}" ]; then
+        printf '\r\033[2K%s> [%s] %s%s\n' "$(sgr_tty 7)" "${mark}" "${app}" "$(sgr_tty 0)"
+      else
+        printf '\r\033[2K  [%s] %s\n' "${mark}" "${app}"
+      fi
+    fi
+    i=$((i + 1))
+  done
+  if [ $((top + visible)) -lt "${count}" ]; then
+    printf '\r\033[2K  %s↓ more%s\n' "$(sgr_tty 2)" "$(sgr_tty 0)"
+  else
+    printf '\r\033[2K\n'
+  fi
+  printf '\r\033[2K%s↑/↓ or j/k: move  Space: toggle  Enter: apply  q: quit%s\n' \
+    "$(sgr_tty 2)" "$(sgr_tty 0)"
+}
 
-  # $HOME/.config
-  (
-    for src in "${DOTDIR}"/windows/wsl/.config/*; do
-      dist="${XDG_CONFIG_HOME}/$(basename "${src}")"
-      create_symbolic_link "${src}" "${dist}"
-    done
-  )
+tui_toggle() {
+  i=0
+  for app in ${APPS}; do
+    if [ "${i}" -eq "${cursor}" ]; then
+      if contains "${selected}" "${app}"; then
+        rest=''
+        for s in ${selected}; do
+          if [ "${s}" != "${app}" ]; then
+            rest="${rest} ${s}"
+          fi
+        done
+        selected="${rest}"
+      else
+        selected="${selected} ${app}"
+      fi
+      return
+    fi
+    i=$((i + 1))
+  done
+}
 
-  # $HOME/.local/bin
-  (
-    for src in "${DOTDIR}"/windows/wsl/.local/bin/*; do
-      dist="${HOME}/.local/bin/$(basename "${src}")"
-      create_symbolic_link "${src}" "${dist}"
-    done
-  )
+tui_select() {
+  selected="$1"
+  cursor=0
+  top=0
+  count=0
+  for app in ${APPS}; do
+    count=$((count + 1))
+  done
+  tui_resize
+
+  tui_key_file="$(mktemp)"
+  tui_stty="$(stty -g </dev/tty)"
+  trap 'tui_restore' EXIT
+  trap 'tui_restore; exit 130' INT
+  trap 'tui_restore; exit 143' TERM
+  stty -icanon -echo min 1 time 0 </dev/tty
+
+  {
+    printf '\033[?25l'
+    printf 'Select apps to install:\n'
+    tui_draw
+  } >/dev/tty
+
+  while :; do
+    tui_read_key
+    case "${key}" in
+      "${ESC}[A" | "${ESC}OA" | k)
+        if [ "${cursor}" -gt 0 ]; then
+          cursor=$((cursor - 1))
+        fi
+        ;;
+      "${ESC}[B" | "${ESC}OB" | j)
+        if [ "${cursor}" -lt $((count - 1)) ]; then
+          cursor=$((cursor + 1))
+        fi
+        ;;
+      ' ')
+        tui_toggle
+        ;;
+      "${NL}" | "${CR}")
+        break
+        ;;
+      q)
+        tui_restore
+        trap - EXIT INT TERM
+        echo 'Aborted.' >&2
+        exit 1
+        ;;
+    esac
+    tui_scroll
+    {
+      printf '\033[%dA' $((visible + 3))
+      tui_draw
+    } >/dev/tty
+  done
+
+  tui_restore
+  trap - EXIT INT TERM
+  selected="$(normalize_apps "${selected}")"
 }
 
 main() {
-  create_xdg_base_directories_if_needed
+  setup_colors
   set_envs
   parse_args "$@"
-
-  install_shared_dotfiles
-
-  if is_macos; then
-    install_macos_dotfiles
+  if [ -n "${DRY_RUN}" ]; then
+    note 'dry run, nothing will be changed'
   fi
 
-  if is_wsl; then
-    install_wsl_dotfiles
+  load_installed
+  remove=''
+
+  if [ -n "${ADD_ALL}" ]; then
+    add="${APPS}"
+  elif [ -n "${ADD}" ]; then
+    add="$(normalize_apps "${ADD}")"
+  elif has_tty; then
+    tui_select "${installed}"
+    add="${selected}"
+    for app in ${installed}; do
+      if ! contains "${selected}" "${app}"; then
+        remove="${remove} ${app}"
+      fi
+    done
+  else
+    error 'no terminal available; use --add or --all'
+    exit 1
+  fi
+
+  create_xdg_base_directories_if_needed
+
+  # set -e does not apply inside these calls; they check failures themselves.
+  for app in ${remove}; do
+    uninstall_app "${app}" || true
+  done
+  for app in ${add}; do
+    install_app "${app}" || true
+  done
+
+  result=''
+  for app in ${installed} ${add}; do
+    if contains "${UNINSTALLED}" "${app}"; then
+      continue
+    fi
+    # Keep apps that were already installed even if re-linking them failed.
+    if contains "${FAILED}" "${app}" && ! contains "${installed}" "${app}"; then
+      continue
+    fi
+    result="${result} ${app}"
+  done
+  save_installed "$(normalize_apps "${result}")${UNKNOWN_STATE}"
+
+  print_summary
+  if [ -n "${FAILED}" ]; then
+    error "failed:${FAILED}"
+    exit 1
   fi
 }
 
