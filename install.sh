@@ -110,42 +110,107 @@ install_shared_dotfiles() {
   create_symbolic_link "${DOTDIR}/shared/.vimrc" "${HOME}/.vimrc"
 
   # $HOME/.config/
-  (
-    for src in "${DOTDIR}"/shared/.config/*; do
-      name="$(basename "${src}")"
-      # TODO: claude needs its contents symlinked individually (not the whole
-      #       directory), so skip it here and handle it in install_claude_config.
-      #       Remove this branch once "symlink directory contents" is generalized.
-      [ "${name}" = "claude" ] && continue
-      dist="${XDG_CONFIG_HOME}/${name}"
-      create_symbolic_link "${src}" "${dist}"
-    done
-  )
+
+  # agents
+  link_xdg_config agents/AGENTS.md
+
+  # alacritty
+  link_xdg_config alacritty/alacritty.toml
+
+  # bash
+  link_xdg_config bash/mise.bash
+
+  # cargo-atcoder
+  link_xdg_config cargo-atcoder.toml
+
+  # claude
+  link_xdg_config claude/CLAUDE.md
+  link_xdg_config claude/commands
+  link_xdg_config claude/settings.json
+
+  # fontconfig
+  link_xdg_config fontconfig/fonts.conf
+
+  # git
+  link_xdg_config git/config
+  link_xdg_config git/ignore
+  link_xdg_config git/prune-merged.sh
+
+  # mise
+  link_xdg_config mise/config.aws.toml
+  link_xdg_config mise/config.c.toml
+  link_xdg_config mise/config.docker.toml
+  link_xdg_config mise/config.github.toml
+  link_xdg_config mise/config.go.toml
+  link_xdg_config mise/config.js.toml
+  link_xdg_config mise/config.lua.toml
+  link_xdg_config mise/config.markdown.toml
+  link_xdg_config mise/config.shell.toml
+  link_xdg_config mise/config.toml
+
+  # npm
+  link_xdg_config npm/npmrc
+
+  # nvim
+  link_xdg_config nvim/ginit.vim
+  link_xdg_config nvim/init.lua
+  link_xdg_config nvim/lazy-lock.json
+  link_xdg_config nvim/lua
+
+  # peco
+  link_xdg_config peco/config.json
+
+  # readline
+  link_xdg_config readline/inputrc
+
+  # sh
+  link_xdg_config sh/alias.sh
+  link_xdg_config sh/env.sh
+  link_xdg_config sh/function.sh
+  link_xdg_config sh/git.sh
+
+  # sqlite3
+  link_xdg_config sqlite3/sqliterc
+
+  # tig
+  link_xdg_config tig/config
+
+  # tmux
+  link_xdg_config tmux/tmux.conf
+
+  # zsh
+  link_xdg_config zsh/.p10k.zsh
+  link_xdg_config zsh/autoload.zsh
+  link_xdg_config zsh/bindkey.zsh
+  link_xdg_config zsh/completion.zsh
+  link_xdg_config zsh/direnv.zsh
+  link_xdg_config zsh/fzf.zsh
+  link_xdg_config zsh/git.zsh
+  link_xdg_config zsh/mise.zsh
+  link_xdg_config zsh/setopt.zsh
+  link_xdg_config zsh/zinit.zsh
+  link_xdg_config zsh/zle.zsh
+  link_xdg_config zsh/zstyle.zsh
 
   # $HOME/.local/bin
-  (
-    for src in "${DOTDIR}"/shared/.local/bin/*; do
-      dist="${HOME}/.local/bin/$(basename "${src}")"
-      create_symbolic_link "${src}" "${dist}"
-    done
-  )
-
-  install_claude_config
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/checkip" "${HOME}/.local/bin/checkip"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/dname" "${HOME}/.local/bin/dname"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/dump-pacman" "${HOME}/.local/bin/dump-pacman"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/dump-yay" "${HOME}/.local/bin/dump-yay"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/install-yay" "${HOME}/.local/bin/install-yay"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/is_wsl" "${HOME}/.local/bin/is_wsl"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/loading" "${HOME}/.local/bin/loading"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/make-editorconfig" "${HOME}/.local/bin/make-editorconfig"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/make-gitattributes" "${HOME}/.local/bin/make-gitattributes"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/restore-pacman" "${HOME}/.local/bin/restore-pacman"
+  create_symbolic_link "${DOTDIR}/shared/.local/bin/restore-yay" "${HOME}/.local/bin/restore-yay"
 }
 
-install_claude_config() {
-  printf "Install \x1b[33mclaude\x1b[39m config:\n"
-
-  # TODO: CLAUDE_CONFIG_DIR holds both config and data in one directory, so for
-  #       claude we symlink the individual config entries instead of the whole
-  #       directory (which would drag data/secrets into the repo). Generalize to
-  #       a "symlink directory contents" rule if more mixed dirs show up.
-  claude_dir="${XDG_CONFIG_HOME}/claude"
-  mkdir -p "${claude_dir}"
-  for src in "${DOTDIR}"/shared/.config/claude/*; do
-    dist="${claude_dir}/$(basename "${src}")"
-    create_symbolic_link "${src}" "${dist}"
-  done
+# Symlink an entry of shared/.config into $XDG_CONFIG_HOME, keeping its parent
+# directory real so that runtime data written by apps stays out of the repo.
+link_xdg_config() {
+  mkdir -p "$(dirname "${XDG_CONFIG_HOME}/$1")"
+  create_symbolic_link "${DOTDIR}/shared/.config/$1" "${XDG_CONFIG_HOME}/$1"
 }
 
 install_macos_dotfiles() {
