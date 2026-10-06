@@ -106,5 +106,7 @@
   "theme": "dark",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
+  "language": "japanese",
+  "attribution": { "commit": "", "pr": "" },
   "hooks": {"SessionStart":[{"matcher":"^(startup|resume|clear|compact|fork)$","hooks":[{"type":"command","command":"bash \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hooks/herdr-agent-state.sh\" session","timeout":10}]}]}
 }
