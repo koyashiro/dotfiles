@@ -10,16 +10,18 @@ Install script for koyashiro's dotfiles.
 Usage:
     install.sh [OPTIONS]
 
-Without --add or --all, an interactive selector opens (requires a terminal).
-Apps unchecked there are uninstalled: their links are removed and any
-<path>.bak backups are restored.
+Without --add, --remove, --all or --list, an interactive selector opens
+(requires a terminal). Apps unchecked there are uninstalled: their links are
+removed and any <path>.bak backups are restored.
 
 Options:
-    --add <app>[,<app>...]  Install the given apps (repeatable); others are left as is
-    --all                   Install all apps
-    --dry-run               Show what would be done without changing anything
-    -v, --verbose           Also show links that are already in place
-    -h, --help              Print help
+    --add <app>[,<app>...]     Install the given apps (repeatable); others are left as is
+    --remove <app>[,<app>...]  Uninstall the given apps (repeatable); others are left as is
+    --all                      Install all apps
+    --list                     List apps and whether they are installed
+    --dry-run                  Show what would be done without changing anything
+    -v, --verbose              Also show links that are already in place
+    -h, --help                 Print help
 
 Apps:
 $(echo "${APPS}" | sed 's/ /, /g' | fold -s -w 72 | sed 's/ *$//; s/^/    /')
@@ -139,6 +141,8 @@ NL='
 DRY_RUN=''
 VERBOSE=''
 ADD_ALL=''
+LIST=''
+REMOVE=''
 ADD=''
 FAILED=''
 UNINSTALLED=''
@@ -336,23 +340,30 @@ create_xdg_base_directories_if_needed() {
 parse_args() {
   while [ $# -gt 0 ]; do
     case "$1" in
-      --add)
+      --add | --remove)
         if [ $# -lt 2 ]; then
-          error "'--add' requires an app name"
+          error "'$1' requires an app name"
           exit 1
         fi
         case "$2" in
           *[!,\ ]*) ;;
           *)
-            error "'--add' requires an app name"
+            error "'$1' requires an app name"
             exit 1
             ;;
         esac
-        ADD="${ADD} $(echo "$2" | tr ',' ' ')"
+        if [ "$1" = --add ]; then
+          ADD="${ADD} $(echo "$2" | tr ',' ' ')"
+        else
+          REMOVE="${REMOVE} $(echo "$2" | tr ',' ' ')"
+        fi
         shift
         ;;
       --all)
         ADD_ALL='1'
+        ;;
+      --list)
+        LIST='1'
         ;;
       --dry-run)
         DRY_RUN='1'
@@ -379,6 +390,30 @@ parse_args() {
     if ! contains "${APPS}" "${app}"; then
       error "unknown app '${app}'"
       exit 1
+    fi
+  done
+  if [ -n "${LIST}" ] && [ -n "${ADD}${REMOVE}${ADD_ALL}" ]; then
+    error "'--list' cannot be combined with --add, --remove or --all"
+    exit 1
+  fi
+  for app in ${REMOVE}; do
+    if contains "${ADD}" "${app}" || { [ -n "${ADD_ALL}" ] && contains "${APPS}" "${app}"; }; then
+      error "'${app}' is given to both --add and --remove"
+      exit 1
+    fi
+  done
+}
+
+list_apps() {
+  for app in ${APPS} ${REMOVED_APPS}; do
+    label="${app}"
+    if contains "${REMOVED_APPS}" "${app}"; then
+      label="${app} (removed)"
+    fi
+    if contains "${installed}" "${app}"; then
+      printf '  [x] %s\n' "${label}"
+    else
+      printf '  %s[ ] %s%s\n' "$(sgr_out 2)" "${label}" "$(sgr_out 0)"
     fi
   done
 }
@@ -869,18 +904,40 @@ main() {
   fi
 
   load_installed
-  remove=''
+  if [ -n "${LIST}" ]; then
+    list_apps
+    return
+  fi
 
-  if [ -n "${ADD_ALL}" ] || [ -n "${ADD}" ]; then
+  remove=''
+  for app in ${REMOVE}; do
+    if ! contains "${APPS}" "${app}" && ! contains "${REMOVED_APPS}" "${app}"; then
+      error "unknown app '${app}'"
+      exit 1
+    fi
+    if contains "${installed}" "${app}"; then
+      remove="${remove} ${app}"
+    else
+      warn "${app} is not installed"
+    fi
+  done
+  remove="$(normalize_apps "${remove}")"
+
+  if [ -n "${ADD_ALL}${ADD}${REMOVE}" ]; then
     for app in ${REMOVED_APPS}; do
-      warn "${app} was removed from install.sh but is still installed; uncheck it in the selector to uninstall"
+      if ! contains "${remove}" "${app}"; then
+        warn "${app} was removed from install.sh but is still installed; use --remove or the selector to uninstall"
+      fi
     done
   fi
 
+  add=''
   if [ -n "${ADD_ALL}" ]; then
     add="${APPS}"
   elif [ -n "${ADD}" ]; then
     add="$(normalize_apps "${ADD}")"
+  elif [ -n "${REMOVE}" ]; then
+    :
   elif has_tty; then
     tui_select "${installed}"
     add="${selected}"
@@ -890,8 +947,13 @@ main() {
       fi
     done
   else
-    error 'no terminal available; use --add or --all'
+    error 'no terminal available; use --add, --remove, --all or --list'
     exit 1
+  fi
+
+  if [ -z "${add}${remove}" ]; then
+    print_summary
+    return
   fi
 
   create_xdg_base_directories_if_needed

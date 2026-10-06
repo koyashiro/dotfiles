@@ -249,6 +249,68 @@ if [ "$(cat "$T/.local/share/dotfiles/installed")" != "$(printf 'vim\t.vimrc')" 
   fail 'the removed path is still recorded'
 fi
 
+begin '--remove uninstalls apps and restores their backups'
+echo mine >"$T/.vimrc"
+install --add vim,tmux
+install --remove vim
+expect_rc 0
+expect_content .vimrc mine
+expect_no_entry .vimrc.bak
+expect_link .config/tmux/tmux.conf
+expect_installed tmux
+
+begin '--remove warns about apps that are not installed and changes nothing'
+install --add tmux
+before="$(snapshot)"
+install --remove vim
+expect_rc 0
+expect_output 'vim is not installed'
+expect_output 'nothing to do'
+if [ "$(snapshot)" != "$before" ]; then
+  fail 'a run with nothing to do changed the home directory'
+fi
+expect_installed tmux
+
+begin '--remove and --add can be combined'
+install --add vim
+install --remove vim --add tmux
+expect_rc 0
+expect_no_entry .vimrc
+expect_link .config/tmux/tmux.conf
+expect_installed tmux
+
+begin 'an app given to both --add and --remove is rejected'
+install --add vim --remove vim
+expect_rc 1
+expect_output 'both --add and --remove'
+if [ -n "$(ls -A "$T")" ]; then
+  fail 'the conflicting arguments changed the home directory'
+fi
+
+begin '--list shows which apps are installed without changes'
+install --add vim
+mkdir -p "$T/.local/share/dotfiles"
+printf 'removed-app\t.removed\n' >>"$T/.local/share/dotfiles/installed"
+before="$(snapshot)"
+install --list
+expect_rc 0
+expect_output '\[x\] vim$'
+expect_output '\[ \] tmux$'
+expect_output '\[x\] removed-app (removed)$'
+if [ "$(snapshot)" != "$before" ]; then
+  fail '--list changed the home directory'
+fi
+
+begin '--list cannot be combined with changes'
+for args in '--list --add vim' '--list --remove vim' '--list --all'; do
+  # shellcheck disable=SC2086
+  install $args
+  expect_rc 1
+done
+if [ -n "$(ls -A "$T")" ]; then
+  fail 'the rejected arguments changed the home directory'
+fi
+
 begin 'a malformed state file is rejected without changes'
 mkdir -p "$T/.local/share/dotfiles"
 echo vim >"$T/.local/share/dotfiles/installed"
