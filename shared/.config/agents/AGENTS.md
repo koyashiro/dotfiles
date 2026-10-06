@@ -89,6 +89,7 @@
 
 - Write commit messages in English (both subject and body). Follow the conventional commits
   format: `type(scope): summary`.
+- Commit messages are basically a single subject line. Do not add a body unless asked.
 - "Suggest / draft a commit message" means **present the text only**. Do not run `git add` or
   `git commit`. Only execute a commit when explicitly told to "commit this".
 
