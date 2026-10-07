@@ -621,6 +621,29 @@ return {
         })
       end
 
+      local is_claude_settings = function(params)
+        local pattern = vim.glob.to_lpeg("**/{.claude,claude}/settings{,.local}.json")
+        return pattern:match(vim.fs.normalize(params.bufname)) ~= nil
+      end
+
+      -- Format JSON exactly like JSON.stringify(value, null, 2), for files that tools
+      -- rewrite in that form (e.g. Claude Code settings).
+      local json_stringify = require("null-ls.helpers").make_builtin({
+        name = "json_stringify",
+        method = null_ls.methods.FORMATTING,
+        filetypes = { "json" },
+        generator_opts = {
+          command = "node",
+          args = {
+            "-e",
+            'process.stdout.write(JSON.stringify(JSON.parse(require("fs").readFileSync(0, "utf8")), null, 2) + "\\n")',
+          },
+          to_stdin = true,
+          runtime_condition = is_claude_settings,
+        },
+        factory = require("null-ls.helpers").formatter_factory,
+      })
+
       null_ls.setup({
         -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
         sources = {
@@ -661,7 +684,12 @@ return {
           -- Formatting
           null_ls.builtins.formatting.clang_format,
           null_ls.builtins.formatting.gofmt,
-          null_ls.builtins.formatting.prettier,
+          null_ls.builtins.formatting.prettier.with({
+            runtime_condition = function(params)
+              return not is_claude_settings(params)
+            end,
+          }),
+          json_stringify,
           null_ls.builtins.formatting.shfmt.with({
             extra_args = { "--indent", "2", "--binary-next-line", "--case-indent" },
           }),
