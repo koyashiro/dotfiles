@@ -1,9 +1,9 @@
 # .zshenv
 
 # env
+# Read POSIX sh files with sh semantics (unmatched globs, word splitting).
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh ]; then
-  # shellcheck source=config/sh/env.sh
-  source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh
+  emulate sh -c '. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh'
 fi
 
 # shellcheck disable=SC2034

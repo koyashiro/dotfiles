@@ -15,17 +15,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}"/p10k-instant-prompt-"$(id -u -n)".zsh
 fi
 
 # sh rc
-for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/*.sh; do
-  if [[ ! -f "$f".zwc ]] || [[ "$f" -nt "$f".zwc ]]; then
-    zcompile "$f"
-  fi
-
-  # shellcheck disable=SC1090
-  source "$f"
-done
+# Read POSIX sh files with sh semantics; functions defined there keep it too.
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc.sh ]]; then
+  emulate sh -c '. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc.sh'
+fi
 
 # zsh rc
-for f in autoload.zsh bindkey.zsh fzf.zsh setopt.zsh completion.zsh git.zsh zle.zsh zstyle.zsh zinit.zsh .p10k.zsh direnv.zsh mise.zsh; do
+for f in autoload.zsh bindkey.zsh setopt.zsh zle.zsh zstyle.zsh zinit.zsh .p10k.zsh "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/rc.d/*.zsh(N); do
+  f="${f#"${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/}"
   if [[ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f".zwc ]] || [[ "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f" -nt "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f".zwc ]]; then
     zcompile "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/"$f"
   fi

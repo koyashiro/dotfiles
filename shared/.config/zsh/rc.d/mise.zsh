@@ -3,3 +3,4 @@ if ! builtin command -v mise >&/dev/null; then
 fi
 
 eval "$(mise activate zsh)"
+source <(mise completion zsh)

@@ -79,15 +79,20 @@ expect_output() {
   fi
 }
 
-# Every file in shared/ (except .local/bin, which is not managed) must be
-# registered in install.sh, or it would silently never be linked.
-repo_entries() {
+# Every file in shared/ (except .local, which is not managed) must be
+# registered in install.sh, or it would silently never be linked. A file counts
+# as linked when it is reached through a linked directory too (e.g. nvim/lua).
+repo_files() {
   (
     cd "$DOTDIR/shared"
-    find . -mindepth 1 -maxdepth 1 ! -name .config ! -name .local
-    find .config -mindepth 1 -maxdepth 1 ! -type d
-    find .config -mindepth 2 -maxdepth 2
+    find . -path ./.local -prune -o -type f -print
   ) | sed 's|^\./||' | sort
+}
+
+expect_resolves() {
+  if [ "$(readlink -f "$T/$1")" != "$(readlink -f "$DOTDIR/shared/$1")" ]; then
+    fail "$1 is not linked to the repository"
+  fi
 }
 
 snapshot() {
@@ -97,10 +102,10 @@ snapshot() {
 begin '--all links every repository entry and records all apps'
 install --all
 expect_rc 0
-repo_entries >"$T.entries"
+repo_files >"$T.files"
 while IFS= read -r path; do
-  expect_link "$path"
-done <"$T.entries"
+  expect_resolves "$path"
+done <"$T.files"
 expect_installed "$APPS"
 
 begin 'directories are created with mode 0700 and existing ones are untouched'
@@ -172,13 +177,13 @@ fi
 expect_output 'parent directory resolves into the repository'
 
 begin 'an app whose parent is not a directory is skipped without changes'
-echo mine >"$T/.bashrc"
+echo mine >"$T/.profile"
 mkdir -p "$T/.config"
-echo file >"$T/.config/bash"
-install --add bash
+echo file >"$T/.config/sh"
+install --add sh
 expect_rc 1
-expect_content .bashrc mine
-expect_no_entry .bash_profile
+expect_content .profile mine
+expect_no_entry .profile.bak
 expect_output 'not an accessible directory'
 
 begin 'running twice changes nothing the second time'
@@ -208,18 +213,19 @@ fi
 expect_output 'dry run'
 
 begin 'without a state file, fully linked apps are treated as installed'
-mkdir -p "$T/.config/tmux"
-ln -s "$DOTDIR/shared/.vimrc" "$T/.vimrc"
-ln -s "$DOTDIR/shared/.config/tmux/tmux.conf" "$T/.config/tmux/tmux.conf"
+mkdir -p "$T/.config/herdr" "$T/.config/peco"
+ln -s "$DOTDIR/shared/.config/herdr/config.toml" "$T/.config/herdr/config.toml"
+ln -s "$DOTDIR/shared/.config/peco/config.json" "$T/.config/peco/config.json"
 ln -s "$DOTDIR/shared/.zshrc" "$T/.zshrc"
-install --add npm
+install --add alacritty
 expect_rc 0
-expect_installed 'npm tmux vim'
+expect_installed 'alacritty herdr peco'
 
 begin 'the state file records every linked path'
 install --add git
 expect_rc 0
-expected="$(printf 'git\t%s\n' .config/git/config .config/git/ignore .config/git/prune-merged.sh)"
+expected="$(printf 'git\t%s\n' .config/git/config .config/git/ignore .config/git/prune-merged.sh \
+  .config/sh/rc.d/git.sh .config/zsh/rc.d/git.zsh)"
 if [ "$(cat "$T/.local/share/dotfiles/installed")" != "$expected" ]; then
   fail 'the state file does not list the linked paths'
 fi
@@ -236,16 +242,17 @@ fi
 expect_output 'was removed from install.sh'
 
 begin 'paths removed from an app are unlinked and their backups restored'
-ln -s "$DOTDIR/shared/.vimrc" "$T/.vimrc"
-ln -s "$DOTDIR/shared/.oldvimrc" "$T/.oldvimrc"
-echo mine >"$T/.oldvimrc.bak"
+mkdir -p "$T/.config/peco"
+ln -s "$DOTDIR/shared/.config/peco/config.json" "$T/.config/peco/config.json"
+ln -s "$DOTDIR/shared/.config/peco/old.json" "$T/.config/peco/old.json"
+echo mine >"$T/.config/peco/old.json.bak"
 mkdir -p "$T/.local/share/dotfiles"
-printf 'vim\t.vimrc\nvim\t.oldvimrc\n' >"$T/.local/share/dotfiles/installed"
-install --add vim
+printf 'peco\t.config/peco/config.json\npeco\t.config/peco/old.json\n' >"$T/.local/share/dotfiles/installed"
+install --add peco
 expect_rc 0
-expect_content .oldvimrc mine
-expect_no_entry .oldvimrc.bak
-if [ "$(cat "$T/.local/share/dotfiles/installed")" != "$(printf 'vim\t.vimrc')" ]; then
+expect_content .config/peco/old.json mine
+expect_no_entry .config/peco/old.json.bak
+if [ "$(cat "$T/.local/share/dotfiles/installed")" != "$(printf 'peco\t.config/peco/config.json')" ]; then
   fail 'the removed path is still recorded'
 fi
 

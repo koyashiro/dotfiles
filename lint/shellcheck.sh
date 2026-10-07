@@ -20,13 +20,17 @@ shellcheck shared/.config/git/prune-merged.sh
 # sh
 shellcheck --shell sh --external-source shared/.profile
 shellcheck --shell sh --external-source shared/.config/sh/env.sh
-shellcheck --shell sh --external-source shared/.config/sh/alias.sh
-shellcheck --shell sh --external-source shared/.config/sh/function.sh
-shellcheck --shell sh --external-source shared/.config/sh/git.sh
+shellcheck --shell sh --external-source shared/.config/sh/rc.sh
+for f in "$DOTDIR"/shared/.config/sh/env.d/*.sh "$DOTDIR"/shared/.config/sh/rc.d/*.sh; do
+  shellcheck --shell sh --external-source "$f"
+done
 
 # bash
 shellcheck --shell bash --external-source shared/.bash_profile
 shellcheck --shell bash --external-source shared/.bashrc
+for f in "$DOTDIR"/shared/.config/bash/rc.d/*.bash; do
+  shellcheck --shell bash --external-source "$f"
+done
 
 # local/bin
 for f in "$DOTDIR"/shared/.local/bin/*; do

@@ -38,6 +38,15 @@ alias gwsl='git worktree list'
 #   subshell, so they prefix working variables with `_` and `unset` them by
 #   hand to avoid leaking into the interactive shell.
 
+# Interactive pickers need fzf; without it, ask for explicit arguments instead.
+_git_fzf() {
+  if ! command -v fzf >/dev/null 2>&1; then
+    echo 'fzf is not installed; pass the arguments explicitly' >&2
+    return 1
+  fi
+  fzf "$@"
+}
+
 # git switch: switch branches.
 # No arg -> pick a branch with fzf.
 gsw() {
@@ -46,7 +55,7 @@ gsw() {
       git switch "$@"
       return
     fi
-    branch=$(git branch --format='%(refname:short)' | fzf --prompt='SWITCH> ') || return
+    branch=$(git branch --format='%(refname:short)' | _git_fzf --prompt='SWITCH> ') || return
     [ -z "$branch" ] && return
     git switch -- "$branch"
   )
@@ -156,7 +165,7 @@ gwrf() {
 # Pick local branches (multi) with fzf, excluding the current branch.
 _git_pick_branches() {
   current=$(git branch --show-current)
-  git branch --format='%(refname:short)' | grep -vFx "$current" | fzf -m --prompt='DELETE> '
+  git branch --format='%(refname:short)' | grep -vFx "$current" | _git_fzf -m --prompt='DELETE> '
 }
 
 # Resolve (and create if missing) a worktree for a branch under
@@ -189,7 +198,7 @@ _git_worktree_resolve() {
         echo 'branch name required' >&2
         return 1
       fi
-      branch=$(git branch --format='%(refname:short)' | fzf --prompt='WORKTREE> ')
+      branch=$(git branch --format='%(refname:short)' | _git_fzf --prompt='WORKTREE> ')
       [ -z "$branch" ] && return 1
     fi
 
@@ -237,5 +246,5 @@ _gwsw_repo_key() {
 _git_pick_worktrees() {
   git worktree list --porcelain 2>/dev/null \
     | awk '/^worktree / { if (seen) print $2; seen = 1 }' \
-    | fzf -m --prompt='REMOVE> '
+    | _git_fzf -m --prompt='REMOVE> '
 }

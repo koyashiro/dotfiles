@@ -30,7 +30,7 @@ EOF
 
 # Apps that can be installed. Each app is a set of paths relative to both
 # "${DOTDIR}/shared" (link source) and "${HOME}" (link destination).
-APPS='agents alacritty bash cargo-atcoder claude fontconfig git herdr mise npm nvim peco readline sh sqlite3 tig tmux vim zsh'
+APPS='agents alacritty ansible aws bash cargo-atcoder claude deno direnv docker eza fontconfig fzf git go herdr kubectl less mise mysql node nvim peco postgresql readline redis ripgrep rust sh sqlite3 tig tmux typescript vim wasmer wasmtime zsh'
 
 app_paths() {
   case "$1" in
@@ -40,10 +40,15 @@ app_paths() {
     alacritty)
       echo .config/alacritty/alacritty.toml
       ;;
+    ansible)
+      echo .config/sh/env.d/ansible.sh
+      ;;
+    aws)
+      echo .config/sh/env.d/aws.sh
+      ;;
     bash)
       echo .bash_profile
       echo .bashrc
-      echo .config/bash/mise.bash
       ;;
     cargo-atcoder)
       echo .config/cargo-atcoder.toml
@@ -52,17 +57,50 @@ app_paths() {
       echo .config/claude/CLAUDE.md
       echo .config/claude/commands
       echo .config/claude/settings.json
+      echo .config/sh/env.d/claude.sh
+      ;;
+    deno)
+      echo .config/sh/env.d/deno.sh
+      ;;
+    direnv)
+      echo .config/sh/env.d/direnv.sh
+      echo .config/bash/rc.d/direnv.bash
+      echo .config/zsh/rc.d/direnv.zsh
+      ;;
+    docker)
+      echo .config/sh/env.d/docker.sh
+      echo .config/sh/rc.d/docker.sh
+      echo .config/zsh/rc.d/docker.zsh
+      ;;
+    eza)
+      echo .config/sh/rc.d/eza.sh
       ;;
     fontconfig)
       echo .config/fontconfig/fonts.conf
+      ;;
+    fzf)
+      echo .config/sh/env.d/fzf.sh
+      echo .config/zsh/rc.d/fzf.zsh
       ;;
     git)
       echo .config/git/config
       echo .config/git/ignore
       echo .config/git/prune-merged.sh
+      echo .config/sh/rc.d/git.sh
+      echo .config/zsh/rc.d/git.zsh
+      ;;
+    go)
+      echo .config/sh/env.d/go.sh
       ;;
     herdr)
       echo .config/herdr/config.toml
+      ;;
+    kubectl)
+      echo .config/sh/env.d/kubectl.sh
+      echo .config/sh/rc.d/kubectl.sh
+      ;;
+    less)
+      echo .config/sh/env.d/less.sh
       ;;
     mise)
       echo .config/mise/config.aws.toml
@@ -75,40 +113,74 @@ app_paths() {
       echo .config/mise/config.markdown.toml
       echo .config/mise/config.shell.toml
       echo .config/mise/config.toml
+      echo .config/sh/env.d/mise.sh
+      echo .config/bash/rc.d/mise.bash
+      echo .config/zsh/rc.d/mise.zsh
       ;;
-    npm)
+    mysql)
+      echo .config/sh/env.d/mysql.sh
+      ;;
+    node)
       echo .config/npm/npmrc
+      echo .config/sh/env.d/node.sh
       ;;
     nvim)
       echo .config/nvim/ginit.vim
       echo .config/nvim/init.lua
       echo .config/nvim/lazy-lock.json
       echo .config/nvim/lua
+      echo .config/sh/rc.d/nvim.sh
       ;;
     peco)
       echo .config/peco/config.json
       ;;
+    postgresql)
+      echo .config/sh/env.d/postgresql.sh
+      ;;
     readline)
       echo .config/readline/inputrc
+      echo .config/sh/env.d/readline.sh
+      ;;
+    redis)
+      echo .config/sh/env.d/redis.sh
+      ;;
+    ripgrep)
+      echo .config/sh/rc.d/ripgrep.sh
+      ;;
+    rust)
+      echo .config/sh/env.d/rust.sh
+      echo .config/zsh/rc.d/rust.zsh
       ;;
     sh)
       echo .profile
-      echo .config/sh/alias.sh
       echo .config/sh/env.sh
-      echo .config/sh/function.sh
-      echo .config/sh/git.sh
+      echo .config/sh/rc.sh
       ;;
     sqlite3)
       echo .config/sqlite3/sqliterc
+      echo .config/sh/env.d/sqlite3.sh
+      echo .config/sh/rc.d/sqlite3.sh
       ;;
     tig)
       echo .config/tig/config
+      echo .config/sh/env.d/tig.sh
       ;;
     tmux)
       echo .config/tmux/tmux.conf
+      echo .config/sh/rc.d/tmux.sh
+      ;;
+    typescript)
+      echo .config/sh/env.d/typescript.sh
       ;;
     vim)
       echo .vimrc
+      echo .config/sh/rc.d/vim.sh
+      ;;
+    wasmer)
+      echo .config/sh/env.d/wasmer.sh
+      ;;
+    wasmtime)
+      echo .config/sh/env.d/wasmtime.sh
       ;;
     zsh)
       echo .zshenv
@@ -116,11 +188,6 @@ app_paths() {
       echo .config/zsh/.p10k.zsh
       echo .config/zsh/autoload.zsh
       echo .config/zsh/bindkey.zsh
-      echo .config/zsh/completion.zsh
-      echo .config/zsh/direnv.zsh
-      echo .config/zsh/fzf.zsh
-      echo .config/zsh/git.zsh
-      echo .config/zsh/mise.zsh
       echo .config/zsh/setopt.zsh
       echo .config/zsh/zinit.zsh
       echo .config/zsh/zle.zsh

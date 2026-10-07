@@ -14,20 +14,14 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 export HISTCONTROL=ignoreboth
 
-# alias
-if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/alias.sh ]]; then
-  # shellcheck source=shared/.config/sh/alias.sh
-  source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/alias.sh
-fi
-
-# function
-if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/function.sh ]]; then
-  # shellcheck source=shared/.config/sh/function.sh
-  source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/function.sh
+# sh rc
+if [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc.sh ]]; then
+  # shellcheck source=shared/.config/sh/rc.sh
+  source "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc.sh
 fi
 
 # bash rc
-for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/bash/*.bash; do
+for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/bash/rc.d/*.bash; do
   # shellcheck disable=SC1090
   [[ -f "$f" ]] && source "$f"
 done
