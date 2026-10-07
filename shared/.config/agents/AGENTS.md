@@ -96,11 +96,10 @@
 
 ## Issues and pull requests
 
-- Write only what the reader needs to act. State the problem and the change in a few plain
-  sentences or a short list.
-- Do not add background the reader already knows, restate the same point in different words,
-  justify each decision, or list caveats and "what does not apply" notes that do not change
-  what the reader does.
+- Include a sentence only if the reader will use it to do or review the work. Judge by that,
+  not by length: detail the reader needs stays.
+- Cut justifications for a decision, notes about what is not affected, and restatements of
+  what the reader already has.
 
 ## Git worktrees and branches
 
