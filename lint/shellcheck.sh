@@ -13,6 +13,9 @@ shellcheck test/install_test.sh
 
 # lint
 shellcheck lint/shellcheck.sh
+shellcheck lint/sh-syntax-check.sh
+shellcheck lint/bash-syntax-check.sh
+shellcheck lint/zsh-syntax-check.sh
 
 # git
 shellcheck shared/.config/git/prune-merged.sh

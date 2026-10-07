@@ -1,0 +1,26 @@
+name: shell-syntax-check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  shell-syntax-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install zsh
+        run: sudo apt-get update && sudo apt-get install -y zsh
+
+      - name: Check sh syntax (sh -n)
+        run: ./lint/sh-syntax-check.sh
+
+      - name: Check bash syntax (bash -n)
+        run: ./lint/bash-syntax-check.sh
+
+      - name: Check zsh syntax (zsh -n)
+        run: ./lint/zsh-syntax-check.sh
