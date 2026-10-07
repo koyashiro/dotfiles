@@ -100,5 +100,6 @@
 - When given an issue link, name the branch `<prefix>/<issue-numbers>-<summary>`. One branch may cover multiple issues; join their numbers with `-` in ascending order (e.g. `36357-36358`).
   - Summary: English kebab-case, translating/summarizing the issue title into something short.
     Examples: `feature/1234-add-pagination` (single), `fix/36357-36358-point-event-lifecycle-validation` (multiple).
-  - Prefix: choose by issue type (bug fixes → `fix/`, feature work → `feature/`). Judge by the
-    label/type, and when unsure, ask.
+  - Prefix: choose by issue type (bug fixes → `fix/`, feature work → `feat/` or `feature/`,
+    whichever the repository's existing branches use). Judge by the label/type, and when
+    unsure of either, ask.
