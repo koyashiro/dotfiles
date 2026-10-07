@@ -94,6 +94,14 @@
 - "Suggest / draft a commit message" means **present the text only**. Do not run `git add` or
   `git commit`. Only execute a commit when explicitly told to "commit this".
 
+## Issues and pull requests
+
+- Write only what the reader needs to act. State the problem and the change in a few plain
+  sentences or a short list.
+- Do not add background the reader already knows, restate the same point in different words,
+  justify each decision, or list caveats and "what does not apply" notes that do not change
+  what the reader does.
+
 ## Git worktrees and branches
 
 - Create worktrees under `.worktrees/<branch>` at the repository root.
