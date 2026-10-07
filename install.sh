@@ -30,7 +30,7 @@ EOF
 
 # Apps that can be installed. Each app is a set of paths relative to both
 # "${DOTDIR}/shared" (link source) and "${HOME}" (link destination).
-APPS='agents alacritty ansible aws bash cargo-atcoder claude deno direnv docker eza fontconfig fzf git go herdr kubectl less mise mysql node nvim peco postgresql readline redis ripgrep rust sh sqlite3 tig tmux typescript vim wasmer wasmtime zsh'
+APPS='agents alacritty ansible aws bash cargo-atcoder claude delta deno direnv docker eza fontconfig fzf git go herdr kubectl less mise mysql node nvim peco postgresql readline redis ripgrep rust sh sqlite3 tig tmux typescript vim wasmer wasmtime zsh'
 
 app_paths() {
   case "$1" in
@@ -58,6 +58,9 @@ app_paths() {
       echo .config/claude/commands
       echo .config/claude/settings.json
       echo .config/sh/env.d/claude.sh
+      ;;
+    delta)
+      echo .config/git/delta.gitconfig
       ;;
     deno)
       echo .config/sh/env.d/deno.sh

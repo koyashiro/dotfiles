@@ -1,0 +1,7 @@
+[core]
+	pager = sh -c 'command -v delta >/dev/null 2>&1 && exec delta || exec less -FRX'
+[interactive]
+	diffFilter = sh -c 'command -v delta >/dev/null 2>&1 && exec delta --color-only || exec cat'
+[delta]
+	features = line-numbers decorations side-by-side
+	syntax-theme = OneHalfDark
