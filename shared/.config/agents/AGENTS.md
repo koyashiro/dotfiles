@@ -64,8 +64,9 @@
 - After changing code, run the test suite if one exists and confirm nothing is broken.
 - After writing or changing code, review your own comments before reporting. Remove
   comments that restate the code, describe session-local context (what was discussed or
-  changed in this conversation), or explain the obvious. Keep only comments that explain a
-  non-obvious why, constraint, or external fact, matching the surrounding code's density.
+  changed in this conversation), or explain the obvious. Keep only "why not" comments: why
+  the code does not take the simpler or more obvious approach, including the constraint or
+  external fact that rules it out. Match the surrounding code's density.
 
 ## Handling constraints
 
