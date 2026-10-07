@@ -1,4 +1,2 @@
 [tools]
 "npm:bash-language-server" = "latest"
-shellcheck = "latest"
-shfmt = "latest"

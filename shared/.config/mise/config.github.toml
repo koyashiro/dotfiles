@@ -1,6 +1,0 @@
-[tools]
-act = "latest"
-actionlint = "latest"
-github-cli = "latest"
-pinact = "latest"
-prettier = "latest"

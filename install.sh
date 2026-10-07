@@ -30,10 +30,16 @@ EOF
 
 # Apps that can be installed. Each app is a set of paths relative to both
 # "${DOTDIR}/shared" (link source) and "${HOME}" (link destination).
-APPS='agents alacritty ansible aws bash cargo-atcoder claude delta deno direnv docker eza fontconfig fzf git go herdr kubectl less mise mysql node nvim peco postgresql readline redis ripgrep rust sh sqlite3 tig tmux typescript vim wasmer wasmtime zsh'
+APPS='act actionlint agents alacritty ansible aws bash bash-language-server bat bun c cargo-atcoder claude delta deno direnv dive docker eslint eza fd fontconfig fzf git github-cli go hadolint herdr jq kubectl less lua markdownlint-cli2 mise mysql node nvim oxfmt oxlint peco pinact pnpm postgresql prettier readline redis ripgrep rust sh shellcheck shfmt sqlite3 stylelint stylua tig tmux typescript vim wasmer wasmtime yarn yq zsh'
 
 app_paths() {
   case "$1" in
+    act)
+      echo .config/mise/conf.d/act.toml
+      ;;
+    actionlint)
+      echo .config/mise/conf.d/actionlint.toml
+      ;;
     agents)
       echo .config/agents/AGENTS.md
       ;;
@@ -44,11 +50,24 @@ app_paths() {
       echo .config/sh/env.d/ansible.sh
       ;;
     aws)
+      echo .config/mise/conf.d/aws.toml
       echo .config/sh/env.d/aws.sh
       ;;
     bash)
       echo .bash_profile
       echo .bashrc
+      ;;
+    bash-language-server)
+      echo .config/mise/conf.d/bash-language-server.toml
+      ;;
+    bat)
+      echo .config/mise/conf.d/bat.toml
+      ;;
+    bun)
+      echo .config/mise/conf.d/bun.toml
+      ;;
+    c)
+      echo .config/mise/conf.d/c.toml
       ;;
     cargo-atcoder)
       echo .config/cargo-atcoder.toml
@@ -60,9 +79,11 @@ app_paths() {
       echo .config/sh/env.d/claude.sh
       ;;
     delta)
+      echo .config/mise/conf.d/delta.toml
       echo .config/git/delta.gitconfig
       ;;
     deno)
+      echo .config/mise/conf.d/deno.toml
       echo .config/sh/env.d/deno.sh
       ;;
     direnv)
@@ -70,18 +91,29 @@ app_paths() {
       echo .config/bash/rc.d/direnv.bash
       echo .config/zsh/rc.d/direnv.zsh
       ;;
+    dive)
+      echo .config/mise/conf.d/dive.toml
+      ;;
     docker)
       echo .config/sh/env.d/docker.sh
       echo .config/sh/rc.d/docker.sh
       echo .config/zsh/rc.d/docker.zsh
       ;;
+    eslint)
+      echo .config/mise/conf.d/eslint.toml
+      ;;
     eza)
+      echo .config/mise/conf.d/eza.toml
       echo .config/sh/rc.d/eza.sh
+      ;;
+    fd)
+      echo .config/mise/conf.d/fd.toml
       ;;
     fontconfig)
       echo .config/fontconfig/fonts.conf
       ;;
     fzf)
+      echo .config/mise/conf.d/fzf.toml
       echo .config/sh/env.d/fzf.sh
       echo .config/zsh/rc.d/fzf.zsh
       ;;
@@ -92,11 +124,21 @@ app_paths() {
       echo .config/sh/rc.d/git.sh
       echo .config/zsh/rc.d/git.zsh
       ;;
+    github-cli)
+      echo .config/mise/conf.d/github-cli.toml
+      ;;
     go)
+      echo .config/mise/conf.d/go.toml
       echo .config/sh/env.d/go.sh
+      ;;
+    hadolint)
+      echo .config/mise/conf.d/hadolint.toml
       ;;
     herdr)
       echo .config/herdr/config.toml
+      ;;
+    jq)
+      echo .config/mise/conf.d/jq.toml
       ;;
     kubectl)
       echo .config/sh/env.d/kubectl.sh
@@ -105,17 +147,14 @@ app_paths() {
     less)
       echo .config/sh/env.d/less.sh
       ;;
+    lua)
+      echo .config/mise/conf.d/lua.toml
+      ;;
+    markdownlint-cli2)
+      echo .config/mise/conf.d/markdownlint-cli2.toml
+      ;;
     mise)
-      echo .config/mise/config.aws.toml
-      echo .config/mise/config.c.toml
-      echo .config/mise/config.docker.toml
-      echo .config/mise/config.github.toml
-      echo .config/mise/config.go.toml
-      echo .config/mise/config.js.toml
-      echo .config/mise/config.lua.toml
-      echo .config/mise/config.markdown.toml
-      echo .config/mise/config.shell.toml
-      echo .config/mise/config.toml
+      echo .config/mise/conf.d/mise.toml
       echo .config/sh/env.d/mise.sh
       echo .config/bash/rc.d/mise.bash
       echo .config/zsh/rc.d/mise.zsh
@@ -124,6 +163,7 @@ app_paths() {
       echo .config/sh/env.d/mysql.sh
       ;;
     node)
+      echo .config/mise/conf.d/node.toml
       echo .config/npm/npmrc
       echo .config/sh/env.d/node.sh
       ;;
@@ -134,11 +174,26 @@ app_paths() {
       echo .config/nvim/lua
       echo .config/sh/rc.d/nvim.sh
       ;;
+    oxfmt)
+      echo .config/mise/conf.d/oxfmt.toml
+      ;;
+    oxlint)
+      echo .config/mise/conf.d/oxlint.toml
+      ;;
     peco)
       echo .config/peco/config.json
       ;;
+    pinact)
+      echo .config/mise/conf.d/pinact.toml
+      ;;
+    pnpm)
+      echo .config/mise/conf.d/pnpm.toml
+      ;;
     postgresql)
       echo .config/sh/env.d/postgresql.sh
+      ;;
+    prettier)
+      echo .config/mise/conf.d/prettier.toml
       ;;
     readline)
       echo .config/readline/inputrc
@@ -148,6 +203,7 @@ app_paths() {
       echo .config/sh/env.d/redis.sh
       ;;
     ripgrep)
+      echo .config/mise/conf.d/ripgrep.toml
       echo .config/sh/rc.d/ripgrep.sh
       ;;
     rust)
@@ -159,10 +215,22 @@ app_paths() {
       echo .config/sh/env.sh
       echo .config/sh/rc.sh
       ;;
+    shellcheck)
+      echo .config/mise/conf.d/shellcheck.toml
+      ;;
+    shfmt)
+      echo .config/mise/conf.d/shfmt.toml
+      ;;
     sqlite3)
       echo .config/sqlite3/sqliterc
       echo .config/sh/env.d/sqlite3.sh
       echo .config/sh/rc.d/sqlite3.sh
+      ;;
+    stylelint)
+      echo .config/mise/conf.d/stylelint.toml
+      ;;
+    stylua)
+      echo .config/mise/conf.d/stylua.toml
       ;;
     tig)
       echo .config/tig/config
@@ -173,6 +241,7 @@ app_paths() {
       echo .config/sh/rc.d/tmux.sh
       ;;
     typescript)
+      echo .config/mise/conf.d/typescript.toml
       echo .config/sh/env.d/typescript.sh
       ;;
     vim)
@@ -184,6 +253,12 @@ app_paths() {
       ;;
     wasmtime)
       echo .config/sh/env.d/wasmtime.sh
+      ;;
+    yarn)
+      echo .config/mise/conf.d/yarn.toml
+      ;;
+    yq)
+      echo .config/mise/conf.d/yq.toml
       ;;
     zsh)
       echo .zshenv
