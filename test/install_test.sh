@@ -301,8 +301,9 @@ printf 'removed-app\t.removed\n' >>"$T/.local/share/dotfiles/installed"
 before="$(snapshot)"
 install --list
 expect_rc 0
-expect_output '\[x\] vim$'
-expect_output '\[ \] tmux$'
+expect_output '\[x\] vim (shell, config)$'
+expect_output '\[ \] tmux (shell, config)$'
+expect_output '\[ \] aws (bin, shell)$'
 expect_output '\[x\] removed-app (removed)$'
 if [ "$(snapshot)" != "$before" ]; then
   fail '--list changed the home directory'

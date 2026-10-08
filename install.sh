@@ -549,12 +549,34 @@ parse_args() {
   done
 }
 
+# set_label <app>: set label to the app name followed by the kinds of files it
+# links. Sets a variable instead of printing so that the selector does not fork
+# twice per row on every key press.
+set_label() {
+  if contains "${REMOVED_APPS}" "$1"; then
+    label="$1 (removed)"
+    return
+  fi
+  kind_bin=''
+  kind_shell=''
+  kind_config=''
+  for path in $(app_paths "$1"); do
+    case "${path}" in
+      .config/mise/conf.d/*) kind_bin='bin' ;;
+      .config/sh/env.d/* | .config/*/rc.d/*) kind_shell='shell' ;;
+      *) kind_config='config' ;;
+    esac
+  done
+  kinds=''
+  for kind in ${kind_bin} ${kind_shell} ${kind_config}; do
+    kinds="${kinds:+${kinds}, }${kind}"
+  done
+  label="$1 (${kinds})"
+}
+
 list_apps() {
   for app in ${APPS} ${REMOVED_APPS}; do
-    label="${app}"
-    if contains "${REMOVED_APPS}" "${app}"; then
-      label="${app} (removed)"
-    fi
+    set_label "${app}"
     if contains "${installed}" "${app}"; then
       printf '  [x] %s\n' "${label}"
     else
@@ -937,10 +959,7 @@ tui_draw() {
       else
         mark=' '
       fi
-      label="${app}"
-      if contains "${REMOVED_APPS}" "${app}"; then
-        label="${app} (removed)"
-      fi
+      set_label "${app}"
       if [ "${i}" -eq "${cursor}" ]; then
         printf '\r\033[2K%s> [%s] %s%s\n' "$(sgr_tty 7)" "${mark}" "${label}" "$(sgr_tty 0)"
       else
