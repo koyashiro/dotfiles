@@ -103,8 +103,34 @@
 
 ## Git worktrees and branches
 
-- Create worktrees under `.worktrees/<branch>` at the repository root.
-  - Example: `git worktree add -b <branch> .worktrees/<branch> main`
+- For issue work, do not work in the main worktree; give each branch its own linked worktree
+  at `<repo-root>/.worktrees/<branch>` and its own herdr workspace.
+- When given an issue link and asked to work on it, create its worktree and workspace, start
+  Claude there, and hand over the requirements instead of working on it yourself. If you are
+  already in that branch's worktree, work there.
+  - `herdr worktree create --cwd <repo-root> --branch <branch> --base <default-branch> --path <repo-root>/.worktrees/<branch> --label <summary> --no-focus`
+  - `herdr agent start <name> --kind claude --pane <root-pane-id>`
+  - `herdr agent prompt <name> "<requirements>"`
+  - In `<requirements>`, include the issue link and the user's instruction verbatim, state
+    that the user has approved starting the work, and mark anything the user did not state
+    as your own inference.
+  - `<root-pane-id>` is `.result.root_pane.pane_id` of the create output. `<name>` must be
+    unique and match `[a-z][a-z0-9_-]{0,31}`.
+  - `<default-branch>` is the output of `git symbolic-ref --short refs/remotes/origin/HEAD`
+    without the `origin/` prefix.
+  - A parent issue gets a worktree and workspace too; each sub-issue gets its own.
+  - Outside herdr (`HERDR_ENV` is not `1`):
+    `git worktree add -b <branch> <repo-root>/.worktrees/<branch> <default-branch>`, and work
+    there yourself.
+- When asked to create a workspace for a task with no branch (e.g. investigation), skip the
+  worktree: `herdr workspace create --cwd <repo-root> --label <short-kebab-label> --no-focus`,
+  then start Claude and hand over the requirements the same way; do not leave an empty shell.
+- When told to clean up a branch's workspace, remove its worktree and branch from the main
+  worktree, not from the workspace being removed: `herdr worktree remove --workspace <ID>`
+  (`open_workspace_id` in `herdr worktree list --cwd <repo-root>`), then
+  `git branch -d <branch>`. If either refuses (dirty worktree, unmerged branch), report it and
+  ask before using `--force` or `-D`; `-D` needs no asking once
+  `gh pr view <branch> --json state` shows `MERGED`.
 - When given an issue link, name the branch `<prefix>/<issue-numbers>-<summary>`. One branch may cover multiple issues; join their numbers with `-` in ascending order (e.g. `36357-36358`).
   - Summary: English kebab-case, translating/summarizing the issue title into something short.
     Examples: `feature/1234-add-pagination` (single), `fix/36357-36358-point-event-lifecycle-validation` (multiple).
