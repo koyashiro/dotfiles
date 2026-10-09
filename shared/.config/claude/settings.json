@@ -99,7 +99,13 @@
       "Read(~/.kube/**)",
       "Read(~/.config/kube/**)",
       "Read(~/.aws/**)",
-      "Read(~/.config/aws/**)"
+      "Read(~/.config/aws/**)",
+      "mcp__plugin_slack_slack__slack_send_message",
+      "mcp__plugin_slack_slack__slack_send_message_draft",
+      "mcp__plugin_slack_slack__slack_schedule_message",
+      "mcp__plugin_slack_slack__slack_add_reaction",
+      "mcp__plugin_slack_slack__slack_create_canvas",
+      "mcp__plugin_slack_slack__slack_update_canvas"
     ]
   },
   "hooks": {
@@ -117,7 +123,8 @@
     ]
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "slack@claude-plugins-official": true
   },
   "language": "japanese",
   "tui": "fullscreen",
