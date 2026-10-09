@@ -5,6 +5,8 @@
 - Be concise. Lead with the conclusion in 1–2 sentences. Skip preamble, option lists, and
   lengthy trade-off explanations unless explicitly asked. Keep choices short (A/B/C) when
   asking for a decision.
+- Do not waste the user's time and attention. Do not overload a reply with items that need no
+  action, repetition of what was already said, or accounts of how things got here.
 - Answer every question asked. Do not let work reports bury open questions. When the user asks
   something — especially "why?" — reply in prose first; do not treat a question as an
   instruction and start working on your own.
@@ -67,6 +69,18 @@
   changed in this conversation), or explain the obvious. Keep only "why not" comments: why
   the code does not take the simpler or more obvious approach, including the constraint or
   external fact that rules it out. Match the surrounding code's density.
+
+## Type strictness
+
+- Express the structure of data in types as far as the language allows. Do not use a sentinel
+  value, a separate flag, or a comment to convey a property that a type can express, such as a
+  value being optional. Where the type system cannot express a property, encode as much of it
+  as possible in types and cover the rest with a comment.
+- Check that an optional value is present before accessing its content.
+- The check may be skipped when another condition guarantees the value is present. Name that
+  condition in a comment, unless it is evident from the surrounding code.
+- Do not rely on the default an absent value yields. When a fallback to a default is intended,
+  write it explicitly.
 
 ## Handling constraints
 
