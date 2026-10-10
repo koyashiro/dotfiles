@@ -126,6 +126,7 @@
     "rust-analyzer-lsp@claude-plugins-official": true,
     "slack@claude-plugins-official": true
   },
+  "cleanupPeriodDays": 36500,
   "language": "japanese",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
