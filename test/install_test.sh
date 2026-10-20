@@ -23,13 +23,83 @@ begin() {
   CASE="$1"
   T="$WORK/$(echo "$1" | tr -c 'a-zA-Z0-9\n' '-')"
   mkdir -p "$T"
+  stub_tools
   printf '%s\n' "$CASE"
 }
 
-# Sets RC; output goes to "$T.log".
+# Sets RC; output goes to "$T.log". The curl stub in "$T.bin" keeps the mise
+# installation off the network.
 install() {
   RC=0
-  HOME="$T" sh "$INSTALL" "$@" </dev/null >"$T.log" 2>&1 || RC=$?
+  (
+    unset CLAUDE_CONFIG_DIR XDG_CONFIG_HOME
+    HOME="$T" PATH="$T.bin:$PATH" sh "$INSTALL" "$@"
+  ) </dev/null >"$T.log" 2>&1 || RC=$?
+}
+
+# Stubs record their calls in "$T.calls". The curl stub downloads an installer
+# that copies the mise stub "$T.mise" to ~/.local/bin/mise, and the mise stub
+# runs `exec` with "$T.tools" on PATH, so herdr is reachable only through
+# `mise exec`. Creating "$T.curl-fail", "$T.mise-fail", "$T.mise-exec-fail" or
+# "$T.herdr-fail" makes that stub fail.
+stub_tools() {
+  mkdir -p "$T.bin" "$T.tools"
+  cat >"$T.bin/curl" <<EOF
+#!/bin/sh
+while [ \$# -gt 0 ]; do
+  if [ "\$1" = -o ]; then
+    out="\$2"
+  fi
+  shift
+done
+if [ -e "$T.curl-fail" ]; then
+  exit 22
+fi
+cat >"\$out" <<'EOS'
+dst="\${MISE_INSTALL_PATH:-\$HOME/.local/bin/mise}"
+mkdir -p "\$(dirname "\$dst")"
+cp "$T.mise" "\$dst"
+echo 'install mise' >>"$T.calls"
+EOS
+EOF
+  cat >"$T.mise" <<EOF
+#!/bin/sh
+if [ "\$3" = exec ]; then
+  if [ -e "$T.mise-exec-fail" ]; then
+    echo 'mise ERROR invalid config' >&2
+    exit 1
+  fi
+  if [ "\${MISE_EXEC_AUTO_INSTALL:-}" != false ]; then
+    echo 'mise exec with auto-install' >>"$T.calls"
+  fi
+  shift 4
+  PATH="$T.tools:/usr/bin:/bin" exec "\$@"
+fi
+echo "mise \$*" >>"$T.calls"
+if [ -e "$T.mise-fail" ]; then
+  exit 1
+fi
+EOF
+  cat >"$T.tools/herdr" <<EOF
+#!/bin/sh
+if [ -L "\$HOME/.config/mise/conf.d/herdr.toml" ]; then
+  linked=yes
+else
+  linked=no
+fi
+echo "herdr \$* CLAUDE_CONFIG_DIR=\$CLAUDE_CONFIG_DIR linked=\$linked" >>"$T.calls"
+if [ -e "$T.herdr-fail" ]; then
+  exit 1
+fi
+EOF
+  chmod +x "$T.bin/curl" "$T.mise" "$T.tools/herdr"
+}
+
+expect_calls() {
+  actual="$(cat "$T.calls" 2>/dev/null || true)"
+  if [ "$actual" != "$1" ]; then
+    fail "calls: expected '$1', got '$actual'"
+  fi
 }
 
 expect_rc() {
@@ -213,8 +283,9 @@ fi
 expect_output 'dry run'
 
 begin 'without a state file, fully linked apps are treated as installed'
-mkdir -p "$T/.config/herdr" "$T/.config/peco"
+mkdir -p "$T/.config/herdr" "$T/.config/mise/conf.d" "$T/.config/peco"
 ln -s "$DOTDIR/shared/.config/herdr/config.toml" "$T/.config/herdr/config.toml"
+ln -s "$DOTDIR/shared/.config/mise/conf.d/herdr.toml" "$T/.config/mise/conf.d/herdr.toml"
 ln -s "$DOTDIR/shared/.config/peco/config.json" "$T/.config/peco/config.json"
 ln -s "$DOTDIR/shared/.zshrc" "$T/.zshrc"
 install --add alacritty
@@ -293,6 +364,279 @@ expect_output 'both --add and --remove'
 if [ -n "$(ls -A "$T")" ]; then
   fail 'the conflicting arguments changed the home directory'
 fi
+
+begin 'installing adds dependencies, installs mise and then runs post_install'
+install --add herdr
+expect_rc 0
+expect_installed 'claude herdr mise'
+expect_output 'claude is added as a dependency'
+expect_calls "$(printf '%s\n' 'install mise' "mise -C $T install" \
+  "herdr integration install claude CLAUDE_CONFIG_DIR=$T/.config/claude linked=yes")"
+if [ "$(grep -o 'Installing [a-z]*' "$T.log" | tr '\n' ' ')" != 'Installing mise Installing claude Installing herdr ' ]; then
+  fail 'dependencies should be installed first'
+fi
+
+begin 'an installed dependency is not reported as added'
+install --add mise
+install --add jq
+expect_rc 0
+if grep -q 'is added as a dependency' "$T.log"; then
+  fail 'an installed dependency should not be reported as added'
+fi
+
+for result in succeeds fails; do
+  begin "the mise installer is removed when the installation $result"
+  if [ "$result" = fails ]; then
+    touch "$T.curl-fail"
+  fi
+  mkdir -p "$T.tmp"
+  RC=0
+  (
+    unset CLAUDE_CONFIG_DIR XDG_CONFIG_HOME
+    HOME="$T" TMPDIR="$T.tmp" PATH="$T.bin:$PATH" sh "$INSTALL" --add jq
+  ) </dev/null >"$T.log" 2>&1 || RC=$?
+  if [ -n "$(ls -A "$T.tmp")" ]; then
+    fail 'the mise installer was left behind'
+  fi
+done
+
+begin 'an existing mise is not installed again'
+mkdir -p "$T/.local/bin"
+cp "$T.mise" "$T/.local/bin/mise"
+install --add ripgrep
+expect_rc 0
+expect_calls "mise -C $T install"
+
+begin 'apps without mise config do not run mise install'
+install --add tmux
+expect_rc 0
+expect_calls ''
+
+begin 'mise is installed to ~/.local/bin even if MISE_INSTALL_PATH is set'
+export MISE_INSTALL_PATH="$T.elsewhere"
+install --add ripgrep
+unset MISE_INSTALL_PATH
+expect_rc 0
+expect_no_entry ../"$(basename "$T").elsewhere"
+expect_calls "$(printf '%s\n' 'install mise' "mise -C $T install")"
+
+begin 'an up-to-date app runs no hooks'
+install --add herdr
+rm -f "$T.calls"
+install --add herdr
+expect_rc 0
+expect_calls ''
+
+begin 'uninstalling runs pre_uninstall before removing links'
+install --add herdr
+rm -f "$T.calls"
+install --remove herdr
+expect_rc 0
+expect_installed 'claude mise'
+expect_calls "herdr integration uninstall claude CLAUDE_CONFIG_DIR=$T/.config/claude linked=yes"
+
+begin 'apps are uninstalled before their dependencies'
+install --add herdr
+install --remove claude,herdr
+expect_rc 0
+expect_installed 'mise'
+if [ "$(grep -o 'Uninstalling [a-z]*' "$T.log" | tr '\n' ' ')" != 'Uninstalling herdr Uninstalling claude ' ]; then
+  fail 'herdr should be uninstalled before claude'
+fi
+
+begin 'a dependency is uninstalled after the apps that need it'
+install --add jq
+install --remove jq,mise
+expect_rc 0
+if [ "$(grep -o 'Uninstalling [a-z]*' "$T.log" | tr '\n' ' ')" != 'Uninstalling jq Uninstalling mise ' ]; then
+  fail 'jq should be uninstalled before mise'
+fi
+
+begin 'an app required by an installed app cannot be removed'
+install --add herdr
+install --remove claude
+expect_rc 1
+expect_output 'cannot remove claude: required by herdr'
+expect_installed 'claude herdr mise'
+expect_link .config/claude/CLAUDE.md
+
+begin 'a dependency is not added against an explicit --remove'
+install --add herdr --remove claude
+expect_rc 1
+expect_output 'cannot remove claude: required by herdr'
+expect_no_entry .config/claude/CLAUDE.md
+
+begin 'an installed app is kept when its dependency fails'
+mkdir -p "$T/.config/mise/conf.d" "$T/.local/share/dotfiles"
+ln -s "$DOTDIR/shared/.config/mise/conf.d/jq.toml" "$T/.config/mise/conf.d/jq.toml"
+printf 'jq\t.config/mise/conf.d/jq.toml\n' >"$T/.local/share/dotfiles/installed"
+echo mine >"$T/.config/mise/conf.d/mise.toml"
+echo mine >"$T/.config/mise/conf.d/mise.toml.bak"
+install --add jq
+expect_rc 1
+if grep -q 'jq: dependency' "$T.log"; then
+  fail 'jq should not be reported as failed'
+fi
+expect_installed 'jq'
+expect_link .config/mise/conf.d/jq.toml
+
+begin 'an installed app that gets new paths is kept when its dependency fails'
+mkdir -p "$T/.config/herdr" "$T/.config/mise/conf.d" "$T/.local/bin" "$T/.local/share/dotfiles"
+ln -s "$DOTDIR/shared/.config/herdr/config.toml" "$T/.config/herdr/config.toml"
+printf 'herdr\t.config/herdr/config.toml\n' >"$T/.local/share/dotfiles/installed"
+cp "$T.mise" "$T/.local/bin/mise"
+echo mine >"$T/.config/mise/conf.d/mise.toml"
+echo mine >"$T/.config/mise/conf.d/mise.toml.bak"
+install --add herdr
+expect_rc 1
+if grep -q 'herdr: dependency' "$T.log"; then
+  fail 'herdr should not be reported as failed'
+fi
+expect_link .config/mise/conf.d/herdr.toml
+
+begin 'an installed app that gets new paths runs no post_install'
+mkdir -p "$T/.config/herdr" "$T/.local/share/dotfiles"
+ln -s "$DOTDIR/shared/.config/herdr/config.toml" "$T/.config/herdr/config.toml"
+printf 'herdr\t.config/herdr/config.toml\n' >"$T/.local/share/dotfiles/installed"
+install --add herdr
+expect_rc 0
+expect_link .config/mise/conf.d/herdr.toml
+expect_calls "$(printf '%s\n' 'install mise' "mise -C $T install")"
+
+begin 'a missing tool fails post_install'
+rm "$T.tools/herdr"
+install --add herdr
+expect_rc 1
+expect_output 'herdr not found:'
+expect_installed 'claude mise'
+expect_no_entry .config/herdr/config.toml
+
+begin 'a failing mise install reverts only the apps that linked mise config'
+touch "$T.mise-fail"
+install --add herdr,tmux
+expect_rc 1
+expect_output 'command failed: mise install'
+expect_installed 'tmux'
+expect_link .config/tmux/tmux.conf
+expect_no_entry .config/mise/conf.d/mise.toml
+
+begin 'a failing post_install reverts the app'
+touch "$T.herdr-fail"
+install --add herdr
+expect_rc 1
+expect_output 'herdr: post_install failed'
+expect_output '2 apps installed, 1 failed (9 linked)'
+expect_installed 'claude mise'
+expect_no_entry .config/herdr/config.toml
+expect_no_entry .config/mise/conf.d/herdr.toml
+
+begin 'reverting an app restores only the backups made in the run'
+mkdir -p "$T/.config/mise/conf.d" "$T/.config/herdr"
+echo old >"$T/.config/mise/conf.d/herdr.toml.bak"
+echo mine >"$T/.config/herdr/config.toml"
+touch "$T.herdr-fail"
+install --add herdr
+expect_rc 1
+expect_no_entry .config/mise/conf.d/herdr.toml
+expect_content .config/mise/conf.d/herdr.toml.bak old
+expect_output '2 apps installed, 1 failed (9 linked)'
+expect_content .config/herdr/config.toml mine
+expect_no_entry .config/herdr/config.toml.bak
+
+begin 'an app whose dependency fails is skipped'
+mkdir -p "$T/.config/claude"
+echo mine >"$T/.config/claude/CLAUDE.md"
+echo mine >"$T/.config/claude/CLAUDE.md.bak"
+install --add herdr
+expect_rc 1
+expect_output 'herdr: dependency claude failed'
+expect_output 'Skipped herdr'
+expect_output '1 app installed, 2 failed (4 linked)'
+expect_output 'failed: claude herdr$'
+expect_installed 'mise'
+expect_no_entry .config/herdr/config.toml
+
+begin 'a failing pre_uninstall keeps the app and its dependencies'
+install --add herdr
+touch "$T.herdr-fail"
+install --remove claude,herdr
+expect_rc 1
+expect_output 'herdr: pre_uninstall failed'
+expect_output 'claude: required by herdr, which could not be uninstalled'
+expect_output 'failed: herdr claude$'
+expect_installed 'claude herdr mise'
+expect_link .config/herdr/config.toml
+expect_link .config/claude/CLAUDE.md
+
+begin 'an app is reverted when a dependency fails after linking'
+mkdir -p "$T/.config/mise/conf.d" "$T/.local/bin"
+ln -s "$DOTDIR/shared/.config/mise/conf.d/herdr.toml" "$T/.config/mise/conf.d/herdr.toml"
+cp "$T.mise" "$T/.local/bin/mise"
+touch "$T.mise-fail"
+install --add herdr
+expect_rc 1
+expect_output 'herdr: dependency claude failed'
+expect_calls "mise -C $T install"
+expect_no_entry .config/herdr/config.toml
+if [ -s "$T/.local/share/dotfiles/installed" ]; then
+  fail 'no app should be recorded'
+fi
+
+begin 'hooks follow XDG_CONFIG_HOME and a preset CLAUDE_CONFIG_DIR'
+RC=0
+(
+  unset CLAUDE_CONFIG_DIR
+  HOME="$T" XDG_CONFIG_HOME="$T/xdg" PATH="$T.bin:$PATH" sh "$INSTALL" --add herdr
+) </dev/null >"$T.log" 2>&1 || RC=$?
+expect_rc 0
+expect_calls "$(printf '%s\n' 'install mise' "mise -C $T install" \
+  "herdr integration install claude CLAUDE_CONFIG_DIR=$T/xdg/claude linked=yes")"
+rm -f "$T.calls"
+RC=0
+(
+  unset XDG_CONFIG_HOME
+  HOME="$T" CLAUDE_CONFIG_DIR="$T/custom" PATH="$T.bin:$PATH" sh "$INSTALL" --remove herdr
+) </dev/null >"$T.log" 2>&1 || RC=$?
+expect_rc 0
+expect_calls "herdr integration uninstall claude CLAUDE_CONFIG_DIR=$T/custom linked=yes"
+
+begin 'a missing tool does not block uninstalling'
+install --add herdr
+rm -f "$T/.local/bin/mise"
+install --remove herdr
+expect_rc 0
+expect_output 'mise not found, skipped'
+expect_installed 'claude mise'
+
+begin 'a broken mise is not mistaken for a missing tool'
+install --add herdr
+touch "$T.mise-exec-fail"
+install --remove herdr
+expect_rc 1
+expect_output 'could not run mise: herdr integration uninstall claude'
+expect_output 'mise ERROR invalid config'
+expect_installed 'claude herdr mise'
+
+begin 'a failing mise installation reverts the apps that linked mise config'
+touch "$T.curl-fail"
+install --add herdr
+expect_rc 1
+expect_output 'could not install mise'
+if grep -q 'command failed: mise install' "$T.log"; then
+  fail 'mise install should not run without mise'
+fi
+if [ -s "$T/.local/share/dotfiles/installed" ]; then
+  fail 'no app should be recorded'
+fi
+expect_no_entry .config/mise/conf.d/mise.toml
+expect_no_entry .config/mise/conf.d/claude.toml
+expect_no_entry .config/herdr/config.toml
+
+begin '--dry-run runs no hooks'
+install --add herdr --dry-run
+expect_rc 0
+expect_calls ''
+expect_output 'Running.*herdr integration install claude'
 
 begin '--list shows which apps are installed without changes'
 install --add vim

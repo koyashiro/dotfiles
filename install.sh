@@ -73,6 +73,7 @@ app_paths() {
       echo .config/cargo-atcoder.toml
       ;;
     claude)
+      echo .config/mise/conf.d/claude.toml
       echo .config/claude/CLAUDE.md
       echo .config/claude/commands
       echo .config/claude/settings.json
@@ -135,6 +136,7 @@ app_paths() {
       echo .config/mise/conf.d/hadolint.toml
       ;;
     herdr)
+      echo .config/mise/conf.d/herdr.toml
       echo .config/herdr/config.toml
       ;;
     jq)
@@ -277,6 +279,51 @@ app_paths() {
   esac
 }
 
+# Apps that the app needs, one per line. They are added along with the app and
+# cannot be removed while it stays installed.
+depends() {
+  case "$1" in
+    act | actionlint | aws | bash-language-server | bat | bun | c | claude | delta | deno | dive | eslint | eza | fd | fzf | github-cli | go | hadolint | jq | lua | markdownlint-cli2 | node | oxfmt | oxlint | pinact | pnpm | prettier | ripgrep | shellcheck | shfmt | stylelint | stylua | typescript | yarn | yq)
+      echo mise
+      ;;
+    herdr)
+      # `herdr integration install claude` fails without the Claude Code
+      # config directory.
+      echo claude
+      echo mise
+      ;;
+  esac
+}
+
+# Runs after the app is newly installed and `mise install` has run. A failure
+# reverts the app's links so that the next run installs it again.
+post_install() {
+  case "$1" in
+    herdr)
+      export_claude_config_dir
+      run_tool herdr integration install claude
+      ;;
+  esac
+}
+
+# Runs before the app's links are removed, while its tools are still
+# configured. A failure keeps the app installed.
+pre_uninstall() {
+  case "$1" in
+    herdr)
+      export_claude_config_dir
+      run_tool herdr integration uninstall claude
+      ;;
+  esac
+}
+
+# The claude app sets CLAUDE_CONFIG_DIR only in shells started after it is
+# installed, and tools such as herdr fall back to ~/.claude without it.
+export_claude_config_dir() {
+  CLAUDE_CONFIG_DIR="${CLAUDE_CONFIG_DIR:-${XDG_CONFIG_HOME:-${HOME}/.config}/claude}"
+  export CLAUDE_CONFIG_DIR
+}
+
 ESC="$(printf '\033')"
 CR="$(printf '\r')"
 TAB="$(printf '\t')"
@@ -297,6 +344,19 @@ REMOVED_APPS=''
 OK_APPS=''
 KEPT_RECORD=''
 DRY_RUN_DIRS=''
+# Apps that install_app linked in this run, including ones that were already
+# installed and only got new paths
+LINKED_APPS=''
+# Lines of "<app><TAB><path>" linked in this run
+NEW_LINKS=''
+# Lines of "<app><TAB><path>" backed up in this run
+NEW_BACKUPS=''
+# Apps that linked a mise config in this run
+MISE_APPS=''
+MISE_FAILED=''
+SKIP_MISSING_TOOLS=''
+ORDERED=''
+VISITING=''
 
 N_INSTALLED=0
 N_UP_TO_DATE=0
@@ -416,6 +476,131 @@ run() {
   fi
 }
 
+# Running mise in HOME keeps a mise.toml in the current directory from adding
+# its own tools, and disabling auto-install keeps `mise exec` from downloading
+# missing tools, which would turn a missing tool into a download or an
+# unrelated failure.
+mise_exec() {
+  MISE_EXEC_AUTO_INSTALL=false "${MISE}" -C "${HOME}" exec -- "$@"
+}
+
+# Tools that `mise install` has just installed are not on PATH until mise is
+# activated in a new shell, so run them through mise.
+run_tool() {
+  tool_command="$*"
+  status '1;32' Running "${tool_command}"
+  if [ -n "${DRY_RUN}" ]; then
+    return
+  fi
+  # `mise exec` exits with 1, not 127, for a missing command.
+  # shellcheck disable=SC2016
+  if ! [ -x "${MISE}" ]; then
+    missing='mise'
+  elif ! mise_exec true; then
+    error "could not run mise: ${tool_command}"
+    return 1
+  elif ! mise_exec sh -c 'command -v "$1"' sh "$1" >/dev/null 2>&1; then
+    missing="$1"
+  else
+    missing=''
+  fi
+  if [ -n "${missing}" ]; then
+    if [ -n "${SKIP_MISSING_TOOLS}" ]; then
+      warn "${missing} not found, skipped: ${tool_command}"
+      return
+    fi
+    error "${missing} not found: ${tool_command}"
+    return 1
+  fi
+  if ! mise_exec "$@"; then
+    error "command failed: ${tool_command}"
+    return 1
+  fi
+}
+
+# The official installer puts mise at ~/.local/bin/mise, which MISE points to.
+install_mise() {
+  status '1;32' Downloading "mise from ${MISE_INSTALLER_URL}"
+  if [ -n "${DRY_RUN}" ]; then
+    return
+  fi
+  installer="$(mktemp)"
+  fetched=''
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL -o "${installer}" "${MISE_INSTALLER_URL}" && fetched='1'
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO "${installer}" "${MISE_INSTALLER_URL}" && fetched='1'
+  else
+    error 'curl or wget is required to install mise'
+  fi
+  if [ -z "${fetched}" ] || ! MISE_INSTALL_PATH="${MISE}" sh "${installer}"; then
+    rm -f "${installer}"
+    error 'could not install mise'
+    return 1
+  fi
+  rm -f "${installer}"
+}
+
+run_mise_install() {
+  if ! [ -x "${MISE}" ] && ! install_mise; then
+    return 1
+  fi
+  status '1;32' Running 'mise install'
+  if ! run "${MISE}" -C "${HOME}" install; then
+    error 'command failed: mise install'
+    return 1
+  fi
+}
+
+# depends_on <app> <dependency>
+depends_on() {
+  contains "$(depends "$1" | tr '\n' ' ')" "$2"
+}
+
+# order_apps <apps>: sets ORDERED to the apps and their dependencies, each
+# after its dependencies
+order_apps() {
+  ORDERED=''
+  VISITING=''
+  for ordered_app in $1; do
+    visit_app "${ordered_app}"
+  done
+}
+
+# visit_app <app>: appends the app to ORDERED after its dependencies
+visit_app() {
+  if contains "${ORDERED} ${VISITING}" "$1"; then
+    return
+  fi
+  VISITING="${VISITING} $1"
+  for dep in $(depends "$1"); do
+    visit_app "${dep}"
+  done
+  ORDERED="${ORDERED} $1"
+}
+
+# Prints the first dependency of the app that failed in this run.
+failed_dependency() {
+  for dep in $(depends "$1"); do
+    if contains "${FAILED}" "${dep}"; then
+      echo "${dep}"
+      return
+    fi
+  done
+  return 1
+}
+
+# Prints the first app that failed in this run and depends on the app.
+failed_dependent() {
+  for failed_app in ${FAILED}; do
+    if depends_on "${failed_app}" "$1"; then
+      echo "${failed_app}"
+      return
+    fi
+  done
+  return 1
+}
+
 contains() {
   case " $1 " in
     *" $2 "*) return 0 ;;
@@ -458,6 +643,8 @@ set_envs() {
   DOTDIR="$(cd -P "$(dirname "$0")" && pwd -P)"
   STATE_DIR="${HOME}/.local/share/dotfiles"
   STATE_FILE="${STATE_DIR}/installed"
+  MISE="${HOME}/.local/bin/mise"
+  MISE_INSTALLER_URL='https://mise.run'
 }
 
 # Mode 0700, as the XDG Base Directory Specification recommends.
@@ -797,9 +984,18 @@ install_app() {
   done
   for path in ${linked_paths}; do
     N_LINKED=$((N_LINKED + 1))
+    NEW_LINKS="${NEW_LINKS}$1${TAB}${path}${NL}"
+    case "${path}" in
+      .config/mise/conf.d/*)
+        if ! contains "${MISE_APPS}" "$1"; then
+          MISE_APPS="${MISE_APPS} $1"
+        fi
+        ;;
+    esac
   done
   for path in ${backed_up_paths}; do
     N_BACKED_UP=$((N_BACKED_UP + 1))
+    NEW_BACKUPS="${NEW_BACKUPS}$1${TAB}${path}${NL}"
   done
   for path in $(stale_paths "$1"); do
     if ! unlink_path "$1" "${path}"; then
@@ -808,6 +1004,7 @@ install_app() {
   done
   N_INSTALLED=$((N_INSTALLED + 1))
   OK_APPS="${OK_APPS} $1"
+  LINKED_APPS="${LINKED_APPS} $1"
 }
 
 rollback_app() {
@@ -829,6 +1026,36 @@ rollback_app() {
   done
   status '1;31' Failed "$1"
   FAILED="${FAILED} $1"
+}
+
+# revert_app <app> <reason>: removes the links that install_app made in this
+# run when a later step for the app fails. Only backups made in this run are
+# restored; unlink_path would also move a .bak left by an earlier run.
+revert_app() {
+  error "$1: $2"
+  while IFS="${TAB}" read -r link_app link_path; do
+    if [ "${link_app}" != "$1" ]; then
+      continue
+    fi
+    dst="${HOME}/${link_path}"
+    if run rm "${dst}"; then
+      status '1;31' Removing "$(pretty "${dst}")"
+      N_LINKED=$((N_LINKED - 1))
+    fi
+    case "${NL}${NEW_BACKUPS}" in
+      *"${NL}$1${TAB}${link_path}${NL}"*)
+        if run mv "${dst}.bak" "${dst}"; then
+          status '1;33' Restoring "$(pretty "${dst}.bak") -> $(pretty "${dst}")"
+          N_BACKED_UP=$((N_BACKED_UP - 1))
+        fi
+        ;;
+    esac
+  done <<EOF
+${NEW_LINKS}
+EOF
+  status '1;31' Failed "$1"
+  FAILED="${FAILED} $1"
+  N_INSTALLED=$((N_INSTALLED - 1))
 }
 
 # unlink_path <app> <path>: remove the link to the repository and restore the
@@ -863,6 +1090,17 @@ unlink_path() {
 uninstall_app() {
   status 1 Uninstalling "$1"
 
+  # A missing tool cannot undo its integration anyway, and failing here would
+  # keep the app, and every app it depends on, installed for good.
+  SKIP_MISSING_TOOLS='1'
+  if ! pre_uninstall "$1"; then
+    SKIP_MISSING_TOOLS=''
+    error "$1: pre_uninstall failed"
+    status '1;31' Failed "$1"
+    FAILED="${FAILED} $1"
+    return
+  fi
+  SKIP_MISSING_TOOLS=''
   for path in $(recorded_paths "$1"); do
     if ! unlink_path "$1" "${path}"; then
       status '1;31' Failed "$1"
@@ -1115,6 +1353,34 @@ main() {
     exit 1
   fi
 
+  # Dependencies come first in add and last in remove.
+  order_apps "${add}"
+  for app in ${ORDERED}; do
+    if ! contains "${add}" "${app}" && ! contains "${installed}" "${app}"; then
+      note "${app} is added as a dependency"
+    fi
+  done
+  add="${ORDERED}"
+
+  # REMOVE also covers apps that are not installed, so that a dependency is not
+  # added against an explicit --remove.
+  for app in ${remove} ${REMOVE}; do
+    for other in ${installed} ${add}; do
+      if ! contains "${remove}" "${other}" && depends_on "${other}" "${app}"; then
+        error "cannot remove ${app}: required by ${other}"
+        exit 1
+      fi
+    done
+  done
+  order_apps "${remove}"
+  remove_set="${remove}"
+  remove=''
+  for app in ${ORDERED}; do
+    if contains "${remove_set}" "${app}"; then
+      remove="${app} ${remove}"
+    fi
+  done
+
   if [ -z "${add}${remove}" ]; then
     print_summary
     return
@@ -1124,10 +1390,38 @@ main() {
 
   # set -e does not apply inside these calls; they check failures themselves.
   for app in ${remove}; do
+    if dependent="$(failed_dependent "${app}")"; then
+      error "${app}: required by ${dependent}, which could not be uninstalled"
+      status '1;31' Failed "${app}"
+      FAILED="${FAILED} ${app}"
+      continue
+    fi
     uninstall_app "${app}" || true
   done
   for app in ${add}; do
+    # An app that is already installed is kept rather than reported as failed.
+    if ! contains "${installed}" "${app}" && dep="$(failed_dependency "${app}")"; then
+      error "${app}: dependency ${dep} failed"
+      status '1;33' Skipped "${app}"
+      FAILED="${FAILED} ${app}"
+      continue
+    fi
     install_app "${app}" || true
+  done
+  if [ -n "${MISE_APPS}" ] && ! run_mise_install; then
+    MISE_FAILED='1'
+  fi
+  # Apps that were already installed only lose the paths that need mise.
+  for app in ${LINKED_APPS}; do
+    if [ -n "${MISE_FAILED}" ] && contains "${MISE_APPS}" "${app}"; then
+      revert_app "${app}" 'mise install failed'
+    elif contains "${installed}" "${app}"; then
+      continue
+    elif dep="$(failed_dependency "${app}")"; then
+      revert_app "${app}" "dependency ${dep} failed"
+    elif ! post_install "${app}"; then
+      revert_app "${app}" 'post_install failed'
+    fi
   done
 
   result=''
