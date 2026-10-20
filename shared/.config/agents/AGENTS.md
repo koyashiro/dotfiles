@@ -102,14 +102,38 @@
 
 ## Commits
 
-- Write commit messages in English (both subject and body). Follow the conventional commits
-  format: `type(scope): summary`.
-- Commit messages are basically a single subject line. Do not add a body unless asked.
+- Follow the conventional commits format: `type(scope): summary`. Write the message in the
+  language of the repository's existing commit history; use English when there is none.
+- When the commit has a corresponding issue, base the summary on the issue title. For a
+  Japanese title, drop the trailing 「する」: issue 「XXXにYYYを追加する」 →
+  `feat(scope): XXXにYYYを追加`.
+- A commit message is a single subject line in principle. Add a body only when there is a
+  strong reason, and ask before adding it.
+- When rewriting existing commits, also reset AuthorDate to the current time so that it matches
+  CommitDate: `git commit --amend --no-edit --date="$(date -R)"`,
+  `git rebase --ignore-date <base>`. Rewrite only commits on a work branch that has not been
+  merged into the default branch.
 - "Suggest / draft a commit message" means **present the text only**. Do not run `git add` or
   `git commit`. Only execute a commit when explicitly told to "commit this".
 
 ## Issues and pull requests
 
+- Phrase an issue title as the action to take: an imperative in English (`Add YYY to XXX`),
+  ending in 「する」 in Japanese (「XXXにYYYを追加する」).
+- Write a pull request title in the same form as a commit subject (see Commits), e.g.
+  `feat(scope): XXXにYYYを追加`.
+- For a pull request body, use the repository's pull request template as is when there is one,
+  keeping its comments, and fill in only the following. Add nothing else unless instructed.
+  - Link the corresponding issue with `- closes <issue URL>`.
+  - Summarize the change in one sentence: the issue title in past tense. In Japanese, change
+    the trailing 「する」 to 「しました。」: 「XXXにYYYを追加しました。」.
+  - Describe how the change was verified, matching what it is. When tests or CI cover it, say
+    so (e.g. "Only removes unused code; covered by CI."). When unsure, ask.
+- Create a pull request as a draft (`gh pr create --draft`) unless told otherwise.
+- Base a pull request on the default branch. Use another base only when the user, after
+  hearing the reason and how long that branch will live, explicitly approves a short-lived one.
+  Do not stack pull requests or make one depend on another unless instructed; when stacking
+  seems necessary, ask.
 - Include a sentence only if the reader will use it to do or review the work. Judge by that,
   not by length: detail the reader needs stays.
 - Cut justifications for a decision, notes about what is not affected, and restatements of
