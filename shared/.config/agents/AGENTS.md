@@ -56,6 +56,8 @@
   project-local environment (e.g. venv) is still considered system pollution.
 - Destructive operations (file deletion, dropping DB tables, `rm -rf`, etc.) must receive
   explicit prior approval.
+- An approved operation may be carried out by you or by a subagent; choose whichever suits
+  the task.
 
 ## Code changes
 
