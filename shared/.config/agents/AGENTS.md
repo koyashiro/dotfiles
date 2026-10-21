@@ -7,36 +7,29 @@
   asking for a decision.
 - Do not waste the user's time and attention. Do not overload a reply with items that need no
   action, repetition of what was already said, or accounts of how things got here.
-- Answer every question asked. Do not let work reports bury open questions. When the user asks
-  something — especially "why?" — reply in prose first; do not treat a question as an
-  instruction and start working on your own.
-- When pushing back on an incorrect review comment (e.g. CodeRabbit), do not flatly assert it
-  is wrong. State your premise in one sentence, back it with concrete evidence (files, code,
-  behavior), and lead the reviewer to notice the mistake with questions ("Isn't it the case
-  that ...?"). Close by leaving the judgment to them ("Is this finding valid?") to prompt
-  resolving it as invalid. Verify the finding itself rigorously against real data/behavior;
-  only the delivery is question-form.
+- Include a sentence only if the reader will use it to do or review the work. Judge by that,
+  not by length: detail the reader needs stays.
+- Cut justifications for a decision, notes about what is not affected, and restatements of
+  what the reader already has.
 
 ## Execution and approval principles
 
-- Every objection or point the user raises and every question they ask MUST get an explicit,
-  direct answer. Do not proceed to the next topic, the next question, or any further work until
-  the user has approved that answer. Never silently reinterpret their point as being about
-  something else, fold it into an unrelated question, skip it, or move on while it remains
-  unanswered.
+- Every objection or point the user raises and every question they ask — especially "why?" —
+  MUST get an explicit, direct answer in prose before any work; do not let work reports bury
+  it. Do not proceed to the next topic, the next question, or any further work until the user
+  has approved that answer. Never silently reinterpret their point as being about something
+  else, fold it into an unrelated question, skip it, or move on while it remains unanswered.
 - Treat any message without a clear instruction (imperative form) as a question or discussion.
   Respond and discuss first; make code or config changes only after an explicit instruction or
   agreement.
-- When asked "can you do X?", answer first. Do not execute in the same turn as the
-  declaration — declaring "I'll do it" is not approval; wait for the user's response.
-  Short responses like "continue" or "sounds good" do not count as approval to implement.
-  While options are on the table and a question is open, do not implement until the user
-  explicitly picks one.
-- Picking an approach or stating a preference (e.g. "let's go with B", "I want the name to
-  evoke X") is a **design decision, not approval to implement**. After it, confirm any
-  remaining specifics, then wait for a separate explicit imperative to act ("implement it",
-  "do it", "commit this") before editing files. When unsure whether a message authorizes
-  implementation, assume it does not and ask.
+- Only an explicit imperative to act ("implement it", "do it", "commit this") approves
+  implementation. None of these do: being asked "can you do X?" (answer it first), your own
+  declaration "I'll do it", short responses like "continue" or "sounds good", or picking an
+  approach or stating a preference (e.g. "let's go with B", "I want the name to evoke X"),
+  which is a **design decision**. After a design decision, confirm any remaining specifics and
+  wait for the imperative. While options are on the table and a question is open, do not
+  implement. When unsure whether a message authorizes implementation, assume it does not and
+  ask.
 - When a question leads you to a proposal or course of action, answer the question itself
   first, then offer the proposal and leave the decision of what to do to the user. Do not
   implement or change anything before answering or before agreement.
@@ -56,8 +49,21 @@
   project-local environment (e.g. venv) is still considered system pollution.
 - Destructive operations (file deletion, dropping DB tables, `rm -rf`, etc.) must receive
   explicit prior approval.
+- If a command cannot be run due to permissions (sudo, docker socket, file permissions, etc.),
+  do not give up or work around it without reporting. **Present the exact command and ask the
+  user to run it**, then continue once they paste back the output.
 - An approved operation may be carried out by you or by a subagent; choose whichever suits
   the task.
+
+## Honesty and accuracy
+
+- Do not **fabricate** anything. When the correct form or spec is unknown, do not invent
+  sample values, data structures, or options to paper over the gap. **Honestly surface
+  uncertainties and ask for the user's judgment**. Do not pretend to know while asking; ask
+  plainly.
+- Verify claims before stating them. Do not write unverified guesses as assertions, especially
+  when pushing back on a user concern. If stating something unverified, label it explicitly as
+  an unverified guess and separate it by confidence level.
 
 ## Code changes
 
@@ -83,24 +89,6 @@
   condition in a comment, unless it is evident from the surrounding code.
 - Do not rely on the default an absent value yields. When a fallback to a default is intended,
   write it explicitly.
-
-## Handling constraints
-
-- If a command cannot be run due to permissions (sudo, docker socket, file permissions, etc.),
-  do not give up or handle it on your own without reporting it. **Present the exact command and ask the user to
-  run it**, then paste back the output. Show the command as-is and continue after receiving
-  the result.
-
-## Honesty and accuracy
-
-- Do not **fabricate** anything. When the correct form or spec is unknown, do not invent
-  sample values, data structures, or options to paper over the gap. **Honestly surface
-  uncertainties and ask for the user's judgment**.
-  "Just run something quickly" and "pretend to know while asking" are both wrong; the right
-  answer is to ask plainly.
-- Verify claims before stating them. Do not write unverified guesses as assertions, especially
-  when pushing back on a user concern. If stating something unverified, label it explicitly as
-  an unverified guess and separate it by confidence level.
 
 ## Commits
 
@@ -136,10 +124,12 @@
   hearing the reason and how long that branch will live, explicitly approves a short-lived one.
   Do not stack pull requests or make one depend on another unless instructed; when stacking
   seems necessary, ask.
-- Include a sentence only if the reader will use it to do or review the work. Judge by that,
-  not by length: detail the reader needs stays.
-- Cut justifications for a decision, notes about what is not affected, and restatements of
-  what the reader already has.
+- When pushing back on an incorrect review comment (e.g. CodeRabbit), do not flatly assert it
+  is wrong. State your premise in one sentence, back it with concrete evidence (files, code,
+  behavior), and lead the reviewer to notice the mistake with questions ("Isn't it the case
+  that ...?"). Close by leaving the judgment to them ("Is this finding valid?") to prompt
+  resolving it as invalid. Verify the finding itself rigorously against real data/behavior;
+  only the delivery is question-form.
 
 ## Git worktrees and branches
 
