@@ -157,6 +157,8 @@
     without the `origin/` prefix.
   - `<root-pane-id>` is `.result.root_pane.pane_id` of the create output. `<name>` must be
     unique and match `[a-z][a-z0-9_-]{0,31}`.
+  - `<summary>` in `--label` is the same `<summary>` as in the branch name, without the issue
+    numbers.
   - In `<requirements>`, include the issue link, if any, and the user's instruction verbatim,
     state that the user has approved starting the work, and mark anything the user did not
     state as your own inference.
