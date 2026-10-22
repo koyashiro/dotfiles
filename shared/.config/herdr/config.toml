@@ -10,3 +10,6 @@ prompt_new_tab_name = false
 
 [worktrees]
 directory = "~/.local/share/herdr/worktrees"
+
+[ui.toast]
+delivery = "system"
