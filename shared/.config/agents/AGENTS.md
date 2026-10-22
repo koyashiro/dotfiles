@@ -39,6 +39,8 @@
   report what will run and how long it is expected to take. Run operations whose results are
   not needed for the next step in the background to keep the conversation responsive.
   Never make the user wait in silence.
+- When explicitly asked to notify the user while running in herdr (`HERDR_ENV` is `1`), use
+  `herdr notification show [--body <text>] <title>`.
 
 ## Operations requiring approval
 
