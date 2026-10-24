@@ -17,7 +17,7 @@ else
 fi
 
 # Apps
-for f in "$XDG_CONFIG_HOME"/sh/env.d/*.sh; do
+for f in "${XDG_CONFIG_HOME:-$HOME/.config}/sh/env.d"/*.sh; do
   # shellcheck disable=SC1090
   [ -f "$f" ] && . "$f"
 done
@@ -28,9 +28,9 @@ export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/coreutils/lib
 
 # wsl
 if [ -n "${WSL_INTEROP:-}" ]; then
-  if [ -f "$XDG_CONFIG_HOME"/wsl/env.sh ]; then
+  if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/wsl/env.sh" ]; then
     # shellcheck source=windows/wsl/.config/wsl/env.sh
-    . "$XDG_CONFIG_HOME"/wsl/env.sh
+    . "${XDG_CONFIG_HOME:-$HOME/.config}/wsl/env.sh"
   fi
 fi
 

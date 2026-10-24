@@ -1,7 +1,7 @@
 # shellcheck shell=sh
 
 alias ..='cd ..'
-alias renv='. ${XDG_CONFIG_HOME:-$HOME/.config}/sh/env.sh'
+alias renv='. "${XDG_CONFIG_HOME:-$HOME/.config}/sh/env.sh"'
 
 # enable color support
 if [ -x /usr/bin/dircolors ]; then
@@ -23,7 +23,7 @@ alias rm='rm -i'
 alias tree='tree -a -I "\.git"'
 
 # Apps
-for f in "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/rc.d/*.sh; do
+for f in "${XDG_CONFIG_HOME:-$HOME/.config}/sh/rc.d"/*.sh; do
   # shellcheck disable=SC1090
   [ -f "$f" ] && . "$f"
 done

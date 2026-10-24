@@ -1,3 +1,3 @@
 # shellcheck shell=sh
 
-export TS_NODE_HISTORY="$XDG_DATA_HOME"/ts-node/history
+export TS_NODE_HISTORY="${XDG_DATA_HOME:-$HOME/.local/share}/ts-node/history"

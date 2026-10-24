@@ -2,8 +2,8 @@
 
 # env
 # Read POSIX sh files with sh semantics (unmatched globs, word splitting).
-if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh ]; then
-  emulate sh -c '. "${XDG_CONFIG_HOME:-$HOME/.config}"/sh/env.sh'
+if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/sh/env.sh" ]; then
+  emulate sh -c '. "${XDG_CONFIG_HOME:-$HOME/.config}/sh/env.sh"'
 fi
 
 # shellcheck disable=SC2034

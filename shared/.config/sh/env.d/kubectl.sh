@@ -1,4 +1,4 @@
 # shellcheck shell=sh
 
-export KUBECONFIG="$XDG_CONFIG_HOME"/kube
-export KUBECACHEDIR="$XDG_CACHE_HOME"/kube
+export KUBECONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/kube"
+export KUBECACHEDIR="${XDG_CACHE_HOME:-$HOME/.cache}/kube"

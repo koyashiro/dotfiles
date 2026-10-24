@@ -4,16 +4,16 @@
 export PAGER=less
 
 # Less
-if [ ! -d "$XDG_CONFIG_HOME"/less ]; then
-  mkdir -m 700 "$XDG_CONFIG_HOME"/less
+if [ ! -d "${XDG_CONFIG_HOME:-$HOME/.config}/less" ]; then
+  mkdir -m 700 "${XDG_CONFIG_HOME:-$HOME/.config}/less"
 fi
-if [ ! -d "$XDG_CACHE_HOME"/less ]; then
-  mkdir -m 700 "$XDG_CACHE_HOME"/less
+if [ ! -d "${XDG_CACHE_HOME:-$HOME/.cache}/less" ]; then
+  mkdir -m 700 "${XDG_CACHE_HOME:-$HOME/.cache}/less"
 fi
 export LESS='-fiMRfFx4X'
 export LESSCHARSET='utf-8'
-export LESSKEY="$XDG_CONFIG_HOME"/less/lesskey
-export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+export LESSKEY="${XDG_CONFIG_HOME:-$HOME/.config}/less/lesskey"
+export LESSHISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/less/history"
 
 # LESS man page colors (makes Man pages more readable).
 LESS_TERMCAP_mb=$(printf "\e[01;31m")

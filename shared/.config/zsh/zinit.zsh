@@ -1,17 +1,17 @@
 # install zinit
-if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit ]]; then
-  mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit
-  git clone https://github.com/zdharma-continuum/zinit.git "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit/bin
+if [[ ! -d "${XDG_DATA_HOME:-$HOME/.local/share}/zinit" ]]; then
+  mkdir -m 700 "${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
+  git clone https://github.com/zdharma-continuum/zinit.git "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/bin"
 fi
 
 declare -A ZINIT
 ZINIT=(
-  BIN_DIR "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit/bin
-  HOME_DIR "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit
-  COMPINIT_OPTS "${XDG_DATA_HOME:-$HOME/.local/share}"/zsh/compdump
+  BIN_DIR "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/bin"
+  HOME_DIR "${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
+  COMPINIT_OPTS "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/compdump"
 )
 
-source "${XDG_DATA_HOME:-$HOME/.local/share}"/zinit/bin/zinit.zsh
+source "${XDG_DATA_HOME:-$HOME/.local/share}/zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 [[ -n "${_comps}" ]] && _comps[zinit]=_zinit
 
