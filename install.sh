@@ -56,6 +56,8 @@ app_paths() {
     bash)
       echo .bash_profile
       echo .bashrc
+      echo .config/bash/rc.d/bash-completion.bash
+      echo .config/bash/rc.d/prompt.bash
       ;;
     bash-language-server)
       echo .config/mise/conf.d/bash-language-server.toml
