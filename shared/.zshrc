@@ -1,5 +1,10 @@
 # .zshrc
 
+# interactive checking
+if [[ ! -o interactive ]]; then
+  return
+fi
+
 # History file
 if [[ ! -d "${XDG_STATE_HOME:-$HOME/.local/state}/zsh" ]]; then
   mkdir -m 700 "${XDG_STATE_HOME:-$HOME/.local/state}/zsh"

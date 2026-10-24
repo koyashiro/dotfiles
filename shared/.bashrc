@@ -1,7 +1,7 @@
 # shellcheck shell=bash
 
 # interactive checking
-if [[ -z "$PS1" ]]; then
+if [[ $- != *i* ]]; then
   return
 fi
 
