@@ -366,7 +366,7 @@ N_UNINSTALLED=0
 N_LINKED=0
 N_BACKED_UP=0
 N_UNCHANGED=0
-N_REMOVED=0
+N_UNLINKED=0
 N_RESTORED=0
 
 # Colors only on a terminal and when NO_COLOR is unset or empty (no-color.org).
@@ -459,7 +459,7 @@ print_summary() {
   if [ -n "${VERBOSE}" ]; then
     summary_item "${N_UNCHANGED}" "${N_UNCHANGED} unchanged"
   fi
-  summary_item "${N_REMOVED}" "${N_REMOVED} removed"
+  summary_item "${N_UNLINKED}" "${N_UNLINKED} unlinked"
   summary_item "${N_RESTORED}" "${N_RESTORED} restored"
 
   if [ -n "${DRY_RUN}" ]; then
@@ -1013,7 +1013,7 @@ rollback_app() {
   error "$1: $2"
   for path in ${linked_paths}; do
     if run rm "${HOME}/${path}"; then
-      status '1;31' Removing "$(pretty "${HOME}/${path}")"
+      status '1;31' Unlinking "$(pretty "${HOME}/${path}")"
     fi
   done
   for path in ${backed_up_paths}; do
@@ -1041,7 +1041,7 @@ revert_app() {
     fi
     dst="${HOME}/${link_path}"
     if run rm "${dst}"; then
-      status '1;31' Removing "$(pretty "${dst}")"
+      status '1;31' Unlinking "$(pretty "${dst}")"
       N_LINKED=$((N_LINKED - 1))
     fi
     case "${NL}${NEW_BACKUPS}" in
@@ -1077,8 +1077,8 @@ unlink_path() {
     error "$1: could not remove $(pretty "${dst}")"
     return 1
   fi
-  status '1;31' Removing "$(pretty "${dst}")"
-  N_REMOVED=$((N_REMOVED + 1))
+  status '1;31' Unlinking "$(pretty "${dst}")"
+  N_UNLINKED=$((N_UNLINKED + 1))
   if exists_or_link "${dst}.bak"; then
     if ! run mv "${dst}.bak" "${dst}"; then
       error "$1: could not restore $(pretty "${dst}.bak")"
