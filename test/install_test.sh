@@ -525,7 +525,7 @@ touch "$T.herdr-fail"
 install --add herdr
 expect_rc 1
 expect_output 'herdr: post_install failed'
-expect_output '2 apps installed, 1 failed (9 linked)'
+expect_output '2 apps installed, 1 failed (10 linked)'
 expect_installed 'claude mise'
 expect_no_entry .config/herdr/config.toml
 expect_no_entry .config/mise/conf.d/herdr.toml
@@ -539,7 +539,7 @@ install --add herdr
 expect_rc 1
 expect_no_entry .config/mise/conf.d/herdr.toml
 expect_content .config/mise/conf.d/herdr.toml.bak old
-expect_output '2 apps installed, 1 failed (9 linked)'
+expect_output '2 apps installed, 1 failed (10 linked)'
 expect_content .config/herdr/config.toml mine
 expect_no_entry .config/herdr/config.toml.bak
 

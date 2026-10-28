@@ -78,6 +78,7 @@ app_paths() {
       echo .config/mise/conf.d/claude.toml
       echo .config/claude/CLAUDE.md
       echo .config/claude/commands
+      echo .config/claude/hooks/require-issue-pr-titles.sh
       echo .config/claude/settings.json
       echo .config/sh/env.d/claude.sh
       ;;

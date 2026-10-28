@@ -20,6 +20,9 @@ shellcheck lint/zsh-syntax-check.sh
 # git
 shellcheck shared/.config/git/prune-merged.sh
 
+# claude
+shellcheck shared/.config/claude/hooks/require-issue-pr-titles.sh
+
 # sh
 shellcheck --shell sh --external-source shared/.profile
 shellcheck --shell sh --external-source shared/.config/sh/env.sh

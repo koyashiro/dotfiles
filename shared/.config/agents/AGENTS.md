@@ -11,6 +11,8 @@
   not by length: detail the reader needs stays.
 - Cut justifications for a decision, notes about what is not affected, and restatements of
   what the reader already has.
+- When mentioning an issue or pull request number, give its title after it in the form
+  `#1234 (Title)`.
 
 ## Execution and approval principles
 

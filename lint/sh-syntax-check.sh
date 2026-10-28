@@ -11,7 +11,8 @@ cd "$DOTDIR"
 for f in install.sh test/install_test.sh lint/*.sh \
   shared/.profile shared/.config/sh/env.sh shared/.config/sh/rc.sh \
   shared/.config/sh/env.d/*.sh shared/.config/sh/rc.d/*.sh \
-  shared/.config/git/prune-merged.sh windows/wsl/.config/wsl/env.sh; do
+  shared/.config/git/prune-merged.sh shared/.config/claude/hooks/require-issue-pr-titles.sh \
+  windows/wsl/.config/wsl/env.sh; do
   sh -n "$f"
 done
 
