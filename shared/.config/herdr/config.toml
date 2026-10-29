@@ -2,8 +2,21 @@ onboarding = false
 
 [keys]
 prefix = ["ctrl+space", "ctrl+s"]
+
 split_vertical = ["prefix+v", "prefix+%", "prefix+|"]
 split_horizontal = ["prefix+minus", 'prefix+"']
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+
+workspace_picker = "prefix+w"
+navigate_workspace_up = ["up", "k"]
+navigate_workspace_down = ["down", "j"]
+navigate_pane_left = []
+navigate_pane_up = []
+navigate_pane_down = []
+navigate_pane_right = []
 
 [ui]
 prompt_new_tab_name = false
