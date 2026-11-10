@@ -408,7 +408,7 @@ expect_rc 0
 expect_calls "mise -C $T install"
 
 begin 'apps without mise config do not run mise install'
-install --add tmux
+install --add tig
 expect_rc 0
 expect_calls ''
 
@@ -513,11 +513,11 @@ expect_no_entry .config/herdr/config.toml
 
 begin 'a failing mise install reverts only the apps that linked mise config'
 touch "$T.mise-fail"
-install --add herdr,tmux
+install --add herdr,tig
 expect_rc 1
 expect_output 'command failed: mise install'
-expect_installed 'tmux'
-expect_link .config/tmux/tmux.conf
+expect_installed 'tig'
+expect_link .config/tig/config
 expect_no_entry .config/mise/conf.d/mise.toml
 
 begin 'a failing post_install reverts the app'
@@ -646,7 +646,7 @@ before="$(snapshot)"
 install --list
 expect_rc 0
 expect_output '\[x\] vim (shell, config)$'
-expect_output '\[ \] tmux (shell, config)$'
+expect_output '\[ \] tmux (bin, shell, config)$'
 expect_output '\[ \] aws (bin, shell)$'
 expect_output '\[x\] removed-app (removed)$'
 if [ "$(snapshot)" != "$before" ]; then

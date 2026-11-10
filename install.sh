@@ -30,7 +30,7 @@ EOF
 
 # Apps that can be installed. Each app is a set of paths relative to both
 # "${DOTDIR}/shared" (link source) and "${HOME}" (link destination).
-APPS='act actionlint agents alacritty ansible aws bash bash-language-server bat bun c cargo-atcoder claude delta deno direnv dive docker eslint eza fd fontconfig fzf git github-cli go hadolint herdr jq kubectl less lua markdownlint-cli2 mise mysql node nvim oxfmt oxlint peco pinact pnpm postgresql prettier readline redis ripgrep rust sh shellcheck shfmt sqlite3 stylelint stylua tig tmux typescript vim wasmer wasmtime yarn yq zsh'
+APPS='act actionlint agents alacritty ansible aws bash bash-language-server bat btop bun c cargo-atcoder claude delta deno direnv dive docker eslint eza fd fontconfig fzf git github-cli go hadolint herdr jq kubectl less lua markdownlint-cli2 mise mysql node nvim oxfmt oxlint peco pinact pnpm postgresql prettier readline redis ripgrep rust sh shellcheck shfmt sqlite3 stylelint stylua tig tmux typescript vim wasmer wasmtime yarn yq zsh'
 
 app_paths() {
   case "$1" in
@@ -64,6 +64,9 @@ app_paths() {
       ;;
     bat)
       echo .config/mise/conf.d/bat.toml
+      ;;
+    btop)
+      echo .config/mise/conf.d/btop.toml
       ;;
     bun)
       echo .config/mise/conf.d/bun.toml
@@ -173,6 +176,7 @@ app_paths() {
       echo .config/sh/env.d/node.sh
       ;;
     nvim)
+      echo .config/mise/conf.d/nvim.toml
       echo .config/nvim/ginit.vim
       echo .config/nvim/init.lua
       echo .config/nvim/lazy-lock.json
@@ -242,6 +246,7 @@ app_paths() {
       echo .config/sh/env.d/tig.sh
       ;;
     tmux)
+      echo .config/mise/conf.d/tmux.toml
       echo .config/tmux/tmux.conf
       echo .config/sh/rc.d/tmux.sh
       ;;
