@@ -82,7 +82,9 @@
   the code does not take the simpler or more obvious approach, including the constraint or
   external fact that rules it out. Match the surrounding code's density.
 
-## Type strictness
+## Code style
+
+### Type strictness
 
 - Express the structure of data in types as far as the language allows. Do not use a sentinel
   value, a separate flag, or a comment to convey a property that a type can express, such as a
@@ -94,7 +96,13 @@
 - Do not rely on the default an absent value yields. When a fallback to a default is intended,
   write it explicitly.
 
-## Control flow
+### Immutability
+
+- Treat values as immutable as far as the language allows, so that changes are easy to trace.
+  Do not construct a value and modify it afterwards; compute each part first, then construct
+  the value at once.
+
+### Control flow
 
 - Make the structure of a branch reflect how its cases relate:
   - When one case is exceptional to the main path (e.g. validation failure, error), move it
