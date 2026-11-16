@@ -94,6 +94,14 @@
 - Do not rely on the default an absent value yields. When a fallback to a default is intended,
   write it explicitly.
 
+## Control flow
+
+- Make the structure of a branch reflect how its cases relate:
+  - When one case is exceptional to the main path (e.g. validation failure, error), move it
+    out of the main path (e.g. early return) so the main path stays shallow.
+  - When cases are of equal standing (e.g. INSERT or UPDATE), place them at the same nesting
+    depth (e.g. `if`-`else`, `switch`).
+
 ## Commits
 
 - Follow the conventional commits format: `type(scope): summary`. Write the message in the
